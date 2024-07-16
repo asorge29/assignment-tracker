@@ -1,8 +1,6 @@
 // pages/index.js
 import React from 'react';
 
-export const runtime = 'experimental-edge';
-
 export async function getServerSideProps() {
   const res = await fetch('http://localhost:3000/api/getItems');
   const items = await res.json();

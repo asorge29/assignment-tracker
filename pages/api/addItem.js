@@ -1,8 +1,6 @@
 // pages/api/addItem.js
 import { DocumentClient } from '../../lib/dynamodb';
 
-export const runtime = 'edge';
-
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { id, name } = req.body;
