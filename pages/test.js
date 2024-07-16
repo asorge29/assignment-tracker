@@ -1,8 +1,6 @@
 // pages/index.js
-import React from 'react';
-
 export async function getServerSideProps() {
-  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+  const protocol = process.env.VERCEL_ENV === 'production' ? 'https' : 'http';
   const host = process.env.VERCEL_URL || 'localhost:3000';
   const res = await fetch(`${protocol}://${host}/api/getItems`);
   const items = await res.json();
