@@ -13,7 +13,7 @@ export async function getServerSideProps() {
 export default function Home({ protocol, host }) {
   return (
     <div>
-      <h1>{host}</h1>
+      <h1>{`${protocol}://${host}/api/getItems`}</h1>
     </div>
   );
 }
