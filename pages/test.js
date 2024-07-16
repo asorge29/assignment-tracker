@@ -7,7 +7,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      items,
+      items: items.results,
     },
   };
 }
