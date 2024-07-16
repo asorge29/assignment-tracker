@@ -1,6 +1,6 @@
 export async function getServerSideProps() {
   const protocol = process.env.VERCEL_ENV === 'production' ? 'https' : 'http';
-  const host = process.env.VERCEL_URL || 'localhost:3000';
+  const host = process.env.VERCEL_PROJECT_PRODUCTION_URL || 'localhost:3000';
 
   return {
     props: {
