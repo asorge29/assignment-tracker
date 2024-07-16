@@ -1,10 +1,6 @@
 // pages/api/getItems.js
 import { DocumentClient } from "../../lib/dynamodb";
 
-export const config = {
-  runtime: "edge",
-};
-
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
