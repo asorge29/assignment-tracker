@@ -1,19 +1,37 @@
-export async function getServerSideProps() {
-  const protocol = process.env.VERCEL_ENV === 'production' ? 'https' : 'http';
-  const host = process.env.VERCEL_PROJECT_PRODUCTION_URL || 'localhost:3000';
+import { useState } from 'react';
+import { queryDb } from '@/lib/queryDb';
 
-  return {
-    props: {
-      protocol: protocol,
-      host: host,
-    },
+export default function MyComponent() {
+  const [query, setQuery] = useState('');
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await queryDb(query);
+      setResult(response);
+      setError(null);
+    } catch (error) {
+      console.error(error);
+      setError('Failed to fetch items');
+    }
   };
-}
 
-export default function Home({ protocol, host }) {
   return (
     <div>
-      <h1>{`${protocol}://${host}/api/getItems`}</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Enter your query"
+        />
+        <button type="submit">Submit</button>
+      </form>
+      {result && <pre>{JSON.stringify(result.results, 0, ' ')}</pre>}
+      {error && <div>{error}</div>}
     </div>
   );
 }
