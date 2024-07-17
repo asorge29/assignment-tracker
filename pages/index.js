@@ -1,9 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import LoginBtn from "@/components/login-btn";
 import styles from "@/styles/Home.module.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
@@ -13,8 +10,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <body>
-      </body>
+      <main>
+        <h1>Assignment Tracker</h1>
+        <LoginBtn />
+      </main>
     </>
   );
 }
