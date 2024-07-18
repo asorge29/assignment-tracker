@@ -57,6 +57,18 @@ export default function Assignments({ session }) {
       .catch((error) => console.error(error));
   }
 
+  function deleteAssignment(id) {
+    const query = `DELETE FROM assignments WHERE id = ${id}`;
+    queryDb(query)
+      .then(() => {
+        const query = `SELECT * FROM assignments WHERE email = "${sessionData?.user?.email || ''}"`;
+        queryDb(query)
+          .then((data) => setAssignments(data.results))
+          .catch((error) => console.error(error));
+      })
+      .catch((error) => console.error(error));
+  }
+
   return (
     <>
     <Head>
@@ -89,6 +101,7 @@ export default function Assignments({ session }) {
                 <td>{assignment.class}</td>
                 <td>{assignment.done}</td>
                 <td>{assignment.overdue}</td>
+                <td><button onClick={() => deleteAssignment(assignment.id)}>Delete</button></td>
               </tr>
             ))}
           </tbody>
