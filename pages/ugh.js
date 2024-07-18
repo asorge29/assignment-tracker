@@ -1,37 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { queryDb } from '@/lib/queryDb';
+import { useSession } from 'next-auth/react';
+import styles from '@/styles/ugh.module.css';
 
 export default function MyComponent() {
-  const [query, setQuery] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await queryDb(query);
-      setResult(response);
-      setError(null);
-    } catch (error) {
-      console.error(error);
-      setError('Failed to fetch items');
-    }
-  };
+  const { data: session } = useSession();
+  const query = `SELECT * from assignments where email = "${session.user.email}"`;
+  useEffect(() => {
+    queryDb(query)
+      .then(data => setResult(data))
+      .catch(error => setError(error));
+  }, []);
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Enter your query"
-        />
-        <button type="submit">Submit</button>
-      </form>
-      {result && <pre>{JSON.stringify(result.results, 0, ' ')}</pre>}
-      {error && <div>{error}</div>}
+    <div className={styles.container}>
+      <pre>{JSON.stringify(result, 0, ' ')}</pre>
+      <table>
+        <tr>
+          <td>Title</td>
+          <td>Priority</td>
+          <td>Link</td>
+          <td>Due Date</td>
+          <td>Time Estimate</td>
+          <td>Class</td>
+          <td>Done</td>
+          <td>Overdue</td>
+        </tr>
+        {result && result.results.map((item, index) => (
+          <tr key={index}>
+            <td>{item.title}</td>
+            <td>{item.priority}</td>
+            <td>{item.link}</td>
+            <td>{item.due_date}</td>
+            <td>{item.time_estimate}</td>
+            <td>{item.class}</td>
+            <td>{item.done}</td>
+            <td>{item.overdue}</td>
+          </tr>
+        ))}
+      </table>
     </div>
   );
 }
