@@ -23,9 +23,9 @@ export default function Login() {
         </Head>
         <main className={ styles.main }>
           <div className={ styles.container }>
-            <h1>Login to Assignment Tracker</h1>
-            <GoogleLoginBtn />
-            <GithubLoginBtn />
+            <h1>Sign in to Assignment Tracker</h1>
+            <GoogleLoginBtn className={ styles.google } />
+            <GithubLoginBtn className={ styles.github } />
           </div>
         </main>
       </>

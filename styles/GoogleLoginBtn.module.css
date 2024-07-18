@@ -8,6 +8,11 @@
     align-items: center;
     gap: 10px;
 }
+@media (max-width: 768px) {
+    .button {
+        font-size: x-large
+    }
+}
 @media (pointer: fine) {
     .button:hover {
         cursor: pointer;
