@@ -1,0 +1,21 @@
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--text);
+    padding: 2%;
+    border-radius: 2vmax;
+}
+.container h1 {
+    margin: 0;
+}
+.container > * {
+    padding: 6px;
+}

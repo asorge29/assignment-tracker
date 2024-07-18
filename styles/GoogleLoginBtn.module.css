@@ -1,0 +1,15 @@
+.button {
+    background-color: var(--background);
+    border-radius: 10px;
+    font-size: xx-large;
+    color: var(--text);
+    font-family: var(--font-jetbrains);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+@media (pointer: fine) {
+    .button:hover {
+        cursor: pointer;
+    }
+}
