@@ -1,9 +1,21 @@
 import Head from "next/head"
+import { useRouter } from 'next/router'
+import { useSession } from "next-auth/react"
+import { useEffect } from 'react'
 import GoogleLoginBtn from "@/components/googleLoginBtn"
 import GithubLoginBtn from "@/components/githubLoginBtn"
 import styles from "@/styles/login.module.css"
 
 export default function Login() {
+    const router = useRouter();
+    const { data: session, status } = useSession();
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            router.push('/assignments');
+        }
+    }, [status, router]);
+
     return (
       <>
         <Head>
