@@ -6,10 +6,12 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import Header from '@/components/header';
+import NewAssignmentMenu from '@/components/newAssignmentMenu';
 
 export default function Assignments({  }) {
   const { data: session } = useSession();
   const [assignments, setAssignments] = useState([]);
+  const [showNewMenu, setShowNewMenu] = useState(false);
 
   useEffect(() => {
     const query = `SELECT * FROM assignments WHERE email = "${session?.user?.email || ''}"`;
@@ -62,7 +64,7 @@ export default function Assignments({  }) {
       <Header session={session} active="assignments" />
       <div>
         <h1>Assignments</h1>
-        <table>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th>Title</th>
@@ -92,40 +94,8 @@ export default function Assignments({  }) {
           </tbody>
         </table>
       </div>
-      <div>
-        <form onSubmit={(e) => newAssignment(e, session)}>
-          <h2>Add New Assignment</h2>
-          <div>
-            <label htmlFor="title">Title:</label>
-            <input type="text" id="title" name="title" required />
-          </div>
-          <div>
-            <label htmlFor="priority">Priority:</label>
-            <select id="priority" name="priority">
-              <option value="1">Low</option>
-              <option value="2">Medium</option>
-              <option value="3">High</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="link">Link:</label>
-            <input type="url" id="link" name="link" />
-          </div>
-          <div>
-            <label htmlFor="dueDate">Due Date:</label>
-            <input type="date" id="dueDate" name="dueDate" required />
-          </div>
-          <div>
-            <label htmlFor="timeEstimate">Time Estimate (hours):</label>
-            <input type="number" id="timeEstimate" name="timeEstimate" min="0" step="0.5" />
-          </div>
-          <div>
-            <label htmlFor="class">Class:</label>
-            <input type="text" id="class" name="class" />
-          </div>
-          <button type="submit">Add Assignment</button>
-        </form>
-      </div>
+      {showNewMenu && <NewAssignmentMenu session={session} closeMethod={() => setShowNewMenu(false)} updateMethod={setAssignments} />}
+      {!showNewMenu && <button onClick={() => setShowNewMenu(true)}>New</button>}
     </main>
     </>
   )

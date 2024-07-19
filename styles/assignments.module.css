@@ -1,0 +1,8 @@
+.table {
+    border-collapse: collapse;
+}
+.table td, .table th {
+    border: 2px solid var(--text);
+    padding: 4px;
+    text-align: center;
+}
