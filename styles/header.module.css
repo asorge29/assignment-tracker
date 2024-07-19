@@ -1,0 +1,53 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1%;
+    border-bottom: 2px solid var(--text);
+}
+.title, .nav {
+    display: flex;
+    align-items: center;
+}
+.title img {
+    font-size: xx-large;
+    height: 3em;
+}
+.nav {
+    gap: 20px;
+}
+.nav a {
+    text-decoration: none;
+    color: var(--text);
+    font-family: var(--font-jetbrains);
+    font-size: x-large;
+}
+.nav h3 {
+    font-size: x-large;
+}
+.nav img {
+    border-radius: 50%;
+    padding: 2px;
+    border: 2px solid var(--text);
+}
+.loginBtn {
+    border-radius: 0.4em;
+    background-color: var(--background);
+    font-family: var(--font-jetbrains);
+    color: var(--text);
+    font-size: x-large;
+}
+.active {
+    text-decoration: underline !important;
+}
+@media (pointer: fine) {
+    .nav a:hover {
+        text-decoration: underline;
+    }
+    .loginBtn:hover {
+        cursor: pointer;
+    }
+    .nav img:hover {
+        cursor: pointer;
+    }
+}

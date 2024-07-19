@@ -5,36 +5,20 @@ import { useSession, getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
+import Header from '@/components/header';
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { session }
-  };
-}
-
-export default function Assignments({ session }) {
-  const { data: sessionData } = useSession();
+export default function Assignments({  }) {
+  const { data: session } = useSession();
   const [assignments, setAssignments] = useState([]);
 
   useEffect(() => {
-    const query = `SELECT * FROM assignments WHERE email = "${sessionData?.user?.email || ''}"`;
+    const query = `SELECT * FROM assignments WHERE email = "${session?.user?.email || ''}"`;
     queryDb(query)
       .then((data) => setAssignments(data.results))
       .catch((error) => console.error(error));
-  }, [sessionData]);
+  }, [session]);
 
-  function newAssignment(e, sessionData) {
+  function newAssignment(e, session) {
     e.preventDefault();
     const title = e.target.title.value;
     const priority = e.target.priority.value;
@@ -44,12 +28,12 @@ export default function Assignments({ session }) {
     const className = e.target.class.value;
     const done = 0;
     const overdue = 0;
-    const query = `INSERT INTO assignments (email, title, priority, link, due_date, time_estimate, class, done, overdue) VALUES ("${sessionData.user.email}", "${title}", "${priority}", "${link}", "${dueDate}", "${timeEstimate}", "${className}", "${done}", "${overdue}");`;
+    const query = `INSERT INTO assignments (email, title, priority, link, due_date, time_estimate, class, done, overdue) VALUES ("${session.user.email}", "${title}", "${priority}", "${link}", "${dueDate}", "${timeEstimate}", "${className}", "${done}", "${overdue}");`;
     console.log(query);
     queryDb(query)
       .then(() => {
         e.target.reset();
-        const query = `SELECT * FROM assignments WHERE email = "${sessionData?.user?.email || ''}"`;
+        const query = `SELECT * FROM assignments WHERE email = "${session?.user?.email || ''}"`;
         queryDb(query)
           .then((data) => setAssignments(data.results))
           .catch((error) => console.error(error));
@@ -61,7 +45,7 @@ export default function Assignments({ session }) {
     const query = `DELETE FROM assignments WHERE id = ${id}`;
     queryDb(query)
       .then(() => {
-        const query = `SELECT * FROM assignments WHERE email = "${sessionData?.user?.email || ''}"`;
+        const query = `SELECT * FROM assignments WHERE email = "${session?.user?.email || ''}"`;
         queryDb(query)
           .then((data) => setAssignments(data.results))
           .catch((error) => console.error(error));
@@ -72,9 +56,10 @@ export default function Assignments({ session }) {
   return (
     <>
     <Head>
-
+      <title>{session && session.user.name.split(' ')[0]}'s Assignments</title>
     </Head>
     <main>
+      <Header session={session} active="assignments" />
       <div>
         <h1>Assignments</h1>
         <table>
@@ -108,7 +93,7 @@ export default function Assignments({ session }) {
         </table>
       </div>
       <div>
-        <form onSubmit={(e) => newAssignment(e, sessionData)}>
+        <form onSubmit={(e) => newAssignment(e, session)}>
           <h2>Add New Assignment</h2>
           <div>
             <label htmlFor="title">Title:</label>
