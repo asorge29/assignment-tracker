@@ -1,7 +1,7 @@
 import styles from '@/styles/newAssignmentMenu.module.css';
 import { queryDb } from '@/lib/queryDb';
 
-export default function NewAssignmentMenu({ session, closeMethod, updateMethod }) {
+export default function NewAssignmentMenu({ session, classes, closeMethod, updateMethod }) {
   function newAssignment(e, session) {
     e.preventDefault();
     const title = e.target.title.value;
@@ -66,7 +66,11 @@ export default function NewAssignmentMenu({ session, closeMethod, updateMethod }
           </div>
           <div>
             <label htmlFor="class">Class:</label>
-            <input type="text" id="class" name="class" />
+            <select id="class" name="class">
+            {classes.map((item) => (
+                <option value={item.name}>{item.name}</option>
+              ))}
+            </select>
           </div>
           <button type="submit">Add Assignment</button>
         </form>

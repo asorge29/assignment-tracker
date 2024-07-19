@@ -11,12 +11,20 @@ import NewAssignmentMenu from '@/components/newAssignmentMenu';
 export default function Assignments({  }) {
   const { data: session } = useSession();
   const [assignments, setAssignments] = useState([]);
+  const [classes, setClasses] = useState([]);
   const [showNewMenu, setShowNewMenu] = useState(false);
 
   useEffect(() => {
     const query = `SELECT * FROM assignments WHERE email = "${session?.user?.email || ''}"`;
     queryDb(query)
       .then((data) => setAssignments(data.results))
+      .catch((error) => console.error(error));
+  }, [session]);
+
+  useEffect(() => {
+    const query = `SELECT * FROM classes WHERE email = "${session?.user?.email || ''}"`;
+    queryDb(query)
+      .then((data) => setClasses(data.results))
       .catch((error) => console.error(error));
   }, [session]);
 
@@ -62,40 +70,66 @@ export default function Assignments({  }) {
     </Head>
     <main>
       <Header session={session} active="assignments" />
-      <div>
-        <h1>Assignments</h1>
-        <table className={styles.table}>
-          <thead>
+      <div className={styles.container}>
+        <div className={styles.classes}>
+          <h2>Classes</h2>
+          <table className={styles.classesTable}>
             <tr>
-              <th>Title</th>
-              <th>Priority</th>
-              <th>Link</th>
-              <th>Due Date</th>
-              <th>Time Estimate</th>
-              <th>Class</th>
-              <th>Done</th>
-              <th>Overdue</th>
+              <th>Name</th>
+              <th>Show</th>
             </tr>
-          </thead>
-          <tbody>
-            {assignments.map((assignment) => (
-              <tr key={assignment.id}>
-                <td>{assignment.title}</td>
-                <td>{assignment.priority}</td>
-                <td><a src={assignment.link}>{assignment.link}</a></td>
-                <td>{assignment.due_date}</td>
-                <td>{assignment.time_estimate}</td>
-                <td>{assignment.class}</td>
-                <td>{assignment.done}</td>
-                <td>{assignment.overdue}</td>
-                <td><button onClick={() => deleteAssignment(assignment.id)}>Delete</button></td>
+          {classes.map((item) => {
+            return (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td><input type="checkbox"  /></td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            );
+          })}
+          </table>
+          <div>
+            <form>
+              <input type="text" placeholder="Class Name" />
+            </form>
+          </div>
+        </div>
+        <div className={styles.assignments}>
+          <div className={styles.toolbar}>
+            <h1>Assignments</h1>
+            {!showNewMenu && <button onClick={() => setShowNewMenu(true)}>New</button>}
+          </div>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Priority</th>
+                <th>Link</th>
+                <th>Due Date</th>
+                <th>Time Estimate</th>
+                <th>Class</th>
+                <th>Done</th>
+                <th>Overdue</th>
+              </tr>
+            </thead>
+            <tbody>
+              {assignments.map((assignment) => (
+                <tr key={assignment.id}>
+                  <td>{assignment.title}</td>
+                  <td>{assignment.priority}</td>
+                  <td><a href={assignment.link}>{assignment.link.split('/').slice(2).join('/')}</a></td>
+                  <td>{assignment.due_date}</td>
+                  <td>{assignment.time_estimate}</td>
+                  <td>{assignment.class}</td>
+                  <td>{assignment.done}</td>
+                  <td>{assignment.overdue}</td>
+                  <td><button onClick={() => deleteAssignment(assignment.id)}>Delete</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {showNewMenu && <NewAssignmentMenu session={session} classes={classes} closeMethod={() => setShowNewMenu(false)} updateMethod={setAssignments} />}
       </div>
-      {showNewMenu && <NewAssignmentMenu session={session} closeMethod={() => setShowNewMenu(false)} updateMethod={setAssignments} />}
-      {!showNewMenu && <button onClick={() => setShowNewMenu(true)}>New</button>}
     </main>
     </>
   )

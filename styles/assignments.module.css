@@ -6,3 +6,32 @@
     padding: 4px;
     text-align: center;
 }
+.container {
+    display: flex;
+    flex-direction: row;
+    height: calc(90vh - 2px);
+}
+.classes {
+    border-right: 2px solid var(--text);
+    width: 16vw;
+    padding: 1vw;
+}
+.classesTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+.classesTable th, .classesTable td {
+    border: 2px solid var(--text);
+    text-align: center;
+}
+.assignments {
+    padding: 0 1vw;
+}
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.toolbar button {
+    height: min-content;
+}
