@@ -37,3 +37,22 @@
     border-radius: 5px;
     background-color: var(--background);
 }
+.form input,
+.form select,
+.form button {
+    border: 2px solid var(--text);
+    border-radius: 4px;
+    font-size: x-large;
+    background-color: var(--background);
+    font-family: var(--font-jetbrains);
+    padding: 0.2em;
+}
+.form label {
+    font-size: x-large;
+    background-color: var(--background);
+    font-family: var(--font-jetbrains);
+    padding: 0.2em;
+}
+.form h2 {
+    font-size: xx-large;
+}
