@@ -1,5 +1,6 @@
 .table {
     border-collapse: collapse;
+    width: 100%;
 }
 .table td, .table th {
     border: 2px solid var(--text);
@@ -13,7 +14,7 @@
 }
 .classes {
     border-right: 2px solid var(--text);
-    width: 16vw;
+    width: 20vw;
     padding: 1vw;
 }
 .classesTable {
@@ -26,6 +27,7 @@
 }
 .assignments {
     padding: 0 1vw;
+    width: 80vw;
 }
 .toolbar {
     display: flex;
@@ -34,4 +36,10 @@
 }
 .toolbar button {
     height: min-content;
+}
+.sortedAsc {
+    background-color: red;
+}
+.sortedDesc {
+    background-color: green;
 }
