@@ -37,9 +37,21 @@
 .toolbar button {
     height: min-content;
 }
-.sortedAsc {
-    background-color: red;
+.headerRow th div {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 }
-.sortedDesc {
-    background-color: green;
+.headerRow h4 {
+    margin: 0;
+}
+.sortedAsc .ascArrow {
+    display: inline;
+}
+.sortedDesc .dscArrow {
+    display: inline;
+}
+.ascArrow, .dscArrow {
+    display: none;
 }

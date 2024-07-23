@@ -11,50 +11,37 @@ export default function Assignments({}) {
   const [assignments, setAssignments] = useState([]);
   const [classes, setClasses] = useState([]);
   const [showNewMenu, setShowNewMenu] = useState(false);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" });
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: "ascending",
+  });
   const [selectedClasses, setSelectedClasses] = useState([]);
 
   useEffect(() => {
-    const query = `SELECT * FROM assignments WHERE email = "${session?.user?.email || ""}"`;
+    const query = `SELECT * FROM assignments WHERE email = "${
+      session?.user?.email || ""
+    }"`;
     queryDb(query)
       .then((data) => setAssignments(data.results))
       .catch((error) => console.error(error));
   }, [session]);
 
   useEffect(() => {
-    const query = `SELECT * FROM classes WHERE email = "${session?.user?.email || ""}"`;
+    const query = `SELECT * FROM classes WHERE email = "${
+      session?.user?.email || ""
+    }"`;
     queryDb(query)
       .then((data) => setClasses(data.results))
       .catch((error) => console.error(error));
   }, [session]);
 
-  function newAssignment(e, session) {
-    e.preventDefault();
-    const title = e.target.title.value;
-    const priority = e.target.priority.value;
-    const link = e.target.link.value;
-    const dueDate = e.target.dueDate.value;
-    const timeEstimate = e.target.timeEstimate.value;
-    const className = e.target.class.value;
-    const done = 0;
-    const overdue = 0;
-    const query = `INSERT INTO assignments (email, title, priority, link, due_date, time_estimate, class, done, overdue) VALUES ("${session.user.email}", "${title}", "${priority}", "${link}", "${dueDate}", "${timeEstimate}", "${className}", "${done}", "${overdue}");`;
-    queryDb(query)
-      .then(() => {
-        e.target.reset();
-        const query = `SELECT * FROM assignments WHERE email = "${session?.user?.email || ""}"`;
-        queryDb(query)
-          .then((data) => setAssignments(data.results))
-          .catch((error) => console.error(error));
-      })
-      .catch((error) => console.error(error));
-  }
-
   function deleteAssignment(id) {
     const query = `DELETE FROM assignments WHERE id = ${id}`;
     queryDb(query)
       .then(() => {
-        const query = `SELECT * FROM assignments WHERE email = "${session?.user?.email || ""}"`;
+        const query = `SELECT * FROM assignments WHERE email = "${
+          session?.user?.email || ""
+        }"`;
         queryDb(query)
           .then((data) => setAssignments(data.results))
           .catch((error) => console.error(error));
@@ -63,10 +50,19 @@ export default function Assignments({}) {
   }
 
   const sortedAssignments = [...assignments].sort((a, b) => {
-    if (a[sortConfig.key] < b[sortConfig.key]) {
+    const aValue =
+      typeof a[sortConfig.key] === "string"
+        ? a[sortConfig.key].toLowerCase()
+        : a[sortConfig.key];
+    const bValue =
+      typeof b[sortConfig.key] === "string"
+        ? b[sortConfig.key].toLowerCase()
+        : b[sortConfig.key];
+
+    if (aValue < bValue) {
       return sortConfig.direction === "ascending" ? -1 : 1;
     }
-    if (a[sortConfig.key] > b[sortConfig.key]) {
+    if (aValue > bValue) {
       return sortConfig.direction === "ascending" ? 1 : -1;
     }
     return 0;
@@ -82,25 +78,34 @@ export default function Assignments({}) {
 
   const handleCheckboxChange = (className) => {
     setSelectedClasses((prev) =>
-      prev.includes(className) ? prev.filter((name) => name !== className) : [...prev, className]
+      prev.includes(className)
+        ? prev.filter((name) => name !== className)
+        : [...prev, className]
     );
   };
 
-  const filteredAssignments = sortedAssignments.filter((assignment) =>
-    selectedClasses.length === 0 || selectedClasses.includes(assignment.class)
+  const filteredAssignments = sortedAssignments.filter(
+    (assignment) =>
+      selectedClasses.length === 0 || selectedClasses.includes(assignment.class)
   );
 
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
       return;
     }
-    return sortConfig.key === name ? (sortConfig.direction === 'ascending' ? styles.sortedAsc : styles.sortedDesc) : '';
+    return sortConfig.key === name
+      ? sortConfig.direction === "ascending"
+        ? styles.sortedAsc
+        : styles.sortedDesc
+      : "";
   };
 
   return (
     <>
       <Head>
-        <title>{session && session.user.name.split(" ")[0]}'s Assignments</title>
+        <title>
+          {session && session.user.name.split(" ")[0]}'s Assignments
+        </title>
       </Head>
       <main>
         <Header session={session} active="assignments" />
@@ -138,19 +143,301 @@ export default function Assignments({}) {
           <div className={styles.assignments}>
             <div className={styles.toolbar}>
               <h1>Assignments</h1>
-              {!showNewMenu && <button onClick={() => setShowNewMenu(true)}>New</button>}
+              {!showNewMenu && (
+                <button onClick={() => setShowNewMenu(true)}>New</button>
+              )}
             </div>
             <table className={styles.table}>
               <thead>
-                <tr>
-                  <th onClick={() => requestSort("title")} className={getClassNamesFor('title')}>Title</th>
-                  <th onClick={() => requestSort("priority")} className={getClassNamesFor('priority')}>Priority</th>
-                  <th onClick={() => requestSort("link")} className={getClassNamesFor('link')}>Link</th>
-                  <th onClick={() => requestSort("due_date")} className={getClassNamesFor('due_date')}>Due Date</th>
-                  <th onClick={() => requestSort("time_estimate")} className={getClassNamesFor('time_estimate')}>Time Estimate</th>
-                  <th onClick={() => requestSort("class")} className={getClassNamesFor('class')}>Class</th>
-                  <th onClick={() => requestSort("done")} className={getClassNamesFor('done')}>Done</th>
-                  <th onClick={() => requestSort("overdue")} className={getClassNamesFor('overdue')}>Overdue</th>
+                <tr className={styles.headerRow}>
+                  <th
+                    onClick={() => requestSort("title")}
+                    className={getClassNamesFor("title")}
+                  >
+                    <div>
+                      <h4>Title</h4>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.ascArrow}
+                      >
+                        <path d="M18 15l-6-6-6 6" />
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.dscArrow}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => requestSort("priority")}
+                    className={getClassNamesFor("priority")}
+                  >
+                    <div>
+                      <h4>Priority</h4>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.ascArrow}
+                      >
+                        <path d="M18 15l-6-6-6 6" />
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.dscArrow}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => requestSort("link")}
+                    className={getClassNamesFor("link")}
+                  >
+                    <div>
+                      <h4>Link</h4>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.ascArrow}
+                      >
+                        <path d="M18 15l-6-6-6 6" />
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.dscArrow}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => requestSort("due_date")}
+                    className={getClassNamesFor("due_date")}
+                  >
+                    <div>
+                      <h4>Due Date</h4>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.ascArrow}
+                      >
+                        <path d="M18 15l-6-6-6 6" />
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.dscArrow}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => requestSort("time_estimate")}
+                    className={getClassNamesFor("time_estimate")}
+                  >
+                    <div>
+                      <h4>Time Estimate</h4>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.ascArrow}
+                      >
+                        <path d="M18 15l-6-6-6 6" />
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.dscArrow}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => requestSort("class")}
+                    className={getClassNamesFor("class")}
+                  >
+                    <div>
+                      <h4>Class</h4>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.ascArrow}
+                      >
+                        <path d="M18 15l-6-6-6 6" />
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.dscArrow}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => requestSort("done")}
+                    className={getClassNamesFor("done")}
+                  >
+                    <div>
+                      <h4>Done</h4>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.ascArrow}
+                      >
+                        <path d="M18 15l-6-6-6 6" />
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.dscArrow}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => requestSort("overdue")}
+                    className={getClassNamesFor("overdue")}
+                  >
+                    <div>
+                      <h4>Overdue</h4>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.ascArrow}
+                      >
+                        <path d="M18 15l-6-6-6 6" />
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={styles.dscArrow}
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </div>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -160,7 +447,7 @@ export default function Assignments({}) {
                     <td>{assignment.priority}</td>
                     <td>
                       <a href={assignment.link} target="_blank">
-                        {assignment.link.split("/").slice(2).join("/")}
+                        {assignment.link}
                       </a>
                     </td>
                     <td>{assignment.due_date}</td>
@@ -169,7 +456,9 @@ export default function Assignments({}) {
                     <td>{assignment.done}</td>
                     <td>{assignment.overdue}</td>
                     <td>
-                      <button onClick={() => deleteAssignment(assignment.id)}>Delete</button>
+                      <button onClick={() => deleteAssignment(assignment.id)}>
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
