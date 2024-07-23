@@ -45,6 +45,7 @@
 }
 .headerRow h4 {
     margin: 0;
+    user-select: none;
 }
 .sortedAsc .ascArrow {
     display: inline;
@@ -54,4 +55,9 @@
 }
 .ascArrow, .dscArrow {
     display: none;
+}
+@media (pointer: fine) {
+    .headerRow th:hover {
+        cursor: pointer;
+    }
 }
