@@ -156,7 +156,7 @@ export default function Assignments({}) {
               <h3>Add a new class:</h3>
               <form className={styles.classForm} onSubmit={(e) => addClass(e)}>
                   <input type="text" placeholder="Class Name" name="className" className={styles.classInput} />
-                  <button type="submit" className={styles.addButton}>Add</button>
+                  <button type="submit" className={styles.button}>Add</button>
               </form>
             </div>
           </div>
@@ -164,7 +164,7 @@ export default function Assignments({}) {
             <div className={styles.toolbar}>
               <h1>Assignments</h1>
               {!showNewMenu && (
-                <button onClick={() => setShowNewMenu(true)}>New</button>
+                <button onClick={() => setShowNewMenu(true)} className={styles.button}>New</button>
               )}
             </div>
             <table className={styles.table}>
@@ -386,78 +386,6 @@ export default function Assignments({}) {
                       </svg>
                     </div>
                   </th>
-                  <th
-                    onClick={() => requestSort("done")}
-                    className={getClassNamesFor("done")}
-                  >
-                    <div>
-                      <h4>Done</h4>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={styles.ascArrow}
-                      >
-                        <path d="M18 15l-6-6-6 6" />
-                      </svg>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={styles.dscArrow}
-                      >
-                        <path d="M6 9l6 6 6-6" />
-                      </svg>
-                    </div>
-                  </th>
-                  <th
-                    onClick={() => requestSort("overdue")}
-                    className={getClassNamesFor("overdue")}
-                  >
-                    <div>
-                      <h4>Overdue</h4>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={styles.ascArrow}
-                      >
-                        <path d="M18 15l-6-6-6 6" />
-                      </svg>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={styles.dscArrow}
-                      >
-                        <path d="M6 9l6 6 6-6" />
-                      </svg>
-                    </div>
-                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -473,12 +401,14 @@ export default function Assignments({}) {
                     <td>{assignment.due_date}</td>
                     <td>{assignment.time_estimate}</td>
                     <td>{assignment.class}</td>
-                    <td>{assignment.done}</td>
-                    <td>{assignment.overdue}</td>
                     <td>
+                      <div className={styles.tableButtons}>
                       <button onClick={() => deleteAssignment(assignment.id)}>
-                        Delete
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>                      </button>
+                      <button onClick={() => editAssignment(assignment.id)}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
                       </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

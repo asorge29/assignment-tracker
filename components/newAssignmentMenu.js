@@ -10,9 +10,7 @@ export default function NewAssignmentMenu({ session, classes, closeMethod, updat
     const dueDate = e.target.dueDate.value;
     const timeEstimate = e.target.timeEstimate.value;
     const className = e.target.class.value;
-    const done = 0;
-    const overdue = 0;
-    const query = `INSERT INTO assignments (email, title, priority, link, due_date, time_estimate, class, done, overdue) VALUES ("${session.user.email}", "${title}", "${priority}", "${link}", "${dueDate}", "${timeEstimate}", "${className}", "${done}", "${overdue}");`;
+    const query = `INSERT INTO assignments (email, title, priority, link, due_date, time_estimate, class) VALUES ("${session.user.email}", "${title}", "${priority}", "${link}", "${dueDate}", "${timeEstimate}", "${className}");`;
     console.log(query);
     queryDb(query)
       .then(() => {

@@ -1,6 +1,7 @@
 .table {
     border-collapse: collapse;
     width: 100%;
+    font-size: large;
 }
 .table td, .table th {
     border: 2px solid var(--text);
@@ -65,7 +66,7 @@
     padding: 0 1ch;
     font-size: large;
 }
-.addButton {
+.button {
     font-family: var(--font-jetbrains);
     border: 2px solid var(--text);
     border-radius: 4px;
@@ -78,8 +79,17 @@
     justify-content: space-between;
     gap: 10px;
 }
+.tableButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    justify-content: center;
+}
 @media (pointer: fine) {
     .headerRow th:hover {
+        cursor: pointer;
+    }
+    .button {
         cursor: pointer;
     }
 }
