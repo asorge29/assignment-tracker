@@ -49,6 +49,24 @@ export default function Assignments({}) {
       .catch((error) => console.error(error));
   }
 
+  const addClass = (e) => {
+    e.preventDefault();
+    const class_name = e.target.className.value;
+    const query = `INSERT INTO classes (email, name) VALUES ("${
+      session?.user?.email
+    }", "${class_name}")`
+    queryDb(query)
+    .then(() => {
+      const query = `SELECT * FROM classes WHERE email = "${
+        session?.user?.email || ""
+      }"`;
+      queryDb(query)
+        .then((data) => setClasses(data.results))
+        .catch((error) => console.error(error));
+    });
+    e.target.reset();
+  }
+
   const sortedAssignments = [...assignments].sort((a, b) => {
     const aValue =
       typeof a[sortConfig.key] === "string"
@@ -135,8 +153,10 @@ export default function Assignments({}) {
               </tbody>
             </table>
             <div>
-              <form>
-                <input type="text" placeholder="Class Name" />
+              <h3>Add a new class:</h3>
+              <form className={styles.classForm} onSubmit={(e) => addClass(e)}>
+                  <input type="text" placeholder="Class Name" name="className" className={styles.classInput} />
+                  <button type="submit" className={styles.addButton}>Add</button>
               </form>
             </div>
           </div>
