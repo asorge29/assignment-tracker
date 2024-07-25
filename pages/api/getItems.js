@@ -1,29 +1,41 @@
+import { NextResponse } from 'next/server';
+
 export const runtime = 'edge';
 
-export default async function handler(req, res) {
-  if (req.method === "POST") {
-    try {
-      const response = await fetch('https://assignment-tracker-worker.oceans4496.workers.dev', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query: req.body.query }),
-      });
+export default async function POST(request) {
+  try {
+    // Read the request body
+    const { query } = await request.json();
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+    // Fetch data from an external API
+    const response = await fetch('https://assignment-tracker-worker.oceans4496.workers.dev', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+    });
 
-      const data = await response.json();
-      res.status(200).json(data);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Failed to fetch items" });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-  } else if (req.method === "GET") {
-    res.status(200).json({ message: "GET method not allowed" });
-  } else {
-    res.status(405).json({ error: "Method not allowed" });
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: "Failed to fetch items" }, { status: 500 });
   }
+}
+
+export async function GET() {
+  return NextResponse.json({ message: "GET method not allowed" }, { status: 405 });
+}
+
+export async function PUT() {
+  return NextResponse.json({ message: "PUT method not allowed" }, { status: 405 });
+}
+
+export async function DELETE() {
+  return NextResponse.json({ message: "DELETE method not allowed" }, { status: 405 });
 }
