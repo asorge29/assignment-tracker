@@ -118,6 +118,13 @@ export default function Assignments({}) {
       : "";
   };
 
+  const overDueCheck = (date) => {
+    const today = new Date();
+    const dueDate = new Date(`${date}T23:59:59`);
+    console.log(today > dueDate, dueDate, today);
+    return (today > dueDate) ? styles.overdue : "";
+  }
+
   return (
     <>
       <Head>
@@ -398,7 +405,7 @@ export default function Assignments({}) {
                         {assignment.link}
                       </a>
                     </td>
-                    <td>{assignment.due_date}</td>
+                    <td className={overDueCheck(assignment.due_date)}>{assignment.due_date}</td>
                     <td>{assignment.time_estimate}</td>
                     <td>{assignment.class}</td>
                     <td>

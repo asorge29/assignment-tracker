@@ -85,6 +85,9 @@
     gap: 4px;
     justify-content: center;
 }
+.overdue {
+    background-color: red;
+}
 @media (pointer: fine) {
     .headerRow th:hover {
         cursor: pointer;
