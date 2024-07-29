@@ -22,7 +22,7 @@
 .signOut {
     border-radius: 0.4em;
     background-color: var(--background);
-    font-family: var(--font-jetbrains);
+    font-family: var(--font);
     color: var(--text);
     font-size: x-large;
 }

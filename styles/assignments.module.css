@@ -58,7 +58,7 @@
     display: none;
 }
 .classInput {
-    font-family: var(--font-jetbrains);
+    font-family: var(--font);
     border: 2px solid var(--text);
     border-radius: 4px;
     background-color: var(--background);
@@ -67,7 +67,7 @@
     font-size: large;
 }
 .button {
-    font-family: var(--font-jetbrains);
+    font-family: var(--font);
     border: 2px solid var(--text);
     border-radius: 4px;
     background-color: var(--background);

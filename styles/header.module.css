@@ -20,7 +20,7 @@
 .nav a {
     text-decoration: none;
     color: var(--text);
-    font-family: var(--font-jetbrains);
+    font-family: var(--font);
     font-size: x-large;
 }
 .nav h3 {
@@ -34,7 +34,7 @@
 .loginBtn {
     border-radius: 0.4em;
     background-color: var(--background);
-    font-family: var(--font-jetbrains);
+    font-family: var(--font);
     color: var(--text);
     font-size: x-large;
 }

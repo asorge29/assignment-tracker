@@ -3,7 +3,7 @@
     border-radius: 10px;
     font-size: xx-large;
     color: var(--text);
-    font-family: var(--font-jetbrains);
+    font-family: var(--font);
     display: flex;
     align-items: center;
     gap: 10px;
