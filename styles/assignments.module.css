@@ -97,6 +97,18 @@
 .overdue {
     background-color: var(--overdue);
 }
+@media (max-width: 768px) {
+    .classes {
+        display: none;
+    }
+    .assignments {
+        width: 100%;
+        overflow: hidden;
+    }
+    .tableContainer {
+        overflow-y: scroll;
+    }
+}
 @media (pointer: fine) {
     .headerRow th:hover {
         cursor: pointer;

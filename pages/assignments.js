@@ -183,176 +183,180 @@ export default function Assignments({}) {
                 </button>
               )}
             </div>
-            <table className={styles.table}>
-              <thead>
-                <tr className={styles.headerRow}>
-                  <th
-                    onClick={() => requestSort("title")}
-                    className={getClassNamesFor("title")}
-                  >
-                    <div>
-                      <h4>Title</h4>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={styles.ascArrow}
-                      >
-                        <path d="M18 15l-6-6-6 6" />
-                      </svg>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={styles.dscArrow}
-                      >
-                        <path d="M6 9l6 6 6-6" />
-                      </svg>
-                    </div>
-                  </th>
-                  <th>
-                    <h4>Link</h4>
-                  </th>
-                  <th
-                    onClick={() => requestSort("due_date")}
-                    className={getClassNamesFor("due_date")}
-                  >
-                    <div>
-                      <h4>Due Date</h4>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={styles.ascArrow}
-                      >
-                        <path d="M18 15l-6-6-6 6" />
-                      </svg>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={styles.dscArrow}
-                      >
-                        <path d="M6 9l6 6 6-6" />
-                      </svg>
-                    </div>
-                  </th>
-
-                  <th
-                    onClick={() => requestSort("class")}
-                    className={getClassNamesFor("class")}
-                  >
-                    <div>
-                      <h4>Class</h4>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={styles.ascArrow}
-                      >
-                        <path d="M18 15l-6-6-6 6" />
-                      </svg>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={styles.dscArrow}
-                      >
-                        <path d="M6 9l6 6 6-6" />
-                      </svg>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredAssignments.map((assignment) => (
-                  <tr key={assignment.id}>
-                    <td>{assignment.title}</td>
-                    <td className={styles.linkCell}>
-                      <a href={assignment.link} target="_blank">
-                        {assignment.link}
-                      </a>
-                    </td>
-                    <td className={overDueCheck(assignment.due_date)}>
-                      {assignment.due_date}
-                    </td>
-                    <td>{assignment.class}</td>
-                    <td>
-                      <div className={styles.tableButtons}>
-                        <button onClick={() => deleteAssignment(assignment.id)}>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                          </svg>{" "}
-                        </button>
-                        <button onClick={() => editAssignment(assignment.id)}>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
-                            <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
-                          </svg>
-                        </button>
+            <div className={styles.tableContainer}>
+              <table className={styles.table}>
+                <thead>
+                  <tr className={styles.headerRow}>
+                    <th
+                      onClick={() => requestSort("title")}
+                      className={getClassNamesFor("title")}
+                    >
+                      <div>
+                        <h4>Title</h4>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="1em"
+                          height="1em"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={styles.ascArrow}
+                        >
+                          <path d="M18 15l-6-6-6 6" />
+                        </svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="1em"
+                          height="1em"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={styles.dscArrow}
+                        >
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
                       </div>
-                    </td>
+                    </th>
+                    <th>
+                      <h4>Link</h4>
+                    </th>
+                    <th
+                      onClick={() => requestSort("due_date")}
+                      className={getClassNamesFor("due_date")}
+                    >
+                      <div>
+                        <h4>Due Date</h4>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="1em"
+                          height="1em"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={styles.ascArrow}
+                        >
+                          <path d="M18 15l-6-6-6 6" />
+                        </svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="1em"
+                          height="1em"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={styles.dscArrow}
+                        >
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </div>
+                    </th>
+
+                    <th
+                      onClick={() => requestSort("class")}
+                      className={getClassNamesFor("class")}
+                    >
+                      <div>
+                        <h4>Class</h4>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="1em"
+                          height="1em"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={styles.ascArrow}
+                        >
+                          <path d="M18 15l-6-6-6 6" />
+                        </svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="1em"
+                          height="1em"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={styles.dscArrow}
+                        >
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </div>
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filteredAssignments.map((assignment) => (
+                    <tr key={assignment.id}>
+                      <td>{assignment.title}</td>
+                      <td className={styles.linkCell}>
+                        <a href={assignment.link} target="_blank">
+                          {assignment.link}
+                        </a>
+                      </td>
+                      <td className={overDueCheck(assignment.due_date)}>
+                        {assignment.due_date}
+                      </td>
+                      <td>{assignment.class}</td>
+                      <td>
+                        <div className={styles.tableButtons}>
+                          <button
+                            onClick={() => deleteAssignment(assignment.id)}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>{" "}
+                          </button>
+                          <button onClick={() => editAssignment(assignment.id)}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
+                              <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
+                            </svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
           {showNewMenu && (
             <NewAssignmentMenu
