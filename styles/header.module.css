@@ -6,7 +6,8 @@
     border-bottom: 2px solid var(--text);
     height: 10vh;
 }
-.title, .nav {
+.title,
+.nav {
     display: flex;
     align-items: center;
 }
@@ -49,6 +50,9 @@
         cursor: pointer;
     }
     .nav img:hover {
+        cursor: pointer;
+    }
+    .settings:hover {
         cursor: pointer;
     }
 }

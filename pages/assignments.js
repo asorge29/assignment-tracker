@@ -95,13 +95,14 @@ export default function Assignments({}) {
     setSelectedClasses((prev) =>
       prev.includes(className)
         ? prev.filter((name) => name !== className)
-        : [...prev, className]
+        : [...prev, className],
     );
   };
 
   const filteredAssignments = sortedAssignments.filter(
     (assignment) =>
-      selectedClasses.length === 0 || selectedClasses.includes(assignment.class)
+      selectedClasses.length === 0 ||
+      selectedClasses.includes(assignment.class),
   );
 
   const getClassNamesFor = (name) => {
@@ -125,7 +126,7 @@ export default function Assignments({}) {
     <>
       <Head>
         <title>
-          {session && session.user.name.split(" ")[0]}'s Assignments
+          {session && session.user.name.split(" ")[0] + "'s "}Assignments
         </title>
       </Head>
       <main>
@@ -222,7 +223,7 @@ export default function Assignments({}) {
                     </div>
                   </th>
                   <th>
-                      <h4>Link</h4>
+                    <h4>Link</h4>
                   </th>
                   <th
                     onClick={() => requestSort("due_date")}
@@ -303,7 +304,7 @@ export default function Assignments({}) {
                 {filteredAssignments.map((assignment) => (
                   <tr key={assignment.id}>
                     <td>{assignment.title}</td>
-                    <td>
+                    <td className={styles.linkCell}>
                       <a href={assignment.link} target="_blank">
                         {assignment.link}
                       </a>

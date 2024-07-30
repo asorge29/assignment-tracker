@@ -3,7 +3,8 @@
     width: 100%;
     font-size: large;
 }
-.table td, .table th {
+.table td,
+.table th {
     border: 2px solid var(--text);
     padding: 4px;
     text-align: center;
@@ -22,7 +23,8 @@
     border-collapse: collapse;
     width: 100%;
 }
-.classesTable th, .classesTable td {
+.classesTable th,
+.classesTable td {
     border: 2px solid var(--text);
     text-align: center;
 }
@@ -54,8 +56,15 @@
 .sortedDesc .dscArrow {
     display: inline;
 }
-.ascArrow, .dscArrow {
+.ascArrow,
+.dscArrow {
     display: none;
+}
+.linkCell {
+    max-width: 10vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .classInput {
     font-family: var(--font);
@@ -86,7 +95,7 @@
     justify-content: center;
 }
 .overdue {
-    background-color: red;
+    background-color: var(--overdue);
 }
 @media (pointer: fine) {
     .headerRow th:hover {
