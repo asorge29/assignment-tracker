@@ -2,6 +2,7 @@
     border-collapse: collapse;
     width: 100%;
     font-size: large;
+    table-layout: auto;
 }
 .table td,
 .table th {
@@ -88,11 +89,17 @@
     justify-content: space-between;
     gap: 10px;
 }
-.tableButtons {
-    display: flex;
-    flex-direction: row;
-    gap: 4px;
-    justify-content: center;
+.buttonCell {
+    position: relative;
+    height: 0;
+    white-space: nowrap;
+    width: 0;
+}
+.tableButton {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 0.5ch;
 }
 .overdue {
     background-color: var(--overdue);
@@ -114,6 +121,9 @@
         cursor: pointer;
     }
     .button {
+        cursor: pointer;
+    }
+    .tableButton:hover {
         cursor: pointer;
     }
 }

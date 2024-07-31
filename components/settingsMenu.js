@@ -1,7 +1,22 @@
 import styles from "@/styles/settingsMenu.module.css";
-import { queryDb } from "@/lib/queryDb";
 
-export default function SettingsMenu({ closeMethod }) {
+const updateSettings = (e, settings, setSettings) => {
+  const id = e.target.id;
+  const type = e.target.type;
+  let value;
+  if (type === "checkbox") {
+    value = e.target.checked;
+  } else {
+    value = e.target.value;
+  }
+  const updatedSettings = {
+    ...settings,
+    [id]: value,
+  };
+  setSettings(updatedSettings);
+};
+
+export default function SettingsMenu({ closeMethod, settings, setSettings }) {
   return (
     <div className={styles.fullScreen}>
       <div className={styles.menu}>
@@ -21,14 +36,28 @@ export default function SettingsMenu({ closeMethod }) {
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
-        <form onSubmit={(e) => console.log(e)} className={styles.form}>
+        <form
+          onChange={(e) => updateSettings(e, settings, setSettings)}
+          className={styles.form}
+        >
           <div>
             <label htmlFor="highlight">Show Overdue Highlights:</label>
-            <input type="checkbox" id="highlight" name="highlight" />
+            <input
+              type="checkbox"
+              id="highlight"
+              name="highlight"
+              checked={settings.highlight}
+            />
           </div>
           <div>
             <label htmlFor="highlightColor">Overdue Highlight Color:</label>
-            <input type="color" id="highlightColor" name="highlightColor" />
+            <input
+              type="color"
+              id="highlightColor"
+              name="highlightColor"
+              value={settings.highlightColor}
+              className={styles.colorInput}
+            />
           </div>
         </form>
       </div>

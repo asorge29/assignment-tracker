@@ -60,3 +60,16 @@
 .form h2 {
     font-size: xx-large;
 }
+.colorInput {
+    padding: 0 !important;
+    width: 1.2em;
+    height: 1.2em;
+}
+@media (pointer: fine) {
+    .closeBtn:hover {
+        cursor: pointer;
+    }
+    .form input:hover {
+        cursor: pointer;
+    }
+}

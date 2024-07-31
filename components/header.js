@@ -6,7 +6,7 @@ import { useState } from "react";
 import ProfileMenu from "./profileMenu";
 import SettingsMenu from "./settingsMenu";
 
-export default function Header({ session, active }) {
+export default function Header({ session, active, settings, setSettings }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const router = useRouter();
@@ -62,7 +62,11 @@ export default function Header({ session, active }) {
       </div>
       {menuOpen && <ProfileMenu session={session} />}
       {settingsOpen && (
-        <SettingsMenu closeMethod={() => setSettingsOpen(false)} />
+        <SettingsMenu
+          closeMethod={() => setSettingsOpen(false)}
+          settings={settings}
+          setSettings={setSettings}
+        />
       )}
     </>
   );

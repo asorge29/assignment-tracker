@@ -16,6 +16,22 @@ export default function Assignments({}) {
     direction: "ascending",
   });
   const [selectedClasses, setSelectedClasses] = useState([]);
+  const [settings, setSettings] = useState({});
+  const [loadedSettings, setLoadedSettings] = useState(false);
+
+  useEffect(() => {
+    const storedSettings = localStorage.getItem("settings");
+    if (storedSettings) {
+      const parsedSettings = JSON.parse(storedSettings);
+      setSettings(parsedSettings);
+    }
+    setLoadedSettings(true);
+  }, []);
+
+  useEffect(() => {
+    loadedSettings &&
+      localStorage.setItem("settings", JSON.stringify(settings));
+  }, [settings]);
 
   useEffect(() => {
     const query = `SELECT * FROM assignments WHERE email = "${
@@ -130,7 +146,12 @@ export default function Assignments({}) {
         </title>
       </Head>
       <main>
-        <Header session={session} active="assignments" />
+        <Header
+          session={session}
+          active="assignments"
+          settings={settings}
+          setSettings={setSettings}
+        />
         <div className={styles.container}>
           <div className={styles.classes}>
             <h2>Classes</h2>
@@ -310,47 +331,49 @@ export default function Assignments({}) {
                           {assignment.link}
                         </a>
                       </td>
-                      <td className={overDueCheck(assignment.due_date)}>
+                      <td
+                        style={
+                          settings.highlight
+                            ? { backgroundColor: settings.highlightColor }
+                            : {}
+                        }
+                      >
                         {assignment.due_date}
                       </td>
                       <td>{assignment.class}</td>
-                      <td>
-                        <div className={styles.tableButtons}>
-                          <button
-                            onClick={() => deleteAssignment(assignment.id)}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                            </svg>{" "}
-                          </button>
-                          <button onClick={() => editAssignment(assignment.id)}>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
-                              <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
-                            </svg>
-                          </button>
-                        </div>
+                      <td className={styles.buttonCell}>
+                        <svg
+                          onClick={() => deleteAssignment(assignment.id)}
+                          className={styles.tableButton}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>{" "}
+                        <svg
+                          onClick={() => editAssignment(assignment.id)}
+                          className={styles.tableButton}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
+                          <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
+                        </svg>
                       </td>
                     </tr>
                   ))}
