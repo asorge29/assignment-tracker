@@ -7,12 +7,14 @@ import Header from "@/components/header";
 import NewAssignmentMenu from "@/components/newAssignmentMenu";
 import ClassTable from "@/components/classTable";
 import AssignmentsTable from "@/components/assignmentsTable";
+import EditMenu from "@/components/editMenu";
 
 export default function Assignments({}) {
   const { data: session } = useSession();
   const [assignments, setAssignments] = useState([]);
   const [classes, setClasses] = useState([]);
   const [showNewMenu, setShowNewMenu] = useState(false);
+  const [showEditMenu, setShowEditMenu] = useState(false);
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
@@ -20,6 +22,7 @@ export default function Assignments({}) {
   const [selectedClasses, setSelectedClasses] = useState([]);
   const [settings, setSettings] = useState({});
   const [loadedSettings, setLoadedSettings] = useState(false);
+  const [selectedAssignment, setSelectedAssignment] = useState(0);
 
   useEffect(() => {
     const storedSettings = localStorage.getItem("settings");
@@ -172,6 +175,8 @@ export default function Assignments({}) {
                 sortConfig={sortConfig}
                 session={session}
                 setAssignments={setAssignments}
+                updateEditMenu={() => setShowEditMenu(true)}
+                assignmentSelector={setSelectedAssignment}
               />
             </div>
           </div>
@@ -181,6 +186,15 @@ export default function Assignments({}) {
               classes={classes}
               closeMethod={() => setShowNewMenu(false)}
               updateMethod={setAssignments}
+            />
+          )}
+          {showEditMenu && (
+            <EditMenu
+              session={session}
+              classes={classes}
+              closeMethod={() => setShowEditMenu(false)}
+              updateMethod={setAssignments}
+              assignment={selectedAssignment}
             />
           )}
         </div>

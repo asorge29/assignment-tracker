@@ -9,6 +9,8 @@ export default function AssignmentsTable({
   sortConfig,
   session,
   setAssignments,
+  updateEditMenu,
+  assignmentSelector,
 }) {
   const overDueCheck = (date) => {
     const today = new Date();
@@ -209,7 +211,10 @@ export default function AssignmentsTable({
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>{" "}
               <svg
-                onClick={() => editAssignment(assignment.id)}
+                onClick={() => {
+                  updateEditMenu();
+                  assignmentSelector(assignment);
+                }}
                 className={styles.tableButton}
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
