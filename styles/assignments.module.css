@@ -1,15 +1,3 @@
-.table {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: large;
-    table-layout: auto;
-}
-.table td,
-.table th {
-    border: 2px solid var(--text);
-    padding: 4px;
-    text-align: center;
-}
 .container {
     display: flex;
     flex-direction: row;
@@ -19,15 +7,6 @@
     border-right: 2px solid var(--text);
     width: 20vw;
     padding: 1vw;
-}
-.classesTable {
-    border-collapse: collapse;
-    width: 100%;
-}
-.classesTable th,
-.classesTable td {
-    border: 2px solid var(--text);
-    text-align: center;
 }
 .assignments {
     padding: 0 1vw;
@@ -40,32 +19,6 @@
 }
 .toolbar button {
     height: min-content;
-}
-.headerRow th div {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-}
-.headerRow h4 {
-    margin: 0;
-    user-select: none;
-}
-.sortedAsc .ascArrow {
-    display: inline;
-}
-.sortedDesc .dscArrow {
-    display: inline;
-}
-.ascArrow,
-.dscArrow {
-    display: none;
-}
-.linkCell {
-    max-width: 10vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 .classInput {
     font-family: var(--font);
@@ -89,21 +42,7 @@
     justify-content: space-between;
     gap: 10px;
 }
-.buttonCell {
-    position: relative;
-    height: 0;
-    white-space: nowrap;
-    width: 0;
-}
-.tableButton {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0 0.5ch;
-}
-.overdue {
-    background-color: var(--overdue);
-}
+
 @media (max-width: 768px) {
     .classes {
         display: none;
@@ -117,13 +56,7 @@
     }
 }
 @media (pointer: fine) {
-    .headerRow th:hover {
-        cursor: pointer;
-    }
     .button {
-        cursor: pointer;
-    }
-    .tableButton:hover {
         cursor: pointer;
     }
 }

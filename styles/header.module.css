@@ -38,6 +38,7 @@
     font-family: var(--font);
     color: var(--text);
     font-size: x-large;
+    border-color: var(--text);
 }
 .active {
     text-decoration: underline !important;

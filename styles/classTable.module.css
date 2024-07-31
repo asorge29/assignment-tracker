@@ -1,0 +1,9 @@
+.classesTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+.classesTable th,
+.classesTable td {
+    border: 2px solid var(--text);
+    text-align: center;
+}
