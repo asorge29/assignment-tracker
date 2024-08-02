@@ -15,10 +15,6 @@ export default function Assignments({}) {
   const [classes, setClasses] = useState([]);
   const [showNewMenu, setShowNewMenu] = useState(false);
   const [showEditMenu, setShowEditMenu] = useState(false);
-  const [sortConfig, setSortConfig] = useState({
-    key: null,
-    direction: "ascending",
-  });
   const [selectedClasses, setSelectedClasses] = useState([]);
   const [settings, setSettings] = useState({});
   const [loadedSettings, setLoadedSettings] = useState(false);
@@ -71,33 +67,6 @@ export default function Assignments({}) {
     e.target.reset();
   };
 
-  const sortedAssignments = [...assignments].sort((a, b) => {
-    const aValue =
-      typeof a[sortConfig.key] === "string"
-        ? a[sortConfig.key].toLowerCase()
-        : a[sortConfig.key];
-    const bValue =
-      typeof b[sortConfig.key] === "string"
-        ? b[sortConfig.key].toLowerCase()
-        : b[sortConfig.key];
-
-    if (aValue < bValue) {
-      return sortConfig.direction === "ascending" ? -1 : 1;
-    }
-    if (aValue > bValue) {
-      return sortConfig.direction === "ascending" ? 1 : -1;
-    }
-    return 0;
-  });
-
-  const requestSort = (key) => {
-    let direction = "ascending";
-    if (sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending";
-    }
-    setSortConfig({ key, direction });
-  };
-
   const handleCheckboxChange = (className) => {
     setSelectedClasses((prev) =>
       prev.includes(className)
@@ -106,7 +75,7 @@ export default function Assignments({}) {
     );
   };
 
-  const filteredAssignments = sortedAssignments.filter(
+  const filteredAssignments = assignments.filter(
     (assignment) =>
       selectedClasses.length === 0 ||
       selectedClasses.includes(assignment.class),
@@ -171,8 +140,6 @@ export default function Assignments({}) {
               <AssignmentsTable
                 filteredAssignments={filteredAssignments}
                 settings={settings}
-                requestSort={requestSort}
-                sortConfig={sortConfig}
                 session={session}
                 setAssignments={setAssignments}
                 updateEditMenu={() => setShowEditMenu(true)}
