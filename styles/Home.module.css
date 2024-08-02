@@ -1,0 +1,23 @@
+.main {
+    position: relative;
+}
+.welcomeWrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.welcomeMsg {
+    font-size: xx-large;
+    display: inline;
+}
+.welcomeMsg::after {
+    background: #f00;
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(236,255,0,1) 12%, rgba(120,255,0,1) 21%, rgba(0,255,63,1) 30%, rgba(116,255,0,1) 39%, rgba(0,219,255,1) 50%, rgba(0,104,255,1) 62%, rgba(50,0,255,1) 76%, rgba(161,0,247,1) 89%, rgba(255,0,241,1) 100%);
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+}
