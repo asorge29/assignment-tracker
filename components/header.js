@@ -26,7 +26,7 @@ export default function Header({ session, active, settings, setSettings }) {
           >
             Assignments
           </Link>
-          {session && (
+          {session && active === 'assignments' && (
             <svg
               onClick={() => setSettingsOpen(!settingsOpen)}
               className={styles.settings}

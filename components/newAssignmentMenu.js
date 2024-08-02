@@ -27,7 +27,20 @@ export default function NewAssignmentMenu({ session, classes, closeMethod, updat
   return (
     <div className={styles.fullScreen}>
       <div className={styles.menu}>
-        <button className={styles.closeBtn} onClick={closeMethod}>X</button>
+        <button className={styles.closeBtn} onClick={closeMethod}><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg></button>
         <form onSubmit={(e) => newAssignment(e, session)} className={styles.form}>
           <h2>Add New Assignment</h2>
           <div>

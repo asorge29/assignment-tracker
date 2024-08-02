@@ -7,3 +7,8 @@
     border: 2px solid var(--text);
     text-align: center;
 }
+@media (pointer: fine) {
+    .classesTable input:hover {
+        cursor: pointer;
+    }
+}

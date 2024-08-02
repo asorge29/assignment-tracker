@@ -76,14 +76,11 @@ export default function AssignmentsTable({
         : b[sortConfig.key];
 
     if (aValue < bValue) {
-      console.log("a is less than b");
       return sortConfig.direction === "ascending" ? -1 : 1;
     }
     if (aValue > bValue) {
-      console.log("a is greater than b");
       return sortConfig.direction === "ascending" ? 1 : -1;
     }
-    console.log("a is equal to b");
     return 0;
   });
 
