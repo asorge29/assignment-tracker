@@ -25,6 +25,8 @@ export default function Assignments({}) {
     if (storedSettings) {
       const parsedSettings = JSON.parse(storedSettings);
       setSettings(parsedSettings);
+    } else {
+      setSettings({"highlight": true, "highlightColor": "#ff0000"});
     }
     setLoadedSettings(true);
   }, []);
@@ -65,6 +67,20 @@ export default function Assignments({}) {
         .catch((error) => console.error(error));
     });
     e.target.reset();
+  };
+
+  const deleteClass = (e) => {
+    e.preventDefault();
+    const id = e.target.className.value;
+    const query = `DELETE FROM classes WHERE id = "${id}" AND email = "${session?.user?.email}"`;
+    queryDb(query).then(() => {
+      const query = `SELECT * FROM classes WHERE email = "${
+        session?.user?.email || ""
+      }"`;
+      queryDb(query)
+        .then((data) => setClasses(data.results))
+        .catch((error) => console.error(error));
+    });
   };
 
   const handleCheckboxChange = (className) => {
@@ -119,6 +135,24 @@ export default function Assignments({}) {
                   />
                   <button type="submit" className={styles.button}>
                     Add
+                  </button>
+                </form>
+              </div>
+            )}
+            {session && (
+              <div>
+                <h3>Delete a class:</h3>
+                <form
+                  className={styles.classForm}
+                  onSubmit={(e) => deleteClass(e)}
+                >
+                  <select name="className" className={styles.classInput}>
+                    {classes.map((className) => (
+                      <option value={className.id}>{className.name}</option>
+                    ))}
+                  </select>
+                  <button type="submit" className={styles.button}>
+                    Delete
                   </button>
                 </form>
               </div>
