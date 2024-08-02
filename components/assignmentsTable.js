@@ -1,17 +1,30 @@
 import styles from "@/styles/assignmentsTable.module.css";
 import { queryDb } from "@/lib/queryDb";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function AssignmentsTable({
   filteredAssignments,
-  requestSort,
   settings,
-  sortConfig,
   session,
   setAssignments,
   updateEditMenu,
   assignmentSelector,
 }) {
+
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: "ascending",
+  });
+
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
   const overDueCheck = (date) => {
     const today = new Date();
     const dueDate = new Date(`${date}T23:59:59`);
@@ -52,7 +65,29 @@ export default function AssignmentsTable({
     );
   }
 
-  if (filteredAssignments.length === 0) {
+  const sortedAssignments = [...filteredAssignments].sort((a, b) => {
+    const aValue =
+      typeof a[sortConfig.key] === "string"
+        ? a[sortConfig.key].toLowerCase()
+        : a[sortConfig.key];
+    const bValue =
+      typeof b[sortConfig.key] === "string"
+        ? b[sortConfig.key].toLowerCase()
+        : b[sortConfig.key];
+
+    if (aValue < bValue) {
+      console.log("a is less than b");
+      return sortConfig.direction === "ascending" ? -1 : 1;
+    }
+    if (aValue > bValue) {
+      console.log("a is greater than b");
+      return sortConfig.direction === "ascending" ? 1 : -1;
+    }
+    console.log("a is equal to b");
+    return 0;
+  });
+
+  if (sortedAssignments.length === 0) {
     return <h3>Create some assignments to get started!</h3>;
   }
 
@@ -175,7 +210,7 @@ export default function AssignmentsTable({
         </tr>
       </thead>
       <tbody>
-        {filteredAssignments.map((assignment) => (
+        {sortedAssignments.map((assignment) => (
           <tr key={assignment.id}>
             <td>{assignment.title}</td>
             <td className={styles.linkCell}>
