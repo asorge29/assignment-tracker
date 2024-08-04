@@ -12,8 +12,8 @@ import GithubLoginBtn from "@/components/githubLoginBtn"
 
 export default function Page() {
   return (
-    <main className="flex items-center justify-center w-screen h-screen dark:bg-slate-800">
-      <Card className="dark:bg-slate-800">
+    <main className="flex items-center justify-center w-screen h-screen">
+      <Card className="">
         <CardHeader>
           <CardTitle className="text-center">Sign in to Assignment Tracker</CardTitle>
           {/*<CardDescription className="text-center">Select your prefered method of authentication, assignments will sync to any accounts with the same email address.</CardDescription>*/}
