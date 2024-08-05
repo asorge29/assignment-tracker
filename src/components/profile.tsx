@@ -28,10 +28,6 @@ export default function Profile() {
     );
   }
 
-  if (status === "loading") {
-    return <Skeleton className="w-10 h-10 rounded-full" />;
-  }
-
   return (
     <div className="relative">
       <Avatar
