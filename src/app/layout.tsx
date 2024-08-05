@@ -22,6 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Header />
             {children}
           </ThemeProvider>
         </SessionProvider>
