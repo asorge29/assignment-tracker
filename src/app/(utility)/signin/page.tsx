@@ -11,6 +11,8 @@ import { auth } from "@/auth"
 import GoogleLoginBtn from "@/components/googleLoginBtn"
 import GithubLoginBtn from "@/components/githubLoginBtn"
 
+export const runtime = 'edge'
+
 export default async function Page() {
   const session = await auth()
 
