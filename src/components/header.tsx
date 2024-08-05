@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ModeToggle } from "./modeToggle";
 
 export default async function Header({}) {
 
@@ -9,6 +10,7 @@ export default async function Header({}) {
         <Link href="/" className="text-2xl hover:underline">Home</Link>
         <Link href="/about" className="text-2xl hover:underline">About</Link>
         <Link href="/assignments" className="text-2xl hover:underline">Assignments</Link>
+        <ModeToggle />
       </div>
     </div>
   );
