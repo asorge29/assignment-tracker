@@ -1,4 +1,5 @@
 export type Assignment = {
+  id: number
   email: string
   title: string
   link: string

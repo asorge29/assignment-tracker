@@ -1,4 +1,4 @@
-import Assignments from "@/components/assignments";
+import Assignments from "./assignments";
 
 export default function Page() {
   return (

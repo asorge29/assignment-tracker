@@ -3,8 +3,9 @@
 import { getAssignments } from "@/lib/getAssignments";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, Suspense } from "react";
-import AssignmentsTable from "./assignmentsTable";
+import { DataTable } from "@/components/dataTable";
 import { Assignment } from "@/types/assignment";
+import { columns } from "./columns";
 
 export default function Assignments() {
   const { data: session, status } = useSession();
@@ -26,7 +27,7 @@ export default function Assignments() {
 
   return (
     <div>
-      <AssignmentsTable assignments={assignments} />
+      <DataTable data={assignments} columns={columns} />
       
     </div>
   );
