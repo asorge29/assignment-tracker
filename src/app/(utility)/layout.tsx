@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <SessionProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             {children}
           </ThemeProvider>
         </SessionProvider>
