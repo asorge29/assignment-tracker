@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { deleteAssignment } from "@/lib/deleteAssignment";
 
 export const columns: ColumnDef<Assignment>[] = [
   {
@@ -107,7 +108,7 @@ export const columns: ColumnDef<Assignment>[] = [
             <DropdownMenuItem
               className="cursor-pointer"
               onClick={() =>
-                console.log(`Assignment #${assignment.id} is complete!`)
+                deleteAssignment(assignment.id)
               }
             >
               <Check className="mr-2 text-green-500" />
