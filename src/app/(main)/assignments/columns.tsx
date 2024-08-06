@@ -42,7 +42,7 @@ export const columns: ColumnDef<Assignment>[] = [
           {link}
         </a>
       );
-    }
+    },
   },
   {
     accessorKey: "due_date",
@@ -105,6 +105,7 @@ export const columns: ColumnDef<Assignment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
+              className="cursor-pointer"
               onClick={() =>
                 console.log(`Assignment #${assignment.id} is complete!`)
               }
@@ -112,12 +113,12 @@ export const columns: ColumnDef<Assignment>[] = [
               <Check className="mr-2 text-green-500" />
               <span className="text-green-500">Complete!</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
               <Pencil className="mr-2" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
               <Trash2 className="mr-2 text-red-500" />
               <span className="text-red-500">Delete</span>
             </DropdownMenuItem>

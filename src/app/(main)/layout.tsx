@@ -9,7 +9,8 @@ const font = Poppins({ weight: ["400", "600", "700"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Assignment Tracker",
-  description: "A simple web app designed to help students keep track of their assignments.",
+  description:
+    "A simple web app designed to help students keep track of their assignments.",
 };
 
 export default function RootLayout({
@@ -19,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body className={font.className + " flex flex-col h-screen"}>
         <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Header />
