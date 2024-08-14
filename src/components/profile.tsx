@@ -47,7 +47,7 @@ export default function Profile() {
         </AvatarFallback>
       </Avatar>
       {isOpen && (
-        <Card className="absolute top-40p right-0 mt-2">
+        <Card className="absolute top-40p right-0 mt-2 z-40">
           <CardHeader className="flex flex-row items-center justify-center">
           <Avatar className="h-24 w-24">
               <AvatarImage

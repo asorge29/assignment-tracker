@@ -18,8 +18,15 @@ export default function Assignments() {
         setAssignments(fetchedAssignments);
       }
     }
-    fetchAssignments();
+    const promise = fetchAssignments()
   }, [session]);
+
+  const refetchAssignments = async () => {
+    if (session?.user?.email) {
+      const fetchedAssignments = await getAssignments(session.user.email);
+      setAssignments(fetchedAssignments);
+    }
+  };
 
   if (status === "loading") {
     return <div>Loading...</div>;
@@ -27,8 +34,7 @@ export default function Assignments() {
 
   return (
     <div>
-      <DataTable data={assignments} columns={columns} />
-      
+      <DataTable data={assignments} columns={columns(refetchAssignments)}/>
     </div>
   );
 }

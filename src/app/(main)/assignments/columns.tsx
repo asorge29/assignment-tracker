@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { deleteAssignment } from "@/lib/deleteAssignment";
 
-export const columns: ColumnDef<Assignment>[] = [
+export const columns = (refetchAssignments: () => void): ColumnDef<Assignment>[] => [
   {
     accessorKey: "title",
     header: ({ column }) => {
@@ -107,8 +107,10 @@ export const columns: ColumnDef<Assignment>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               className="cursor-pointer"
-              onClick={() =>
-                deleteAssignment(assignment.id)
+              onClick={ async () => {
+                await deleteAssignment(assignment.id);
+                refetchAssignments();
+              }
               }
             >
               <Check className="mr-2 text-green-500" />
@@ -119,7 +121,11 @@ export const columns: ColumnDef<Assignment>[] = [
               Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem className="cursor-pointer" onClick={ async () => {
+              await deleteAssignment(assignment.id);
+              refetchAssignments();
+            }
+            }>
               <Trash2 className="mr-2 text-red-500" />
               <span className="text-red-500">Delete</span>
             </DropdownMenuItem>
