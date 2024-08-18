@@ -8,10 +8,6 @@ export default function Page() {
         <h2 className="text-3xl">Classes</h2>
       </div>
       <div className="p-4 w-full">
-        <div className="flex flex-row justify-between mb-4">
-          <h2 className="text-3xl">Assignments</h2>
-          <Button>Create Assignment</Button>
-        </div>
         <Assignments/>
       </div>
     </div>
