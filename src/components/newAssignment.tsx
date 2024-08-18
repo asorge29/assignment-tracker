@@ -36,8 +36,8 @@ export default function NewAssignment({ classes }: { classes: string[] }) {  ret
           <div className='flex flex-row gap-4 justify-center items-center'>
             <label htmlFor="class" className='text-lg'>Class:</label>
             <select id="class" name="class" className='rounded text-lg'>
-              {classes.map((item) => (
-                <option value={item}>{item}</option>
+              {classes.map((item, index) => (
+                <option key={index} value={item}>{item}</option>
               ))}
             </select>
           </div>
