@@ -1,11 +1,13 @@
 import Assignments from "./assignments";
+import Classes from "./classes";
 import {Button} from "@/components/ui/button";
 
 export default function Page() {
   return (
     <div className="flex flex-row h-full">
-      <div className="border-r w-1/5 p-4">
+      <div className="border-r min-w-1/5 p-4">
         <h2 className="text-3xl">Classes</h2>
+        <Classes/>
       </div>
       <div className="p-4 w-full">
         <Assignments/>
