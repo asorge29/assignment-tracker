@@ -43,12 +43,11 @@ export default function Classes() {
     }
 
     const promise = fetchAssignments()
-  }
+  }, [session]);
 
   const countAssignments = (classId: number): string => {
-    return assignments.filter((assignment: Assignment) => assignment.class == classId).length.toString()
+    return assignments.filter((assignment: Assignment) => assignment.class === classId).length.toString()
   }
-
   return (
     <div>
       <Table>
