@@ -4,5 +4,5 @@ export type Assignment = {
   title: string
   link: string
   due_date: string
-  class: string
+  class: number
 }

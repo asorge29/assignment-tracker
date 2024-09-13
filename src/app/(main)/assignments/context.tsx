@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext } from "react";
 import { Class } from "@/types/class";
 import { Assignment } from "@/types/assignment";
 
@@ -20,7 +20,9 @@ const Context = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const useClassesContext = () => useContext(classContext);
-const useAssignmentsContext = () => useContext(assignmentContext);
+// @ts-ignore
+const useClassesContext = (): {classes: Class[], setClasses: (classes: Class[]) => void} => useContext(classContext);
+// @ts-ignore
+const useAssignmentsContext = (): {assignments: Assignment[], setAssignments: (assignments: Assignment[]) => void} => useContext(assignmentContext);
 
 export { Context, useClassesContext, useAssignmentsContext };
