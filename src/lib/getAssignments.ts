@@ -1,6 +1,7 @@
+import { Assignment } from "@/types/assignment";
 import { queryDb } from "./queryDb";
 
-export async function getAssignments(userEmail: string): Promise<any[]> {
+export async function getAssignments(userEmail: string): Promise<Assignment[]> {
   const query = `SELECT * FROM assignments WHERE email = "${userEmail}"`
   
   try {

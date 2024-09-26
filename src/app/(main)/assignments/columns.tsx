@@ -2,6 +2,7 @@
 
 import {ColumnDef} from "@tanstack/react-table";
 import {Assignment} from "@/types/assignment";
+import {Class} from "@/types/class";
 import {ArrowUpDown, Check, MoreHorizontal, Pencil, Trash2} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {
@@ -14,7 +15,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {deleteAssignment} from "@/lib/deleteAssignment";
 
-export const columns = (refetchAssignments: () => void): ColumnDef<Assignment>[] => [
+export const columns = (refetchAssignments: () => void, classes: Class[]): ColumnDef<Assignment>[] => [
+
+
   {
     accessorKey: "title",
     header: ({column}) => {
@@ -39,7 +42,7 @@ export const columns = (refetchAssignments: () => void): ColumnDef<Assignment>[]
     cell: ({row}) => {
       const link = row.getValue("link") as string;
       return (
-        <a href={link} target="_blank" rel="noopener noreferrer">
+        <a href={link} target="_blank" rel="noopener noreferrer" className="hover:underline hover:decoration-white duration-200 decoration-transparent">
           {link}
         </a>
       );
@@ -62,6 +65,7 @@ export const columns = (refetchAssignments: () => void): ColumnDef<Assignment>[]
     cell: ({row}) => {
       const date = new Date(`${row.getValue("due_date")}T23:59:59`);
       const formatted = new Intl.DateTimeFormat("en-US", {
+        weekday: "long",
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -91,6 +95,11 @@ export const columns = (refetchAssignments: () => void): ColumnDef<Assignment>[]
         </Button>
       );
     },
+    cell: ({row}) => {
+      const classId = row.getValue("class") as number;
+      const className = classes.find((c: Class) => c.id === classId)?.name;
+      return <div>{className}</div>;
+    }
   },
   {
     id: "actions",

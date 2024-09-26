@@ -8,7 +8,6 @@ export async function queryDb(query: string) {
       },
       body: JSON.stringify({ query }),
     });
-    console.log(response);
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
