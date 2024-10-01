@@ -22,7 +22,7 @@ export default function Home() {
           <TableHeader>
             <TableRow>
               <TableHead>Things the Assignment Tracker Will Do</TableHead>
-              <TableHead>Things the Assignment Tracker Won't Do</TableHead>
+              <TableHead>Things the Assignment Tracker Won&apos;t Do</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
