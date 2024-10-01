@@ -1,6 +1,5 @@
 import Assignments from "./assignments";
 import Classes from "./classes";
-import { Button } from "@/components/ui/button";
 import { Context } from "./context";
 
 export default function Page() {

@@ -15,8 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {deleteAssignment} from "@/lib/deleteAssignment";
 
-export const columns = (refetchAssignments: () => void, classes: Class[]): ColumnDef<Assignment>[] => [
-
+export const columns = (refetchAssignments: () => void, classes: Class[], openEditAssignment: (assignment: Assignment) => void): ColumnDef<Assignment>[] => [
 
   {
     accessorKey: "title",
@@ -42,7 +41,8 @@ export const columns = (refetchAssignments: () => void, classes: Class[]): Colum
     cell: ({row}) => {
       const link = row.getValue("link") as string;
       return (
-        <a href={link} target="_blank" rel="noopener noreferrer" className="hover:underline hover:decoration-white duration-200 decoration-transparent">
+        <a href={link} target="_blank" rel="noopener noreferrer"
+           className="hover:underline hover:decoration-black dark:hover:decoration-white duration-200 decoration-transparent">
           {link}
         </a>
       );
@@ -128,7 +128,13 @@ export const columns = (refetchAssignments: () => void, classes: Class[]): Colum
                 <Check className="mr-2 text-green-500"/>
                 <span className="text-green-500">Complete!</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => {
+                  openEditAssignment(assignment);
+                }
+                }
+              >
                 <Pencil className="mr-2"/>
                 Edit
               </DropdownMenuItem>

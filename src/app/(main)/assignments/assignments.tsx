@@ -1,25 +1,29 @@
 'use client';
 
-import {getAssignments} from "@/lib/getAssignments";
 import {useSession} from "next-auth/react";
-import {useEffect, useState, Suspense} from "react";
 import {DataTable} from "@/components/dataTable";
 import {Assignment} from "@/types/assignment";
 import {columns} from "./columns";
-import {Button} from "@/components/ui/button";
 import NewAssignment from "@/components/newAssignment";
-import {Class} from "@/types/class";
-import {queryDb} from "@/lib/queryDb";
-import { Context, useAssignmentsContext, useClassesContext } from "./context"
+import { useAssignmentsContext, useClassesContext } from "./context";
+import EditAssignment from "@/components/editAssignment";
+import {useState} from "react";
 
 export default function Assignments() {
   const {data: session, status} = useSession();
   const {assignments, setAssignments, refetchAssignments} = useAssignmentsContext();
   const {classes, setClasses, refetchClasses} = useClassesContext();
+  const [editMenuOpen, setEditMenuOpen] = useState(false);
+  const [selectedAssignment, setSelectedAssignment] = useState<Assignment>(assignments[0]);
 
   if (status === "loading") {
     return <div>Loading...</div>;
   }
+
+  const openEditAssignment = (assignment: Assignment) => {
+    setSelectedAssignment(assignment);
+    setEditMenuOpen(true);
+  };
 
   return (
     <div>
@@ -28,8 +32,9 @@ export default function Assignments() {
         <NewAssignment classes={classes} session={session} refetchAssignments={refetchAssignments}/>
       </div>
       <div>
-        <DataTable data={assignments} columns={columns(refetchAssignments, classes)}/>
+        <DataTable data={assignments} columns={columns(refetchAssignments, classes, openEditAssignment)}/>
       </div>
+      {selectedAssignment && <EditAssignment assignment={selectedAssignment} isOpen={editMenuOpen} setIsOpen={setEditMenuOpen}/>}
     </div>
   );
 }
