@@ -24,6 +24,8 @@ import {useClassesContext, useAssignmentsContext} from "@/app/(main)/assignments
 import {Assignment} from "@/types/assignment";
 import { Button } from "@/components/ui/button";
 import {useEffect, useState} from "react";
+import { createClass } from "@/lib/createClass";
+import { deleteClass } from "@/lib/deleteClass";
 
 export default function Classes() {
   const {data: session, status} = useSession();
@@ -34,6 +36,32 @@ export default function Classes() {
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  const handleCreateClass = async (e : React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const email = session?.user?.email;
+    
+    if (name && email) {
+      createClass({ name, email }).then(() => {
+        refetchClasses();
+      });
+    }
+  }
+
+  const handleDeleteClass = async (e : React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(e.currentTarget)
+    const formData = new FormData(e.currentTarget);
+    const id = formData.get('id') as string;
+
+    if (id) {
+      deleteClass(id).then(() => {
+        refetchClasses();
+      });
+    }
+  }
 
   const countAssignments = (classId: number): string => {
     return assignments.filter((assignment: Assignment) => assignment.class === classId).length.toString()
@@ -66,7 +94,7 @@ export default function Classes() {
             <DialogHeader>
               <DialogTitle>Create a new class</DialogTitle>
             </DialogHeader>
-            <form className='flex flex-col gap-4'>
+            <form className='flex flex-col gap-4' onSubmit={handleCreateClass}>
               <div className="flex flex-row gap-4 justify-center items-center">
                 <label className='text-lg' htmlFor="name">Class Name:</label>
                 <input type="text" id="name" name="name" className='rounded text-lg border p-0.5'/>
@@ -85,10 +113,10 @@ export default function Classes() {
             <DialogHeader>
               <DialogTitle>Delete a class</DialogTitle>
             </DialogHeader>
-            <form className='flex flex-col gap-4'>
+            <form className='flex flex-col gap-4' onSubmit={handleDeleteClass}>
               <div className="flex flex-row gap-4 justify-center items-center">
                 <label className='text-lg nowrap' htmlFor="name">Class Name:</label>
-                <select className='rounded text-lg border p-0.5'>
+                <select className='rounded text-lg border p-0.5' name='id'>
                   {classes.map((item: Class) => (
                     <option key={item.id} value={item.id}>{item.name}</option>
                   ))}
