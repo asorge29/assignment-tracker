@@ -67,9 +67,9 @@ export default function Classes() {
               <DialogTitle>Create a new class</DialogTitle>
             </DialogHeader>
             <form className='flex flex-col gap-4'>
-              <div className="flex flex-row justify-between">
-                <label htmlFor="name">Class Name</label>
-                <input type="text" id="name" name="name"/>
+              <div className="flex flex-row gap-4 justify-center items-center">
+                <label className='text-lg' htmlFor="name">Class Name:</label>
+                <input type="text" id="name" name="name" className='rounded text-lg border p-0.5'/>
               </div>
               <DialogClose asChild>
                 <Button type="submit" className='hover:bg-green-700 w-full'>Create Class</Button>
@@ -86,9 +86,9 @@ export default function Classes() {
               <DialogTitle>Delete a class</DialogTitle>
             </DialogHeader>
             <form className='flex flex-col gap-4'>
-              <div className="flex flex-row justify-between">
-                <label htmlFor="name">Class Name</label>
-                <select>
+              <div className="flex flex-row gap-4 justify-center items-center">
+                <label className='text-lg nowrap' htmlFor="name">Class Name:</label>
+                <select className='rounded text-lg border p-0.5'>
                   {classes.map((item: Class) => (
                     <option key={item.id} value={item.id}>{item.name}</option>
                   ))}
