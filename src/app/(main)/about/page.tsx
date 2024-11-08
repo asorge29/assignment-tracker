@@ -63,7 +63,7 @@ export default function About() {
                   Make you happy
                 </TableCell>
                 <TableCell>
-                  Solve golbal warming :(
+                  Solve global warming :(
                 </TableCell>
               </TableRow>
             </TableBody>
