@@ -4,6 +4,7 @@ export async function createClass({ name, email }: { name: string, email: string
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'key': process.env.DATABASE_KEY as string,
       },
       body: JSON.stringify({
         query: `insert into classes (name, email) values ('${name}', '${email}')`

@@ -4,6 +4,7 @@ export async function updateAssignment({ id, title, link, dueDate, classId, emai
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'key': process.env.DATABASE_KEY as string,
       },
       body: JSON.stringify({
         query: `UPDATE assignments SET title = "${title}", link = "${link}", due_date = "${dueDate}", class = ${classId} WHERE id = ${id} AND email = "${email}"`,

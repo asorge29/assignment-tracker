@@ -4,6 +4,7 @@ export async function deleteClass(id: string) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'key': process.env.DATABASE_KEY as string,
       },
       body: JSON.stringify({
         query: `delete from classes where id = ${id}`

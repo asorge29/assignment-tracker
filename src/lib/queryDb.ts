@@ -5,6 +5,7 @@ export async function queryDb(query: string) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        'key': process.env.DATABASE_KEY as string,
       },
       body: JSON.stringify({ query }),
     });
