@@ -4,7 +4,6 @@ export const runtime = "edge";
 
 export async function POST(request: Request) {
   try {
-    const key = request.headers.get("key");
     const { query } = await request.json();
 
     const response = await fetch(
@@ -14,7 +13,6 @@ export async function POST(request: Request) {
         body: JSON.stringify({ query }),
         headers: {
           "Content-Type": "application/json",
-          "key": key as string,
         },
       }
     );
