@@ -20,7 +20,6 @@ const Context = ({ children }: { children: React.ReactNode }) => {
       if (session?.user?.email) {
         const fetchedClasses = await getClasses(session.user.email);
         setClasses(fetchedClasses);
-        console.log(fetchedClasses);
       }
     }
 
@@ -32,7 +31,6 @@ const Context = ({ children }: { children: React.ReactNode }) => {
       if (session?.user?.email) {
         const fetchedAssignments = await getAssignments(session.user.email);
         setAssignments(fetchedAssignments);
-        console.log(fetchedAssignments);
       }
     }
 
