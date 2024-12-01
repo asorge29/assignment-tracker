@@ -6,10 +6,10 @@ export default function About() {
 
   return (
     <main className="flex items-center flex-col min-h-screen">
-      <h1 className="text-6xl font-semibold p-4">So you want to know more...</h1>
-      <div className="flex justify-center flex-row w-3/4">
-        <div className="w-1/2 flex-shrink-0 p-4 gap-4 flex flex-col">
-          <h2 className='text-center text-4xl'>What does it do?</h2>
+      <h1 className="md:text-6xl text-3xl text-center font-semibold p-4">So you want to know more...</h1>
+      <div className="flex justify-center md:flex-row flex-col md:w-3/4 w-full">
+        <div className="md:w-1/2 w-full flex-shrink-0 p-4 gap-4 flex flex-col">
+          <h2 className='text-center md:text-4xl text-xl'>What does it do?</h2>
           <Table>
             <TableHeader>
               <TableRow>
@@ -68,15 +68,15 @@ export default function About() {
               </TableRow>
             </TableBody>
           </Table>
-          <h2 className='text-center text-4xl'>What if I find a bug or have suggestions?</h2>
+          <h2 className='text-center md:text-4xl text-xl'>What if I find a bug or have suggestions?</h2>
           <p className='indent-10 text-justify'>
             The Assignment Tracker is open source, so you can find the source code on Github
             at <Link className='underline' href='https://github.com/asorge29/assignment-tracker'>github.com/asorge29/assignment-tracker</Link>.
             Feel free to open an issue or pull request!
           </p>
         </div>
-        <div className="w-1/2 flex-shrink-0 flex flex-col gap-4 p-4">
-          <h2 className='text-center text-4xl'>Where did it come from?</h2>
+        <div className="md:w-1/2 w-full flex-shrink-0 flex flex-col gap-4 p-4">
+          <h2 className='text-center md:text-4xl text-xl'>Where did it come from?</h2>
           <p className='indent-10 text-justify'>
             I created this app to help me keep track of the ever-growing mound of schoolwork and for a fun learning
             project.
@@ -86,7 +86,7 @@ export default function About() {
             you
             have any feedback!
           </p>
-          <h2 className='text-center text-4xl'>How much does it cost?</h2>
+          <h2 className='text-center  md:text-4xl text-xl'>How much does it cost?</h2>
           <p className='indent-10 text-justify'>
             It is completely free to use. It will always be completely free to use. Below is a brief breakdown of the
             costs associated with running this. The cost of maintaining this may increase if the usage approaches the limits of the free tier.

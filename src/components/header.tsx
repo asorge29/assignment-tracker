@@ -5,12 +5,12 @@ import Profile from "./profile";
 export default async function Header({}) {
 
   return (
-    <div className="w-full flex justify-between items-center p-4 border-b">
-      <h1 className="text-4xl font-semibold">Assignment Tracker</h1>
+    <div className="w-full flex flex-col md:flex-row justify-between items-center p-4 border-b">
+      <h1 className="md:text-4xl text-xl font-semibold">Assignment Tracker</h1>
       <div className="flex gap-4 justify-center items-center">
-        <Link href="/" className="text-2xl hover:underline">Home</Link>
-        <Link href="/about" className="text-2xl hover:underline">About</Link>
-        <Link href="/assignments" className="text-2xl hover:underline">Assignments</Link>
+        <Link href="/" className="md:text-2xl text-lg hover:underline">Home</Link>
+        <Link href="/about" className="md:text-2xl text-lg hover:underline">About</Link>
+        <Link href="/assignments" className="md:text-2xl text-lg hover:underline">Assignments</Link>
         <ModeToggle />
         <Profile />
       </div>
