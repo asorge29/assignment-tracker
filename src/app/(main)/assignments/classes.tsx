@@ -18,6 +18,16 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {useSession} from "next-auth/react";
 import {Class} from "@/types/class";
 import {useClassesContext, useAssignmentsContext} from "@/app/(main)/assignments/context";
@@ -26,6 +36,16 @@ import { Button } from "@/components/ui/button";
 import {useEffect, useState} from "react";
 import { createClass } from "@/lib/createClass";
 import { deleteClass } from "@/lib/deleteClass";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+
+const createClassSchema = z.object({
+  name: z.string().min(2, {
+    message: "Class name must be at least 2 characters.",
+  }),
+  email: z.string(),
+})
 
 export default function Classes() {
   const {data: session, status} = useSession();
@@ -36,6 +56,18 @@ export default function Classes() {
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  const createForm = useForm<z.infer<typeof createClassSchema>>({
+    resolver: zodResolver(createClassSchema),
+    defaultValues: {
+      name: "",
+      email: session?.user?.email as string,
+    }
+  })
+
+  function onSubmit(values: z.infer<typeof createClassSchema>) {
+    console.log(values)
+  }
 
   const handleCreateClass = async (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -94,15 +126,24 @@ export default function Classes() {
             <DialogHeader>
               <DialogTitle>Create a new class</DialogTitle>
             </DialogHeader>
-            <form className='flex flex-col gap-4' onSubmit={handleCreateClass}>
-              <div className="flex flex-row gap-4 justify-center items-center">
-                <label className='text-lg' htmlFor="name">Class Name:</label>
-                <input type="text" id="name" name="name" className='rounded text-lg border p-0.5'/>
-              </div>
-              <DialogClose asChild>
+            <Form {...createForm}>
+              <form className='flex flex-col gap-4' onSubmit={createForm.handleSubmit(onSubmit)}>
+              <FormField
+                control={createForm.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Class Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Calculus AB" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
                 <Button type="submit" className='hover:bg-green-700 w-full'>Create Class</Button>
-              </DialogClose>
-            </form>
+              </form>
+            </Form>
           </DialogContent>
         </Dialog>
         <Dialog>
