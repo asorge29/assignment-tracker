@@ -52,6 +52,7 @@ export default function Classes() {
   const {classes, setClasses, refetchClasses} = useClassesContext()
   const {assignments, setAssignments, refetchAssignments} = useAssignmentsContext()
   const [isClient, setIsClient] = useState(false);
+  const [createFormOpen, setCreateFormOpen] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -65,21 +66,11 @@ export default function Classes() {
     }
   })
 
-  function onSubmit(values: z.infer<typeof createClassSchema>) {
-    console.log(values)
-  }
-
-  const handleCreateClass = async (e : React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const name = formData.get('name') as string;
-    const email = session?.user?.email;
-    
-    if (name && email) {
-      createClass({ name, email }).then(() => {
-        refetchClasses();
-      });
-    }
+  function createClassSubmit(values: z.infer<typeof createClassSchema>) {
+    createClass(values).then(() => {
+      refetchClasses();
+    });
+    setCreateFormOpen(false);
   }
 
   const handleDeleteClass = async (e : React.FormEvent<HTMLFormElement>) => {
@@ -118,7 +109,7 @@ export default function Classes() {
         </TableBody>
       </Table>
       <div className='flex flex-row justify-between'>
-        <Dialog>
+        <Dialog open={createFormOpen} onOpenChange={setCreateFormOpen}>
           <DialogTrigger>
             <Button>Create Class</Button>
           </DialogTrigger>
@@ -127,7 +118,7 @@ export default function Classes() {
               <DialogTitle>Create a new class</DialogTitle>
             </DialogHeader>
             <Form {...createForm}>
-              <form className='flex flex-col gap-4' onSubmit={createForm.handleSubmit(onSubmit)}>
+              <form className='flex flex-col gap-4' onSubmit={createForm.handleSubmit(createClassSubmit)}>
               <FormField
                 control={createForm.control}
                 name="name"
