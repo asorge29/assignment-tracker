@@ -40,11 +40,17 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
+//use select not combobox
+
 const createClassSchema = z.object({
   name: z.string().min(2, {
     message: "Class name must be at least 2 characters.",
   }),
   email: z.string(),
+})
+
+const deleteClassSchema = z.object({
+  id: z.string(),
 })
 
 export default function Classes() {
@@ -155,7 +161,7 @@ export default function Classes() {
                 </select>
               </div>
               <DialogClose asChild>
-                <Button type="submit" className='hover:bg-green-700 w-full'>Create Class</Button>
+                <Button type="submit" className='hover:bg-red-600 w-full'>Delete Class</Button>
               </DialogClose>
             </form>
           </DialogContent>
