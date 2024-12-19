@@ -27,6 +27,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import {useSession} from "next-auth/react";
 import {Class} from "@/types/class";
@@ -40,8 +47,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
-//use select not combobox
-
 const createClassSchema = z.object({
   name: z.string().min(2, {
     message: "Class name must be at least 2 characters.",
@@ -50,7 +55,9 @@ const createClassSchema = z.object({
 })
 
 const deleteClassSchema = z.object({
-  id: z.string(),
+  id: z.string({
+    required_error: "Please select a class to delete."
+  }),
 })
 
 export default function Classes() {
@@ -59,6 +66,7 @@ export default function Classes() {
   const {assignments, setAssignments, refetchAssignments} = useAssignmentsContext()
   const [isClient, setIsClient] = useState(false);
   const [createFormOpen, setCreateFormOpen] = useState(false);
+  const [deleteFormOpen, setDeleteFormOpen] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -72,24 +80,19 @@ export default function Classes() {
     }
   })
 
+  const deleteForm = useForm<z.infer<typeof deleteClassSchema>>({
+    resolver: zodResolver(deleteClassSchema),
+  })
+
   function createClassSubmit(values: z.infer<typeof createClassSchema>) {
-    createClass(values).then(() => {
-      refetchClasses();
-    });
-    setCreateFormOpen(false);
+    console.log(values)
   }
 
-  const handleDeleteClass = async (e : React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(e.currentTarget)
-    const formData = new FormData(e.currentTarget);
-    const id = formData.get('id') as string;
-
-    if (id) {
-      deleteClass(id).then(() => {
-        refetchClasses();
-      });
-    }
+  function deleteClassSubmit(values: z.infer<typeof deleteClassSchema>) {
+    deleteClass(values.id).then(() => {
+      refetchClasses();
+    });
+    setDeleteFormOpen(false);
   }
 
   const countAssignments = (classId: number): string => {
@@ -143,7 +146,7 @@ export default function Classes() {
             </Form>
           </DialogContent>
         </Dialog>
-        <Dialog>
+        <Dialog open={deleteFormOpen} onOpenChange={setDeleteFormOpen}>
           <DialogTrigger>
             <Button>Delete Class</Button>
           </DialogTrigger>
@@ -151,19 +154,36 @@ export default function Classes() {
             <DialogHeader>
               <DialogTitle>Delete a class</DialogTitle>
             </DialogHeader>
-            <form className='flex flex-col gap-4' onSubmit={handleDeleteClass}>
-              <div className="flex flex-row gap-4 justify-center items-center">
-                <label className='text-lg nowrap' htmlFor="name">Class Name:</label>
-                <select className='rounded text-lg border p-0.5' name='id'>
-                  {classes.map((item: Class) => (
-                    <option key={item.id} value={item.id}>{item.name}</option>
-                  ))}
-                </select>
-              </div>
-              <DialogClose asChild>
+            <Form {...deleteForm}>
+              <form className='flex flex-col gap-4' onSubmit={deleteForm.handleSubmit(deleteClassSubmit)}>
+                <FormField 
+                  control={deleteForm.control}
+                  name="id"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Class</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a class to delete." />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {classes.map((classItem, index) => (
+                            <SelectItem key={index} value={JSON.stringify(classItem.id)}>{classItem.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>
+                        
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <Button type="submit" className='hover:bg-red-600 w-full'>Delete Class</Button>
-              </DialogClose>
-            </form>
+              </form>
+            </Form>
           </DialogContent>
         </Dialog>
       </div>
