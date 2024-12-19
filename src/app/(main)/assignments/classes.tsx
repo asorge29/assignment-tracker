@@ -34,18 +34,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
+import {Input} from "@/components/ui/input"
 import {useSession} from "next-auth/react";
 import {Class} from "@/types/class";
 import {useClassesContext, useAssignmentsContext} from "@/app/(main)/assignments/context";
 import {Assignment} from "@/types/assignment";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {useEffect, useState} from "react";
-import { createClass } from "@/lib/createClass";
-import { deleteClass } from "@/lib/deleteClass";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import {createClass} from "@/lib/createClass";
+import {deleteClass} from "@/lib/deleteClass";
+import {z} from "zod";
+import {zodResolver} from "@hookform/resolvers/zod"
+import {useForm} from "react-hook-form"
 
 const createClassSchema = z.object({
   name: z.string().min(2, {
@@ -85,7 +85,11 @@ export default function Classes() {
   })
 
   function createClassSubmit(values: z.infer<typeof createClassSchema>) {
-    console.log(values)
+    createClass(values).then(() => {
+      refetchClasses();
+    });
+    setCreateFormOpen(false);
+    createForm.reset();
   }
 
   function deleteClassSubmit(values: z.infer<typeof deleteClassSchema>) {
@@ -93,6 +97,7 @@ export default function Classes() {
       refetchClasses();
     });
     setDeleteFormOpen(false);
+    deleteForm.reset();
   }
 
   const countAssignments = (classId: number): string => {
@@ -128,19 +133,20 @@ export default function Classes() {
             </DialogHeader>
             <Form {...createForm}>
               <form className='flex flex-col gap-4' onSubmit={createForm.handleSubmit(createClassSubmit)}>
-              <FormField
-                control={createForm.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Class Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Calculus AB" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={createForm.control}
+                  name="name"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Class Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Calculus AB" {...field} />
+                      </FormControl>
+                      <FormMessage/>
+                    </FormItem>
+                  )}
+                />
+                <Input type="hidden" {...createForm.register("email")} />
                 <Button type="submit" className='hover:bg-green-700 w-full'>Create Class</Button>
               </form>
             </Form>
@@ -156,7 +162,7 @@ export default function Classes() {
             </DialogHeader>
             <Form {...deleteForm}>
               <form className='flex flex-col gap-4' onSubmit={deleteForm.handleSubmit(deleteClassSubmit)}>
-                <FormField 
+                <FormField
                   control={deleteForm.control}
                   name="id"
                   render={({field}) => (
@@ -165,7 +171,7 @@ export default function Classes() {
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a class to delete." />
+                            <SelectValue placeholder="Select a class to delete."/>
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -175,9 +181,9 @@ export default function Classes() {
                         </SelectContent>
                       </Select>
                       <FormDescription>
-                        
+
                       </FormDescription>
-                      <FormMessage />
+                      <FormMessage/>
                     </FormItem>
                   )}
                 />
