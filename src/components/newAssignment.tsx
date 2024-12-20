@@ -25,6 +25,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button";
 import {Class} from "@/types/class";
@@ -43,7 +49,7 @@ const formSchema = z.object({
 })
 
 export default function NewAssignment({ classes, session, refetchAssignments}: { classes: Class[], session: any, refetchAssignments: () => void }) {
-  const handleSubmit = (values) => {
+  const handleSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values)
   };
 
@@ -113,7 +119,7 @@ export default function NewAssignment({ classes, session, refetchAssignments}: {
             render={({field}) => (
               <FormItem>
                 <FormLabel>Class</FormLabel>
-                <Select>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a class for this assignment."/>
