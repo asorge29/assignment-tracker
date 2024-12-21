@@ -31,26 +31,38 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import {format} from "date-fns"
+import { cn } from "@/lib/utils"
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button";
 import {Class} from "@/types/class";
-import React from "react";
+import React, { useState } from "react";
 import { createAssignment } from "@/lib/createAssignment";
 import { z } from "zod"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "lucide-react";
 
 const formSchema = z.object({
-  title: z.string(),
-  link: z.string().url(),
-  dueDate: z.string(),
-  className: z.string(),
+  title: z.string().min(1),
+  link: z.string(),
+  dueDate: z.date(),
+  className: z.string({
+    required_error: "Please select a class",
+  }),
   email: z.string().email(),
 })
 
-export default function NewAssignment({ classes, session, refetchAssignments}: { classes: Class[], session: any, refetchAssignments: () => void }) {
+const NewAssignment = ({ classes, session, refetchAssignments}: { classes: Class[], session: any, refetchAssignments: () => void }) => {
+  const [open, setOpen] = useState(false);
+
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    const newAssignment = {...values, dueDate: values.dueDate.toISOString().split("T")[0]};
+    createAssignment(newAssignment).then(() => {
+      refetchAssignments();
+    })
+    setOpen(false);
+    form.reset();
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -58,14 +70,13 @@ export default function NewAssignment({ classes, session, refetchAssignments}: {
     defaultValues: {
       title: "",
       link: "",
-      dueDate: "",
-      className: "",
+      dueDate: new Date(),
       email: session?.user?.email,
     }
   })
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <Button>Create Assignment</Button>
       </DialogTrigger>
@@ -105,10 +116,35 @@ export default function NewAssignment({ classes, session, refetchAssignments}: {
             control={form.control}
             name="dueDate"
             render={({field}) => (
-              <FormItem>
+              <FormItem className="flex flex-col">
                 <FormLabel>Due Date</FormLabel>
-                <FormControl>
-                </FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-[240px] pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                      {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0 z-50" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}
@@ -135,9 +171,12 @@ export default function NewAssignment({ classes, session, refetchAssignments}: {
               </FormItem>
             )}
           />
-            <Button type="submit" className='hover:bg-green-700'>Create Assignment</Button>
+          <Input type="hidden" {...form.register("email")} />
+          <Button type="submit" className='hover:bg-green-700'>Create Assignment</Button>
         </form></Form>
       </DialogContent>
     </Dialog>
   );
 }
+
+export default NewAssignment;
