@@ -76,7 +76,7 @@ export default function Classes() {
     resolver: zodResolver(createClassSchema),
     defaultValues: {
       name: "",
-      email: session?.user?.email as string,
+      email: "",
     }
   })
 
@@ -85,7 +85,8 @@ export default function Classes() {
   })
 
   function createClassSubmit(values: z.infer<typeof createClassSchema>) {
-    createClass(values).then(() => {
+    const newClass = {...values, email: session?.user?.email as string};
+    createClass(newClass).then(() => {
       refetchClasses();
     });
     setCreateFormOpen(false);
