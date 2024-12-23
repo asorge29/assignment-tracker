@@ -1,4 +1,4 @@
-export async function updateAssignment({ id, title, link, dueDate, classId, email }: { id: number, title: string, link: string, dueDate: string, classId: number, email: string }) {
+export async function updateAssignment({ id, title, link, dueDate, classId, email }: { id: number, title: string, link: string, dueDate: string, classId: string, email: string }) {
   try {
     const response = await fetch('api/database', {
       method: 'POST',
