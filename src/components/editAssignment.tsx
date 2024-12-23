@@ -7,32 +7,79 @@ import {
   DialogTitle,
   DialogClose,
 } from "./ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import {format} from "date-fns"
+import { cn } from "@/lib/utils"
+import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button";
-import React from "react";
+import React, {useEffect} from "react";
 import { updateAssignment } from "@/lib/updateAssignment";
 import {Assignment} from "@/types/assignment";
 import {useClassesContext} from "@/app/(main)/assignments/context";
 import { useAssignmentsContext } from "@/app/(main)/assignments/context";
+import { z } from "zod"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "lucide-react";
+
+const formSchema = z.object({
+  id: z.number(),
+  title: z.string().min(1),
+  link: z.string(),
+  dueDate: z.date(),
+  classId: z.string({
+    required_error: "Please select a class",
+  }),
+  email: z.string().email(),
+})
 
 export default function EditAssignment({ assignment, isOpen, setIsOpen }: { assignment: Assignment, isOpen: boolean, setIsOpen: (isOpen: boolean) => void }) {
   const {classes, setClasses, refetchClasses} = useClassesContext()
   const { assignments, setAssignments, refetchAssignments} = useAssignmentsContext()
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const id = Number(formData.get("id"));
-    const title = formData.get("title") as string;
-    const link = formData.get("link") as string;
-    const dueDate = formData.get("dueDate") as string;
-    const classId = Number(formData.get("class"));
-    const email = formData.get("email") as string;
-
-    await updateAssignment({ id, title, link, dueDate, classId, email })
-    
-    await refetchAssignments();
+  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+    const updatedAssignment = {...values, dueDate: values.dueDate.toISOString().split("T")[0]};
+    updateAssignment(updatedAssignment).then(() => {
+      refetchAssignments();
+    });
     setIsOpen(false);
   };
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  })
+
+  useEffect(() => {
+    if (assignment) {
+      form.setValue('id', assignment.id);
+      form.setValue('title', assignment.title);
+      form.setValue('link', assignment.link);
+      form.setValue('dueDate', new Date(`${assignment.due_date}T00:00:00`));
+      form.setValue('classId', JSON.stringify(assignment.class));
+      form.setValue('email', assignment.email);
+    }
+  }, [assignment, form]);
 
   return (
     <>
@@ -41,33 +88,98 @@ export default function EditAssignment({ assignment, isOpen, setIsOpen }: { assi
           <DialogHeader>
             <DialogTitle>Edit Assignment</DialogTitle>
           </DialogHeader>
-          <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
-            <input type="hidden" name="id" id="id" value={assignment.id} />
-            <div className='flex flex-row gap-4 justify-center items-center'>
-              <label htmlFor="title" className='text-lg'>Title:</label>
-              <input type="text" id="title" name="title" required className='rounded text-lg border p-0.5' defaultValue={assignment.title} />
-            </div>
-            <div className='flex flex-row gap-4 justify-center items-center'>
-              <label htmlFor="link" className='text-lg'>Link:</label>
-              <input type="url" id="link" name="link" className='rounded text-lg border p-0.5' defaultValue={assignment.link} />
-            </div>
-            <div className='flex flex-row gap-4 justify-center items-center'>
-              <label htmlFor="dueDate" className='text-lg'>Due Date:</label>
-              <input type="date" id="dueDate" name="dueDate" required className='rounded text-lg border p-0.5' defaultValue={assignment.due_date} />
-            </div>
-            <div className='flex flex-row gap-4 justify-center items-center'>
-              <label htmlFor="class" className='text-lg'>Class:</label>
-              <select id="class" name="class" className='rounded text-lg border p-0.5' defaultValue={assignment.class} >
-                {classes.map((item, index) => (
-                  <option key={index} value={item.id}>{item.name}</option>
-                ))}
-              </select>
-            </div>
-            <input type="hidden" name="email" id="email" value={assignment.email} />
-            <DialogClose asChild>
+          <Form {...form}>
+            <form className='flex flex-col gap-4' onSubmit={form.handleSubmit(handleSubmit)}>
+              <FormField
+                control={form.control}
+                name="title"
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Topic Article #4" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="link"
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Link</FormLabel>
+                    <FormControl>
+                      <Input placeholder="https://docs.google.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="dueDate"
+                render={({field}) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Due Date</FormLabel>
+                    <Popover >
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal w-full",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 z-50" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="classId"
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Class</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a class for this assignment."/>
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {classes.map((classItem, index) => (
+                          <SelectItem key={index} value={JSON.stringify(classItem.id)}>{classItem.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Input type="hidden" {...form.register("id")} />
+              <Input type="hidden" {...form.register("email")} />
               <Button type="submit" className='hover:bg-green-700'>Update Assignment</Button>
-            </DialogClose>
-          </form>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
     </>
