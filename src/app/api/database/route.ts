@@ -1,28 +1,15 @@
 import { NextResponse } from "next/server";
+import { getRequestContext } from "@cloudflare/next-on-pages";
 
 export const runtime = "edge";
 
 export async function POST(request: Request) {
+  const { env } = getRequestContext();
+
   try {
     const { query } = await request.json();
-
-    const response = await fetch(
-      "https://assignment-tracker-worker.oceans4496.workers.dev",
-      {
-        method: "POST",
-        body: JSON.stringify({ query }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (!response.ok) {
-      new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return NextResponse.json(data);
+    const results = await env.DATABASE.prepare(query).all();
+    return NextResponse.json(results);
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json(
