@@ -8,7 +8,7 @@ export async function POST(request: Request) {
 
   try {
     const { query } = await request.json();
-    const results = await (env as any).DATABASE.prepare(query).all();
+    const results = await env.DATABASE.prepare(query).all();
     return NextResponse.json(results);
   } catch (error) {
     console.error("Error:", error);
