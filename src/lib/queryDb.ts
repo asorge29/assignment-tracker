@@ -1,21 +1,15 @@
-export async function queryDb(query: string) {
+export async function queryDb(query: string, params: any[] = []) {
   try {
     const response = await fetch("api/database", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query, params }),
     });
 
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
-    console.error(error);
-    throw new Error("Failed to fetch items");
+    console.error("queryDb:", error);
   }
 }
