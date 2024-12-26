@@ -1,17 +1,13 @@
+import {queryDb} from "@/lib/queryDb";
+
 export async function deleteClass(id: string) {
+  const query = `delete from classes where id = ?`
+  const values = [id]
+
   try {
-    const response = await fetch('api/database', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'key': process.env.DATABASE_KEY as string,
-      },
-      body: JSON.stringify({
-        query: `delete from classes where id = ${id}`
-      }),
-    });
-    return response.json();
+    return (await queryDb(query, values).then(data => data.results))
   } catch (error) {
-    console.error(error);
+    console.error('Error deleting class:', error)
+    throw error
   }
 }

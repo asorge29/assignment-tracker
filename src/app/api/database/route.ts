@@ -1,28 +1,23 @@
 import { NextResponse } from "next/server";
+import { getRequestContext } from "@cloudflare/next-on-pages";
+import { auth } from "@/auth";
 
 export const runtime = "edge";
 
 export async function POST(request: Request) {
+
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { env } = getRequestContext();
+
   try {
-    const { query } = await request.json();
-
-    const response = await fetch(
-      "https://assignment-tracker-worker.oceans4496.workers.dev",
-      {
-        method: "POST",
-        body: JSON.stringify({ query }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (!response.ok) {
-      new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return NextResponse.json(data);
+    const { query, params } = await request.json();
+    const statement = await env.DATABASE.prepare(query);
+    const results = await statement.bind(...params).all();
+    return NextResponse.json(results);
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json(
@@ -31,7 +26,6 @@ export async function POST(request: Request) {
     );
   }
 }
-
 export async function GET() {
   return NextResponse.json(
     { message: "GET method not allowed" },
