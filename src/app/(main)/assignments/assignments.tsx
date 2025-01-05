@@ -8,6 +8,7 @@ import NewAssignment from "@/components/newAssignment";
 import { useAssignmentsContext, useClassesContext } from "./context";
 import EditAssignment from "@/components/editAssignment";
 import {useState} from "react";
+import {CornerRightUp} from "lucide-react";
 
 export default function Assignments() {
   const {data: session, status} = useSession();
@@ -15,10 +16,6 @@ export default function Assignments() {
   const {classes, setClasses, refetchClasses} = useClassesContext();
   const [editMenuOpen, setEditMenuOpen] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState<Assignment>(assignments[0]);
-
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
 
   const openEditAssignment = (assignment: Assignment) => {
     setSelectedAssignment(assignment);
@@ -32,7 +29,14 @@ export default function Assignments() {
         <NewAssignment classes={classes} session={session} refetchAssignments={refetchAssignments}/>
       </div>
       <div>
-        <DataTable data={assignments} columns={columns(refetchAssignments, classes, openEditAssignment)}/>
+        {assignments.length > 0 ?
+          <DataTable data={assignments} columns={columns(refetchAssignments, classes, openEditAssignment)}/>
+          :
+          <div className="flex flex-row justify-end mr-20">
+            <p>Create an assignment here to get started</p>
+            <CornerRightUp className="relative bottom-2"/>
+          </div>
+        }
       </div>
       {selectedAssignment && <EditAssignment assignment={selectedAssignment} isOpen={editMenuOpen} setIsOpen={setEditMenuOpen}/>}
     </div>

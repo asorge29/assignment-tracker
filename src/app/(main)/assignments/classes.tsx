@@ -64,13 +64,8 @@ export default function Classes() {
   const {data: session, status} = useSession();
   const {classes, setClasses, refetchClasses} = useClassesContext()
   const {assignments, setAssignments, refetchAssignments} = useAssignmentsContext()
-  const [isClient, setIsClient] = useState(false);
   const [createFormOpen, setCreateFormOpen] = useState(false);
   const [deleteFormOpen, setDeleteFormOpen] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const createForm = useForm<z.infer<typeof createClassSchema>>({
     resolver: zodResolver(createClassSchema),
@@ -105,7 +100,7 @@ export default function Classes() {
     return assignments.filter((assignment: Assignment) => assignment.class === classId).length.toString()
   }
 
-  return isClient ? (
+  return (
     <div>
       <Table>
         <TableHeader>
@@ -125,7 +120,7 @@ export default function Classes() {
       </Table>
       <div className='flex flex-row justify-between'>
         <Dialog open={createFormOpen} onOpenChange={setCreateFormOpen}>
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <Button>Create Class</Button>
           </DialogTrigger>
           <DialogContent>
@@ -154,7 +149,7 @@ export default function Classes() {
           </DialogContent>
         </Dialog>
         <Dialog open={deleteFormOpen} onOpenChange={setDeleteFormOpen}>
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <Button>Delete Class</Button>
           </DialogTrigger>
           <DialogContent>
@@ -195,5 +190,5 @@ export default function Classes() {
         </Dialog>
       </div>
     </div>
-  ) : null;
+  );
 }
