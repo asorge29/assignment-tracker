@@ -46,6 +46,7 @@ import {deleteClass} from "@/lib/deleteClass";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
+import {Pencil} from "lucide-react";
 
 const createClassSchema = z.object({
   name: z.string().min(2, {
@@ -102,7 +103,7 @@ export default function Classes() {
 
   return (
     <div>
-      <Table>
+      {classes.length > 0 && <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Class</TableHead>
@@ -112,13 +113,14 @@ export default function Classes() {
         <TableBody>
           {classes.map((item: Class) => (
             <TableRow key={item.id}>
-              <TableCell>{item.name}</TableCell>
+              <TableCell className="group flex items-center">{item.name}{/*<Pencil
+                className="hidden group-hover:block cursor-pointer h-4 text-muted-foreground"/>*/}</TableCell>
               <TableCell className='text-right'>{countAssignments(item.id)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
-      </Table>
-      <div className='flex flex-row justify-between'>
+      </Table>}
+      <div className='flex flex-row justify-between gap-4 py-4'>
         <Dialog open={createFormOpen} onOpenChange={setCreateFormOpen}>
           <DialogTrigger asChild>
             <Button>Create Class</Button>
@@ -148,7 +150,7 @@ export default function Classes() {
             </Form>
           </DialogContent>
         </Dialog>
-        <Dialog open={deleteFormOpen} onOpenChange={setDeleteFormOpen}>
+        {classes.length > 0 && <Dialog open={deleteFormOpen} onOpenChange={setDeleteFormOpen}>
           <DialogTrigger asChild>
             <Button>Delete Class</Button>
           </DialogTrigger>
@@ -171,13 +173,17 @@ export default function Classes() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {classes.map((classItem, index) => (
-                            <SelectItem key={index} value={JSON.stringify(classItem.id)}>{classItem.name}</SelectItem>
-                          ))}
+                          {classes.map((classItem, index) => {
+                            if (countAssignments(classItem.id) === "0") {
+                              return (
+                                <SelectItem key={index} value={JSON.stringify(classItem.id)}>{classItem.name}</SelectItem>
+                              )
+                            }
+                          })}
                         </SelectContent>
                       </Select>
                       <FormDescription>
-
+                        Note: Classes cannot be deleted if they have active assignments.
                       </FormDescription>
                       <FormMessage/>
                     </FormItem>
@@ -187,7 +193,7 @@ export default function Classes() {
               </form>
             </Form>
           </DialogContent>
-        </Dialog>
+        </Dialog>}
       </div>
     </div>
   );
