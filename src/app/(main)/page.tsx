@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 
+export const runtime = 'edge'
+
 export default function Home() {
   return (
     <main className="flex items-center flex-col min-h-screen">

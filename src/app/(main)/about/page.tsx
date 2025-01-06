@@ -2,6 +2,8 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/c
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 
+export const runtime = 'edge'
+
 export default function About() {
 
   return (
@@ -124,9 +126,10 @@ export default function About() {
               </TableBody>
             </Table>
           </div>
-          <div className='flex justify-center'>
-            <Button className='text-2xl bg-[#ff5f5f]' asChild><Link href='https://buymeacoffee.com/asorge29'>☕Buy me a coffee :)</Link></Button>
-          </div>
+          {/*<div className='flex justify-center'>
+            <Button className='text-2xl bg-[#ff5f5f]' asChild><Link href='https://buymeacoffee.com/asorge29'>☕Buy me a
+              coffee :)</Link></Button>
+          </div>*/}
         </div>
       </div>
     </main>
