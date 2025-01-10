@@ -22,7 +22,7 @@ export default async function Profile() {
           >
             <AvatarImage
               src={session?.user?.image ?? undefined}
-              alt={session?.user?.name || "User avatar"}
+              alt={`${session?.user?.name} Profile Picture` || "User Profile Picture"}
             />
             <AvatarFallback>
               {session?.user?.name
