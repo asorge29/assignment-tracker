@@ -25,7 +25,7 @@ export default async function Home() {
       <div className="flex md:flex-row flex-col items-center justify-center gap-4 p-4">
         {session ? <Link href='/assignments' className='underline text-xl'> Just take me to my assignments</Link> : <Link href='/login' className='underline text-xl'>Log In/Sign Up</Link>}
       </div>
-      <div className="flex justify-center md:flex-row flex-col md:w-3/4 w-full">
+      <div className="flex justify-center md:flex-row flex-col md:w-5/6 w-full">
         <div className="md:w-1/2 w-full flex-shrink-0 p-4 gap-4 flex flex-col">
           <h2 className='text-center md:text-4xl text-xl'>What does it do?</h2>
           <Table>
