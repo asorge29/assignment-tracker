@@ -10,9 +10,9 @@ import { getClasses } from "@/lib/getClasses";
 const classContext = createContext({});
 const assignmentContext = createContext({});
 
-const Context = ({ children }: { children: React.ReactNode }) => {
-  const [classes, setClasses] = useState<Class[]>([]);
-  const [assignments, setAssignments] = useState<Assignment[]>([]);
+const Context = ({ children, defaultAssignments, defaultClasses }: { children: React.ReactNode, defaultAssignments: Assignment[], defaultClasses: Class[] }) => {
+  const [classes, setClasses] = useState<Class[]>(defaultClasses);
+  const [assignments, setAssignments] = useState<Assignment[]>(defaultAssignments);
   const { data: session, status } = useSession();
 
   useEffect(() => {

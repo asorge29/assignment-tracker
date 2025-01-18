@@ -107,10 +107,9 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
       const assignment = row.original;
 
       return (
-        <Button variant="ghost" className="h-8 w-8 p-0">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="link" className="h-8 w-8 p-0">
+              <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4"/>
               </Button>
@@ -125,7 +124,7 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
                 }
                 }
               >
-                <Check className="mr-2 text-green-500"/>
+                <Check className="text-green-500"/>
                 <span className="text-green-500">Complete!</span>
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -135,7 +134,7 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
                 }
                 }
               >
-                <Pencil className="mr-2"/>
+                <Pencil/>
                 Edit
               </DropdownMenuItem>
               <DropdownMenuSeparator/>
@@ -144,12 +143,11 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
                 refetchAssignments();
               }
               }>
-                <Trash2 className="mr-2 text-red-500"/>
+                <Trash2 className="text-red-500"/>
                 <span className="text-red-500">Delete</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </Button>
       );
     },
   },

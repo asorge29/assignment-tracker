@@ -46,6 +46,7 @@ import {deleteClass} from "@/lib/deleteClass";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
+import {Pencil} from "lucide-react";
 
 const createClassSchema = z.object({
   name: z.string().min(2, {
@@ -64,13 +65,8 @@ export default function Classes() {
   const {data: session, status} = useSession();
   const {classes, setClasses, refetchClasses} = useClassesContext()
   const {assignments, setAssignments, refetchAssignments} = useAssignmentsContext()
-  const [isClient, setIsClient] = useState(false);
   const [createFormOpen, setCreateFormOpen] = useState(false);
   const [deleteFormOpen, setDeleteFormOpen] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const createForm = useForm<z.infer<typeof createClassSchema>>({
     resolver: zodResolver(createClassSchema),
@@ -105,9 +101,9 @@ export default function Classes() {
     return assignments.filter((assignment: Assignment) => assignment.class === classId).length.toString()
   }
 
-  return isClient ? (
+  return (
     <div>
-      <Table>
+      {classes.length > 0 && <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Class</TableHead>
@@ -117,15 +113,16 @@ export default function Classes() {
         <TableBody>
           {classes.map((item: Class) => (
             <TableRow key={item.id}>
-              <TableCell>{item.name}</TableCell>
+              <TableCell className="group flex items-center">{item.name}{/*<Pencil
+                className="hidden group-hover:block cursor-pointer h-4 text-muted-foreground"/>*/}</TableCell>
               <TableCell className='text-right'>{countAssignments(item.id)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
-      </Table>
-      <div className='flex flex-row justify-between'>
+      </Table>}
+      <div className='flex flex-row justify-between gap-4 py-4'>
         <Dialog open={createFormOpen} onOpenChange={setCreateFormOpen}>
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <Button>Create Class</Button>
           </DialogTrigger>
           <DialogContent>
@@ -153,8 +150,8 @@ export default function Classes() {
             </Form>
           </DialogContent>
         </Dialog>
-        <Dialog open={deleteFormOpen} onOpenChange={setDeleteFormOpen}>
-          <DialogTrigger>
+        {classes.length > 0 && <Dialog open={deleteFormOpen} onOpenChange={setDeleteFormOpen}>
+          <DialogTrigger asChild>
             <Button>Delete Class</Button>
           </DialogTrigger>
           <DialogContent>
@@ -176,13 +173,17 @@ export default function Classes() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {classes.map((classItem, index) => (
-                            <SelectItem key={index} value={JSON.stringify(classItem.id)}>{classItem.name}</SelectItem>
-                          ))}
+                          {classes.map((classItem, index) => {
+                            if (countAssignments(classItem.id) === "0") {
+                              return (
+                                <SelectItem key={index} value={JSON.stringify(classItem.id)}>{classItem.name}</SelectItem>
+                              )
+                            }
+                          })}
                         </SelectContent>
                       </Select>
                       <FormDescription>
-
+                        Note: Classes cannot be deleted if they have active assignments.
                       </FormDescription>
                       <FormMessage/>
                     </FormItem>
@@ -192,8 +193,8 @@ export default function Classes() {
               </form>
             </Form>
           </DialogContent>
-        </Dialog>
+        </Dialog>}
       </div>
     </div>
-  ) : null;
+  );
 }

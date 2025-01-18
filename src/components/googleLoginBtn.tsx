@@ -11,7 +11,6 @@ export default function GoogleLoginBtn() {
         viewBox="0 0 48 48"
         width="1.4em"
         height="1.4em"
-        className="mr-4"
       >
         <path
           fill="#FFC107"

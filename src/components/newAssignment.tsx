@@ -36,7 +36,7 @@ import { cn } from "@/lib/utils"
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button";
 import {Class} from "@/types/class";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { createAssignment } from "@/lib/createAssignment";
 import { z } from "zod"
 import { useForm } from "react-hook-form";
@@ -75,9 +75,13 @@ const NewAssignment = ({ classes, session, refetchAssignments}: { classes: Class
     }
   })
 
+  useEffect(() => {
+    form.setValue('email', session?.user?.email);
+  }, [session?.user?.email, form]);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button>Create Assignment</Button>
       </DialogTrigger>
       <DialogContent>
@@ -124,7 +128,7 @@ const NewAssignment = ({ classes, session, refetchAssignments}: { classes: Class
                       <Button
                         variant="outline"
                         className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
+                          "pl-3 text-left font-normal w-full",
                           !field.value && "text-muted-foreground"
                         )}
                       >

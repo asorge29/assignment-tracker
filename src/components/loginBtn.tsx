@@ -1,25 +1,14 @@
-'use client';
+'use client'
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import {signIn} from "next-auth/react";
+import {Button} from "@/components/ui/button";
 
-export default function LoginBtn() {
-  const { data: session, status } = useSession()
-
-  if (status === "loading") {
-    return (
-      <p>Loading...</p>
-    )
-  }
-
-  if (!session) {
-    return (
-      <button onClick={() => signIn()}>Sign in</button>
-    )
-  }
+const loginBtn = () => {
   return (
-    <>
-    <pre>{JSON.stringify(session)}</pre>
-    <button onClick={() => signOut()}>Sign out</button>
-    </>
+    <Button onClick={() => signIn()}>
+      Sign In
+    </Button>
   )
-}
+};
+
+export default loginBtn;

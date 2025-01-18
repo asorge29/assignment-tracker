@@ -3,6 +3,7 @@ import { SessionProvider } from "next-auth/react";
 import { Poppins } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/themeProvider";
+import React from "react";
 
 const font = Poppins({ weight: ["400", "600", "700"], subsets: ["latin"] });
 
@@ -17,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={font.className}>
         <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
