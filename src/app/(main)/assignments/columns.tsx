@@ -32,18 +32,12 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
       );
     },
     cell: ({row}) => {
-      return <span className="capitalize">{row.getValue("title")}</span>;
-    },
-  },
-  {
-    accessorKey: "link",
-    header: () => <span className='text-primary'>Link</span>,
-    cell: ({row}) => {
-      const link = row.getValue("link") as string;
+      const assignment = row.original;
+      if (assignment.link === "") return <span className="capitalize">{assignment.title}</span>;
       return (
-        <a href={link} target="_blank" rel="noopener noreferrer"
+        <a href={assignment.link} target="_blank" rel="noopener noreferrer"
            className="hover:underline hover:decoration-black dark:hover:decoration-white duration-200 decoration-transparent">
-          {link}
+          <span className="capitalize">{assignment.title}</span>
         </a>
       );
     },
