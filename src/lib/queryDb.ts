@@ -1,11 +1,11 @@
-export async function queryDb(query: string, params: any[] = []) {
+export async function queryDb(action: string, params: any[] = []) {
   try {
     const response = await fetch("api/database", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ query, params }),
+      body: JSON.stringify({ action, params }),
     });
 
     return await response.json();

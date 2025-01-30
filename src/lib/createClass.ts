@@ -1,13 +1,12 @@
-import {queryDb} from "@/lib/queryDb";
+import { queryDb } from "@/lib/queryDb";
 
-export async function createClass({ name, email }: { name: string, email: string }) {
-  const query = `insert into classes (name, email) values (?, ?)`
-  const values = [name, email]
+export async function createClass({ name }: { name: string }) {
+  const values = [name];
 
   try {
-    return (await queryDb(query, values).then(data => data.results))
+    return await queryDb("createClass", values).then((data) => data.results);
   } catch (error) {
-    console.error('Error creating class:', error)
-    throw error
+    console.error("Error creating class:", error);
+    throw error;
   }
 }
