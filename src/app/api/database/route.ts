@@ -19,22 +19,25 @@ export async function POST(request: Request) {
 
     switch (action) {
       case "createClass":
-        query = `insert into classes (name, email) values (?, ${session.user?.email})`;
+        query = `insert into classes (name, email) values (?, "${session.user?.email}")`;
         break;
       case "createAssignment":
-        query = `insert into assignments (title, link, due_date, class, email) values (?, ?, ?, ?, ${session.user?.email})`;
+        query = `insert into assignments (title, link, due_date, class, email) values (?, ?, ?, ?, "${session.user?.email}")`;
         break;
       case "deleteClass":
-        query = `delete from classes where id = ? AND email = ${session.user?.email}`;
+        query = `delete from classes where id = ? AND email = "${session.user?.email}"`;
         break;
       case "deleteAssignment":
-        query = `DELETE FROM assignments WHERE id = ? AND email = ${session.user?.email}`;
+        query = `DELETE FROM assignments WHERE id = ? AND email = "${session.user?.email}"`;
         break;
       case "getClasses":
+        query = `SELECT * FROM classes WHERE email = "${session.user?.email}"`
         break;
       case "getAssignments":
+        query = `SELECT * FROM assignments WHERE email = "${session.user?.email}"`
         break;
       case "updateAssignment":
+        query = `UPDATE assignments SET title = ?, link = ?, due_date = ?, class = ? WHERE id = ? AND email = "${session.user?.email}"`;
         break;
       default:
         return NextResponse.json(

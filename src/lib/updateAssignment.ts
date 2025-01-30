@@ -15,7 +15,6 @@ export async function updateAssignment({
   classId: string;
   email: string;
 }) {
-  const query = `UPDATE assignments SET title = ?, link = ?, due_date = ?, class = ? WHERE id = ? AND email = ?`;
   const values = [title, link, dueDate, classId, id];
 
   try {
