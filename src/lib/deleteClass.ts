@@ -1,13 +1,12 @@
-import {queryDb} from "@/lib/queryDb";
+import { queryDb } from "@/lib/queryDb";
 
 export async function deleteClass(id: string) {
-  const query = `delete from classes where id = ?`
-  const values = [id]
+  const values = [id];
 
   try {
-    return (await queryDb(query, values).then(data => data.results))
+    return await queryDb("deleteClass", values).then((data) => data.results);
   } catch (error) {
-    console.error('Error deleting class:', error)
-    throw error
+    console.error("Error deleting class:", error);
+    throw error;
   }
 }

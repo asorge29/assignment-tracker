@@ -1,13 +1,12 @@
 import { queryDb } from "@/lib/queryDb";
 
 export async function deleteAssignment(id: number): Promise<void> {
-  const query = `DELETE FROM assignments WHERE id = ?`
-  const values = [id]
+  const values = [id];
 
   try {
-    await queryDb(query, values)
+    await queryDb("deleteAssignment", values);
   } catch (error) {
-    console.error('Error deleting assignment:', error)
-    throw error
+    console.error("Error deleting assignment:", error);
+    throw error;
   }
 }

@@ -5,12 +5,10 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogClose,
 } from "./ui/dialog";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -51,12 +49,11 @@ const formSchema = z.object({
   classId: z.string({
     required_error: "Please select a class",
   }),
-  email: z.string().email(),
 })
 
 export default function EditAssignment({ assignment, isOpen, setIsOpen }: { assignment: Assignment, isOpen: boolean, setIsOpen: (isOpen: boolean) => void }) {
-  const {classes, setClasses, refetchClasses} = useClassesContext()
-  const { assignments, setAssignments, refetchAssignments} = useAssignmentsContext()
+  const {classes} = useClassesContext()
+  const {refetchAssignments} = useAssignmentsContext()
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     const updatedAssignment = {...values, dueDate: values.dueDate.toISOString().split("T")[0]};
@@ -77,7 +74,6 @@ export default function EditAssignment({ assignment, isOpen, setIsOpen }: { assi
       form.setValue('link', assignment.link);
       form.setValue('dueDate', new Date(`${assignment.due_date}T00:00:00`));
       form.setValue('classId', JSON.stringify(assignment.class));
-      form.setValue('email', assignment.email);
     }
   }, [assignment, form]);
 
@@ -176,7 +172,6 @@ export default function EditAssignment({ assignment, isOpen, setIsOpen }: { assi
                 )}
               />
               <Input type="hidden" {...form.register("id")} />
-              <Input type="hidden" {...form.register("email")} />
               <Button type="submit" className='hover:bg-green-700'>Update Assignment</Button>
             </form>
           </Form>

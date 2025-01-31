@@ -3,16 +3,13 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "./ui/dialog";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -36,7 +33,7 @@ import { cn } from "@/lib/utils"
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button";
 import {Class} from "@/types/class";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import { createAssignment } from "@/lib/createAssignment";
 import { z } from "zod"
 import { useForm } from "react-hook-form";
@@ -50,10 +47,9 @@ const formSchema = z.object({
   className: z.string({
     required_error: "Please select a class",
   }),
-  email: z.string().email(),
 })
 
-const NewAssignment = ({ classes, session, refetchAssignments}: { classes: Class[], session: any, refetchAssignments: () => void }) => {
+const NewAssignment = ({ classes, refetchAssignments}: { classes: Class[], refetchAssignments: () => void }) => {
   const [open, setOpen] = useState(false);
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
@@ -71,13 +67,8 @@ const NewAssignment = ({ classes, session, refetchAssignments}: { classes: Class
       title: "",
       link: "",
       dueDate: new Date(),
-      email: session?.user?.email,
     }
   })
-
-  useEffect(() => {
-    form.setValue('email', session?.user?.email);
-  }, [session?.user?.email, form]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -175,7 +166,6 @@ const NewAssignment = ({ classes, session, refetchAssignments}: { classes: Class
               </FormItem>
             )}
           />
-          <Input type="hidden" {...form.register("email")} />
           <Button type="submit" className='hover:bg-green-700'>Create Assignment</Button>
         </form></Form>
       </DialogContent>

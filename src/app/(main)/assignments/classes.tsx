@@ -3,7 +3,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -12,11 +11,9 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog"
 import {
   Form,
@@ -35,24 +32,21 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import {Input} from "@/components/ui/input"
-import {useSession} from "next-auth/react";
 import {Class} from "@/types/class";
 import {useClassesContext, useAssignmentsContext} from "@/app/(main)/assignments/context";
 import {Assignment} from "@/types/assignment";
 import {Button} from "@/components/ui/button";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {createClass} from "@/lib/createClass";
 import {deleteClass} from "@/lib/deleteClass";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
-import {Pencil} from "lucide-react";
 
 const createClassSchema = z.object({
   name: z.string().min(2, {
     message: "Class name must be at least 2 characters.",
   }),
-  email: z.string(),
 })
 
 const deleteClassSchema = z.object({
@@ -62,9 +56,8 @@ const deleteClassSchema = z.object({
 })
 
 export default function Classes() {
-  const {data: session, status} = useSession();
-  const {classes, setClasses, refetchClasses} = useClassesContext()
-  const {assignments, setAssignments, refetchAssignments} = useAssignmentsContext()
+  const {classes, refetchClasses} = useClassesContext()
+  const {assignments} = useAssignmentsContext()
   const [createFormOpen, setCreateFormOpen] = useState(false);
   const [deleteFormOpen, setDeleteFormOpen] = useState(false);
 
@@ -72,7 +65,6 @@ export default function Classes() {
     resolver: zodResolver(createClassSchema),
     defaultValues: {
       name: "",
-      email: "",
     }
   })
 
@@ -81,7 +73,7 @@ export default function Classes() {
   })
 
   function createClassSubmit(values: z.infer<typeof createClassSchema>) {
-    const newClass = {...values, email: session?.user?.email as string};
+    const newClass = {...values};
     createClass(newClass).then(() => {
       refetchClasses();
     });
@@ -144,7 +136,6 @@ export default function Classes() {
                     </FormItem>
                   )}
                 />
-                <Input type="hidden" {...createForm.register("email")} />
                 <Button type="submit" className='hover:bg-green-700 w-full'>Create Class</Button>
               </form>
             </Form>
