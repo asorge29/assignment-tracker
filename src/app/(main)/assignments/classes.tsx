@@ -3,7 +3,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -12,11 +11,9 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog"
 import {
   Form,
@@ -40,13 +37,12 @@ import {Class} from "@/types/class";
 import {useClassesContext, useAssignmentsContext} from "@/app/(main)/assignments/context";
 import {Assignment} from "@/types/assignment";
 import {Button} from "@/components/ui/button";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {createClass} from "@/lib/createClass";
 import {deleteClass} from "@/lib/deleteClass";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
-import {Pencil} from "lucide-react";
 
 const createClassSchema = z.object({
   name: z.string().min(2, {
@@ -62,9 +58,9 @@ const deleteClassSchema = z.object({
 })
 
 export default function Classes() {
-  const {data: session, status} = useSession();
-  const {classes, setClasses, refetchClasses} = useClassesContext()
-  const {assignments, setAssignments, refetchAssignments} = useAssignmentsContext()
+  const {data: session} = useSession();
+  const {classes, refetchClasses} = useClassesContext()
+  const {assignments} = useAssignmentsContext()
   const [createFormOpen, setCreateFormOpen] = useState(false);
   const [deleteFormOpen, setDeleteFormOpen] = useState(false);
 

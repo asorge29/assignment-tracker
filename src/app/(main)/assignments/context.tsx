@@ -13,40 +13,40 @@ const assignmentContext = createContext({});
 const Context = ({ children, defaultAssignments, defaultClasses }: { children: React.ReactNode, defaultAssignments: Assignment[], defaultClasses: Class[] }) => {
   const [classes, setClasses] = useState<Class[]>(defaultClasses);
   const [assignments, setAssignments] = useState<Assignment[]>(defaultAssignments);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     async function fetchClasses() {
       if (session?.user?.email) {
-        const fetchedClasses = await getClasses(session.user.email);
+        const fetchedClasses = await getClasses();
         setClasses(fetchedClasses);
       }
     }
 
-    const promise = fetchClasses();
+    void fetchClasses();
   }, [session]);
 
   useEffect(() => {
     async function fetchAssignments() {
       if (session?.user?.email) {
-        const fetchedAssignments = await getAssignments(session.user.email);
+        const fetchedAssignments = await getAssignments();
         setAssignments(fetchedAssignments);
       }
     }
 
-    const promise = fetchAssignments();
+    void fetchAssignments();
   }, [session]);
 
   const refetchAssignments = async () => {
     if (session?.user?.email) {
-      const fetchedAssignments = await getAssignments(session.user.email);
+      const fetchedAssignments = await getAssignments();
       setAssignments(fetchedAssignments);
     }
   };
 
   const refetchClasses = async () => {
     if (session?.user?.email) {
-      const fetchedClasses = await getClasses(session.user.email);
+      const fetchedClasses = await getClasses();
       setClasses(fetchedClasses);
     }
   };
@@ -62,17 +62,16 @@ const Context = ({ children, defaultAssignments, defaultClasses }: { children: R
   );
 };
 
-// @ts-ignore
 const useClassesContext = (): {
   classes: Class[];
   setClasses: (classes: Class[]) => void;
   refetchClasses: () => Promise<void>;
 } => useContext(classContext) as {
-  classes: Class[];
-  setClasses: (classes: Class[]) => void;
-  refetchClasses: () => Promise<void>;
-};
-// @ts-ignore
+    classes: Class[];
+    setClasses: (classes: Class[]) => void;
+    refetchClasses: () => Promise<void>;
+  };
+
 const useAssignmentsContext = (): {
   assignments: Assignment[];
   setAssignments: (assignments: Assignment[]) => void;
@@ -83,4 +82,5 @@ const useAssignmentsContext = (): {
     setAssignments: (assignments: Assignment[]) => void;
     refetchAssignments: () => Promise<void>;
   };
+
 export { Context, useClassesContext, useAssignmentsContext };

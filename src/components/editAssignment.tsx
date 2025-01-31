@@ -5,12 +5,10 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogClose,
 } from "./ui/dialog";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -55,8 +53,8 @@ const formSchema = z.object({
 })
 
 export default function EditAssignment({ assignment, isOpen, setIsOpen }: { assignment: Assignment, isOpen: boolean, setIsOpen: (isOpen: boolean) => void }) {
-  const {classes, setClasses, refetchClasses} = useClassesContext()
-  const { assignments, setAssignments, refetchAssignments} = useAssignmentsContext()
+  const {classes} = useClassesContext()
+  const {refetchAssignments} = useAssignmentsContext()
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     const updatedAssignment = {...values, dueDate: values.dueDate.toISOString().split("T")[0]};

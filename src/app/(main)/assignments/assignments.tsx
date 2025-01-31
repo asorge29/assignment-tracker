@@ -11,9 +11,9 @@ import {useState} from "react";
 import {CornerRightUp, MoveLeft} from "lucide-react";
 
 export default function Assignments() {
-  const {data: session, status} = useSession();
-  const {assignments, setAssignments, refetchAssignments} = useAssignmentsContext();
-  const {classes, setClasses, refetchClasses} = useClassesContext();
+  const {data: session} = useSession();
+  const {assignments, refetchAssignments} = useAssignmentsContext();
+  const {classes} = useClassesContext();
   const [editMenuOpen, setEditMenuOpen] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState<Assignment>(assignments[0]);
 
