@@ -6,14 +6,12 @@ export async function updateAssignment({
   link,
   dueDate,
   classId,
-  email,
 }: {
   id: number;
   title: string;
   link: string;
   dueDate: string;
   classId: string;
-  email: string;
 }) {
   const values = [title, link, dueDate, classId, id];
 

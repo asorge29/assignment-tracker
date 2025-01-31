@@ -1,5 +1,4 @@
-export async function queryDb(action: string, params: any[] = []) {
-  try {
+export async function queryDb(action: string, params: (string|number)[] = []) {  try {
     const response = await fetch("api/database", {
       method: "POST",
       headers: {

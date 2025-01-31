@@ -1,6 +1,5 @@
 'use client';
 
-import {useSession} from "next-auth/react";
 import {DataTable} from "@/components/dataTable";
 import {Assignment} from "@/types/assignment";
 import {columns} from "./columns";
@@ -11,7 +10,6 @@ import {useState} from "react";
 import {CornerRightUp, MoveLeft} from "lucide-react";
 
 export default function Assignments() {
-  const {data: session} = useSession();
   const {assignments, refetchAssignments} = useAssignmentsContext();
   const {classes} = useClassesContext();
   const [editMenuOpen, setEditMenuOpen] = useState(false);
@@ -26,7 +24,7 @@ export default function Assignments() {
     <div>
       <div className="flex flex-row justify-between mb-4">
         <h2 className="md:text-3xl text-xl">Assignments</h2>
-        {classes.length > 0 && <NewAssignment classes={classes} session={session} refetchAssignments={refetchAssignments}/>}
+        {classes.length > 0 && <NewAssignment classes={classes} refetchAssignments={refetchAssignments}/>}
       </div>
       <div>
         {assignments.length > 0 ? (

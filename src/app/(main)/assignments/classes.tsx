@@ -32,7 +32,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import {Input} from "@/components/ui/input"
-import {useSession} from "next-auth/react";
 import {Class} from "@/types/class";
 import {useClassesContext, useAssignmentsContext} from "@/app/(main)/assignments/context";
 import {Assignment} from "@/types/assignment";
@@ -48,7 +47,6 @@ const createClassSchema = z.object({
   name: z.string().min(2, {
     message: "Class name must be at least 2 characters.",
   }),
-  email: z.string(),
 })
 
 const deleteClassSchema = z.object({
@@ -58,7 +56,6 @@ const deleteClassSchema = z.object({
 })
 
 export default function Classes() {
-  const {data: session} = useSession();
   const {classes, refetchClasses} = useClassesContext()
   const {assignments} = useAssignmentsContext()
   const [createFormOpen, setCreateFormOpen] = useState(false);
@@ -68,7 +65,6 @@ export default function Classes() {
     resolver: zodResolver(createClassSchema),
     defaultValues: {
       name: "",
-      email: "",
     }
   })
 
@@ -77,7 +73,7 @@ export default function Classes() {
   })
 
   function createClassSubmit(values: z.infer<typeof createClassSchema>) {
-    const newClass = {...values, email: session?.user?.email as string};
+    const newClass = {...values};
     createClass(newClass).then(() => {
       refetchClasses();
     });
@@ -140,7 +136,6 @@ export default function Classes() {
                     </FormItem>
                   )}
                 />
-                <Input type="hidden" {...createForm.register("email")} />
                 <Button type="submit" className='hover:bg-green-700 w-full'>Create Class</Button>
               </form>
             </Form>
