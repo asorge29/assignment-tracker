@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {deleteAssignment} from "@/lib/deleteAssignment";
+import {balloons} from "balloons-js"
 
 export const columns = (refetchAssignments: () => void, classes: Class[], openEditAssignment: (assignment: Assignment) => void): ColumnDef<Assignment>[] => [
 
@@ -115,6 +116,7 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
                 onClick={async () => {
                   await deleteAssignment(assignment.id);
                   refetchAssignments();
+                  balloons();
                 }
                 }
               >
