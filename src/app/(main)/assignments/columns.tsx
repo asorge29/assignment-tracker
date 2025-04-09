@@ -117,7 +117,9 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
                 onClick={async () => {
                   await deleteAssignment(assignment.id);
                   refetchAssignments();
-                  balloons();
+                  if (settings.balloons) {
+                    balloons();
+                  }
                 }
                 }
               >
