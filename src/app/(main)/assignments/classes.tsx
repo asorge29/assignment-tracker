@@ -42,6 +42,7 @@ import {deleteClass} from "@/lib/deleteClass";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
+import {useSettingsContext} from "@/app/(main)/assignments/context";
 
 const createClassSchema = z.object({
   name: z.string().min(2, {
@@ -60,6 +61,7 @@ export default function Classes() {
   const {assignments} = useAssignmentsContext()
   const [createFormOpen, setCreateFormOpen] = useState(false);
   const [deleteFormOpen, setDeleteFormOpen] = useState(false);
+  const {settings} = useSettingsContext();
 
   const createForm = useForm<z.infer<typeof createClassSchema>>({
     resolver: zodResolver(createClassSchema),
@@ -115,7 +117,7 @@ export default function Classes() {
       <div className='flex flex-row justify-between gap-4 py-4'>
         <Dialog open={createFormOpen} onOpenChange={setCreateFormOpen}>
           <DialogTrigger asChild>
-            <Button>Create Class</Button>
+            <Button className={`${settings.accentColor && `bg-${settings.accentColor}-500`}`}>Create Class</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -143,7 +145,7 @@ export default function Classes() {
         </Dialog>
         {classes.length > 0 && <Dialog open={deleteFormOpen} onOpenChange={setDeleteFormOpen}>
           <DialogTrigger asChild>
-            <Button>Delete Class</Button>
+            <Button className={`${settings.accentColor && `bg-${settings.accentColor}-500`}`}>Delete Class</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>

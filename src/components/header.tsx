@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ModeToggle } from "./modeToggle";
 import Profile from "./profile";
-import SettingsMenu from "./settingsMenu";
 
 export default async function Header({}) {
 
@@ -12,7 +11,6 @@ export default async function Header({}) {
         <Link href="/" className="text-2xl hover:underline hidden md:block">Home</Link>
         <Link href="/assignments" className="text-2xl hover:underline hidden md:block">Assignments</Link>
         <ModeToggle />
-        <SettingsMenu />
         <Profile />
       </div>
     </div>

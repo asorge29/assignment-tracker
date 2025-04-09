@@ -1,3 +1,4 @@
 export type Settings = {
-  color: string|null;
+  accentColor: string|undefined;
+  overdueHighlight: boolean;
 }

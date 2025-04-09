@@ -15,7 +15,7 @@ const settingsContext = createContext({});
 const Context = ({ children, defaultAssignments, defaultClasses }: { children: React.ReactNode, defaultAssignments: Assignment[], defaultClasses: Class[] }) => {
   const [classes, setClasses] = useState<Class[]>(defaultClasses);
   const [assignments, setAssignments] = useState<Assignment[]>(defaultAssignments);
-  const [settings, setSettings] = useState<Settings>({color: null});
+  const [settings, setSettings] = useState<Settings>({color: null, overdueHighlight: true});
   const { data: session } = useSession();
 
   useEffect(() => {
