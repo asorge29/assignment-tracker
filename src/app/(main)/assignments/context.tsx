@@ -53,7 +53,9 @@ const Context = ({ children, defaultAssignments, defaultClasses }: { children: R
         } else if (!fetchedUser.settings) {
           updateSettings({settings: {accentColor: undefined, overdueHighlight: true, balloons: true, font: "--font-poppins"}})
         } else {
-          setSettings(fetchedUser.settings);
+          if (fetchedUser.settings) {
+            setSettings(fetchedUser.settings);
+          }
         }
       }
     }
