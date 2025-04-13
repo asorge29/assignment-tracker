@@ -47,8 +47,8 @@ const Context = ({ children, defaultAssignments, defaultClasses }: { children: R
     async function fetchUser() {
       if (session?.user?.email) {
         const fetchedUser = await getUser();
-        console.log(fetchedUser)
         if (!fetchedUser) {
+          console.log("creating user")
           await createUser({settings: {accentColor: undefined, overdueHighlight: true, balloons: true, font: "--font-poppins"}})
         } else if (!fetchedUser.settings) {
           updateSettings({settings: {accentColor: undefined, overdueHighlight: true, balloons: true, font: "--font-poppins"}})
