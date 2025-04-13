@@ -29,7 +29,9 @@ const SettingsMenu = () => {
   const refetchSettings = async (newSettings: Settings) => {
     await updateSettings({settings: newSettings})
     const fetchedUser = await getUser();
-    setSettings(fetchedUser.settings);
+    if (fetchedUser) {
+      setSettings(fetchedUser.settings);
+    }
   }
 
   useEffect(() => {
