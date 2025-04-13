@@ -9,8 +9,9 @@ export async function getUser(): Promise<User | undefined> {
         const user = data.results[0];
         if (!user) {
           return undefined;
+        } else {
+          return {email: user.email, settings: JSON.parse(user.settings)}
         }
-        return user;
       },
     )
   } catch (error) {
