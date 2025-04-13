@@ -39,6 +39,14 @@ export async function POST(request: Request) {
       case "updateAssignment":
         query = `UPDATE assignments SET title = ?, link = ?, due_date = ?, class = ? WHERE id = ? AND email = "${session.user?.email}"`;
         break;
+      case "checkUser":
+        break;
+      case "addUser":
+        break;
+      case "updateSettings":
+        break;
+      case "getSettings":
+        break;
       default:
         return NextResponse.json(
           { error: "Internal Server Error" },

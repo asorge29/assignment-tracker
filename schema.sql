@@ -1,7 +1,7 @@
 --Database schema
---To set up for local dev install wrangler cli and run: wrangler d1 execute assignment-tracker  --local --file ./schema.sql
+--To set up for local dev install wrangler cli and run: wrangler d1 execute assignment-tracker --local --file ./schema.sql
 
-CREATE TABLE assignments
+CREATE TABLE IF NOT EXISTS assignments 
 (
     id       INTEGER PRIMARY KEY AUTOINCREMENT,
     email    TEXT    NOT NULL,
@@ -11,9 +11,15 @@ CREATE TABLE assignments
     class    INTEGER NOT NULL
 );
 
-CREATE table classes
+CREATE TABLE IF NOT EXISTS classes
 (
     id   INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     email TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS users 
+(
+    email TEXT PRIMARY KEY NOT NULL, 
+    settings TEXT
 );
