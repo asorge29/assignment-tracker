@@ -7,6 +7,9 @@ import { useSession } from "next-auth/react";
 import { getAssignments } from "@/lib/getAssignments";
 import { getClasses } from "@/lib/getClasses";
 import { Settings } from "@/types/settings";
+import { getUser } from "@/lib/getUser";
+import { createUser } from "@/lib/createUser";
+import { updateSettings } from "@/lib/updateSettings";
 
 const classContext = createContext({});
 const assignmentContext = createContext({});
@@ -38,6 +41,24 @@ const Context = ({ children, defaultAssignments, defaultClasses }: { children: R
     }
 
     void fetchAssignments();
+  }, [session]);
+  
+  useEffect(() => {
+    async function fetchUser() {
+      if (session?.user?.email) {
+        const fetchedUser = await getUser();
+        console.log(fetchedUser)
+        if (!fetchedUser) {
+          await createUser({settings: {accentColor: undefined, overdueHighlight: true, balloons: true, font: "--font-poppins"}})
+        } else if (!fetchedUser.settings) {
+          updateSettings({settings: {accentColor: undefined, overdueHighlight: true, balloons: true, font: "--font-poppins"}})
+        } else {
+          setSettings(fetchedUser.settings);
+        }
+      }
+    }
+    
+    void fetchUser();
   }, [session]);
 
   const refetchAssignments = async () => {
