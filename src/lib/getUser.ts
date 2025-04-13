@@ -7,7 +7,9 @@ export async function getUser(): Promise<User> {
     return await queryDb("getUser").then(
       (data) =>{
         const user = data.results[0];
-        user.settings = JSON.parse(user.settings)
+        if (user.settings){
+          user.settings = JSON.parse(user.settings)
+        }
         return user;
       },
     )
