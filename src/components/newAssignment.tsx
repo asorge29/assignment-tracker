@@ -39,6 +39,7 @@ import { z } from "zod"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "lucide-react";
+import { useSettingsContext } from "@/app/(main)/assignments/context";
 
 const formSchema = z.object({
   title: z.string().min(1),
@@ -51,6 +52,7 @@ const formSchema = z.object({
 
 const NewAssignment = ({ classes, refetchAssignments}: { classes: Class[], refetchAssignments: () => void }) => {
   const [open, setOpen] = useState(false);
+  const {settings} = useSettingsContext();
 
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     const newAssignment = {...values, dueDate: values.dueDate.toISOString().split("T")[0]};
@@ -73,7 +75,7 @@ const NewAssignment = ({ classes, refetchAssignments}: { classes: Class[], refet
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Create Assignment</Button>
+        <Button className={`${settings?.accentColor && `bg-${settings.accentColor}-500`} ${settings?.accentColor && `hover:bg-${settings.accentColor}-600`} text-wrap`}>Create Assignment</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -166,7 +168,7 @@ const NewAssignment = ({ classes, refetchAssignments}: { classes: Class[], refet
               </FormItem>
             )}
           />
-          <Button type="submit" className='hover:bg-green-700'>Create Assignment</Button>
+          <Button type="submit" className='bg-green-700'>Create Assignment</Button>
         </form></Form>
       </DialogContent>
     </Dialog>

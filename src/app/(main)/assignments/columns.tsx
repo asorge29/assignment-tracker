@@ -15,8 +15,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {deleteAssignment} from "@/lib/deleteAssignment";
 import {balloons} from "balloons-js"
+import { Settings } from "@/types/settings";
 
-export const columns = (refetchAssignments: () => void, classes: Class[], openEditAssignment: (assignment: Assignment) => void): ColumnDef<Assignment>[] => [
+export const columns = (refetchAssignments: () => void, classes: Class[], openEditAssignment: (assignment: Assignment) => void, settings: Settings): ColumnDef<Assignment>[] => [
 
   {
     accessorKey: "title",
@@ -25,10 +26,10 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
         <Button
           variant="link"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0"
+          className="p-0 gap-1"
         >
           Name
-          <ArrowUpDown className="ml-2 h-4 w-4"/>
+          <ArrowUpDown className="h-4 w-4"/>
         </Button>
       );
     },
@@ -50,10 +51,10 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
         <Button
           variant="link"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0"
+          className="p-0 gap-1"
         >
           Due Date
-          <ArrowUpDown className="ml-2 h-4 w-4"/>
+          <ArrowUpDown className="h-4 w-4"/>
         </Button>
       );
     },
@@ -69,7 +70,7 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
       const due = new Date(`${row.getValue("due_date")}T23:59:59`);
       const now = new Date();
 
-      if (due < now) {
+      if (due < now && settings.overdueHighlight) {
         return <div className="text-red-500">{formatted}</div>;
       }
 
@@ -83,10 +84,10 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
         <Button
           variant="link"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0"
+          className="p-0 gap-1"
         >
           Class
-          <ArrowUpDown className="ml-2 h-4 w-4"/>
+          <ArrowUpDown className="h-4 w-4"/>
         </Button>
       );
     },
@@ -116,7 +117,9 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
                 onClick={async () => {
                   await deleteAssignment(assignment.id);
                   refetchAssignments();
-                  balloons();
+                  if (settings.balloons) {
+                    balloons();
+                  }
                 }
                 }
               >

@@ -9,14 +9,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
+import { Settings2 } from "lucide-react";
 
 const UpdateNotes = () => {
   const [showNotes, setShowNotes] = useState(true);
 
   useEffect(() => {
-    const show = localStorage.getItem("showPr19");
+    const show = localStorage.getItem("showPr23");
     if (show === null) {
-      localStorage.setItem("showPr19", "true");
+      localStorage.setItem("showPr23", "true");
       setShowNotes(true);
       console.log("rahhh");
     } else {
@@ -25,7 +26,7 @@ const UpdateNotes = () => {
   }, []);
 
   const hideForever = () => {
-    localStorage.setItem("showPr19", "false");
+    localStorage.setItem("showPr23", "false");
     setShowNotes(false)
   };
 
@@ -36,25 +37,29 @@ const UpdateNotes = () => {
           <DialogTitle>
             Update Notes{" "}
             <a
-              href="https://github.com/asorge29/assignment-tracker/pull/19"
+              href="https://github.com/asorge29/assignment-tracker/pull/23"
               target="_blank"
               className="underline"
             >
-              PR#19
+              PR#23
             </a>
           </DialogTitle>
         </DialogHeader>
-        <ul className="list-disc list-inside">
+        <div className="px-5">
+          <ul className="list-disc mr-5">
           <li>
-            The link column in the assignments table has been removed to reduce
-            clutter and save space on mobile
+            Added a balloons effect that plays whenever an assignment is completed. This can be
+            disbaled in the settings menu.
           </li>
           <li>
-            Links can still be added and changed when creating and editing an
-            assignment as usual
+            Added a settings menu. Users can configure font, accent color, and more. Settings are saved across all sessions.
           </li>
-          <li>To access links, simply click on the title of the assignment</li>
+          <li>
+            Settings menu is located near new assignment button, and looks like this:
+            <Button variant="outline"><Settings2/></Button>
+          </li>
         </ul>
+        </div>
         <DialogFooter className="sm:justify-center justify-center gap-2 sm:space-x-0">
           <Button onClick={() => setShowNotes(false)}>Remind me later</Button>
           <Button onClick={hideForever}>Never show me this again</Button>

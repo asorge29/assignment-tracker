@@ -8,8 +8,19 @@ const config = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
 	],
+	safelist: [
+		'hover:bg-blue-600',
+		'hover:bg-red-600',
+		'hover:bg-orange-600',
+		'hover:bg-lime-600',
+		'hover:bg-emerald-600',
+		'hover:bg-cyan-600',
+		'hover:bg-violet-600',
+		'hover:bg-fuchsia-600',
+		'hover:bg-rose-600',
+	],
   prefix: "",
-  theme: {
+	theme: {
   	container: {
   		center: true,
   		padding: '2rem',
