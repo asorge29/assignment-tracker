@@ -23,11 +23,6 @@ const Context = ({ children, defaultAssignments, defaultClasses, defaultUser }: 
   const { data: session } = useSession();
 
   useEffect(() => {
-    const body = document.body;
-    body.style.fontFamily = `var(${settings.font})`;
-  }, [settings.font]);
-
-  useEffect(() => {
     async function fetchClasses() {
       if (session?.user?.email) {
         const fetchedClasses = await getClasses();
@@ -65,6 +60,13 @@ const Context = ({ children, defaultAssignments, defaultClasses, defaultUser }: 
     
     void fetchUser();
   }, [session]);
+
+  useEffect(() => {
+    const body = document.body;
+    if (settings?.font) {
+      body.style.fontFamily = `var(${settings.font})`;
+    }
+  }, [settings?.font]);
 
   const refetchAssignments = async () => {
     if (session?.user?.email) {

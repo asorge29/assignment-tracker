@@ -31,13 +31,13 @@ export default async function RootLayout({
   const { env } = getRequestContext();
   let user: User|undefined;
 
-  if (session) {
-      user = await env.DATABASE.prepare("SELECT * FROM users WHERE email=?").bind(session?.user?.email).first().then((data: {email: string, settings: string}) => ({email: data.email, settings: JSON.parse(data.settings)}));
+  if (session?.user?.email) {
+    user = await env.DATABASE.prepare("SELECT * FROM users WHERE email=?").bind(session?.user?.email).first().then((data: {email: string, settings: string}) => ({email: data.email, settings: JSON.parse(data.settings)})).catch(() => ({email: session?.user?.email, settings: undefined}));
   }
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${poppins.variable} ${inter.variable} ${kalam.variable} ${lora.variable} ${orelegaOne.variable} ${bebasNeue.variable} ${jetBrainsMono.variable} flex flex-col h-screen dark:bg-background`} style={{fontFamily: `var(${user?.settings.font ? user.settings.font : "--font-poppins"})`}}>
+      <body className={`${poppins.variable} ${inter.variable} ${kalam.variable} ${lora.variable} ${orelegaOne.variable} ${bebasNeue.variable} ${jetBrainsMono.variable} flex flex-col h-screen dark:bg-background`} style={{fontFamily: `var(${user?.settings?.font ? user.settings.font : "--font-poppins"})`}}>
         <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <Header />

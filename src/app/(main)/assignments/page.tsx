@@ -21,12 +21,12 @@ export default async function Page() {
   }
 
   const now = new Date();
-  const endNotes = new Date("2025-02-10T23:59:59");
+  const endNotes = new Date("2025-04-30T23:59:59");
 
   const { env } = getRequestContext();
   const assignments: Assignment[] = await env.DATABASE.prepare("SELECT * FROM assignments WHERE email=?").bind(session?.user?.email).all().then((data: { results: Assignment[]; }) => data.results);
   const classes: Class[] = await env.DATABASE.prepare("SELECT * FROM classes WHERE email=?").bind(session?.user?.email).all().then((data: {results: Class[]}) => data.results);
-  const user: User = await env.DATABASE.prepare("SELECT * FROM users WHERE email=?").bind(session?.user?.email).first().then((data: {email: string, settings: string}) => ({email: data.email, settings: JSON.parse(data.settings)}));
+  const user: User = await env.DATABASE.prepare("SELECT * FROM users WHERE email=?").bind(session?.user?.email).first().then((data: {email: string, settings: string}) => ({email: data.email, settings: JSON.parse(data.settings)})).catch(() => ({email: session?.user?.email, settings: undefined}));
 
   return (
     <div className="flex md:flex-row flex-col h-full">

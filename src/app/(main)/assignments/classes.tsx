@@ -114,10 +114,10 @@ export default function Classes() {
           ))}
         </TableBody>
       </Table>}
-      <div className='flex flex-row justify-between gap-4 py-4'>
+      <div className='flex flex-row justify-between gap-1 py-4'>
         <Dialog open={createFormOpen} onOpenChange={setCreateFormOpen}>
           <DialogTrigger asChild>
-            <Button className={`${settings.accentColor && `bg-${settings.accentColor}-500`}`}>Create Class</Button>
+            <Button className={`${settings?.accentColor && `bg-${settings.accentColor}-500`} ${settings?.accentColor && `hover:bg-${settings.accentColor}-600`}`}>Create Class</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -138,14 +138,14 @@ export default function Classes() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className='hover:bg-green-700 w-full'>Create Class</Button>
+                <Button type="submit" className='bg-green-700 w-full'>Create Class</Button>
               </form>
             </Form>
           </DialogContent>
         </Dialog>
         {classes.length > 0 && <Dialog open={deleteFormOpen} onOpenChange={setDeleteFormOpen}>
           <DialogTrigger asChild>
-            <Button className={`${settings.accentColor && `bg-${settings.accentColor}-500`}`}>Delete Class</Button>
+            <Button className={`${settings?.accentColor && `bg-${settings.accentColor}-500`} ${settings?.accentColor && `hover:bg-${settings.accentColor}-600`}`}>Delete Class</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -182,7 +182,7 @@ export default function Classes() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className='hover:bg-red-600 w-full'>Delete Class</Button>
+                <Button type="submit" className='bg-red-600 w-full'>Delete Class</Button>
               </form>
             </Form>
           </DialogContent>
