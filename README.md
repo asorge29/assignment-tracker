@@ -6,7 +6,7 @@ It is completely free to use. It will always be completely free to use.
 
 ## Active Website
 
-[Free Site](assignmenttracker.app) 
+[Free Site] (https://www.assignmenttracker.app) 
 
 *The cost of maintaining this may increase if the usage approaches the limits of the free tier.
 
