@@ -12,8 +12,6 @@ It is completely free to use. It will always be completely free to use.
 
 ![desktop-screenshot](https://raw.githubusercontent.com/asorge29/assignment-tracker/main/public/desktop-screenshot.jpeg)
 
-![mobile-screenshot](https://raw.githubusercontent.com/asorge29/assignment-tracker/main/public/mobile-screenshot.png)
-
 ## Where did it come from?
 
 I created this app to help me keep track of the ever-growing mound of schoolwork and for a fun learning project. I'm a student trying to gain experience, and will be maintaining and improving this app in my free time. I'd be pretty stoked if even a few people get some good use out of it and I'd love to hear from you have any feedback!
