@@ -5,6 +5,9 @@ import "@/app/globals.css";
 import { ThemeProvider } from "@/components/themeProvider";
 import Header from "@/components/header";
 import React from "react";
+import {auth} from "@/auth";
+import { getRequestContext } from "@cloudflare/next-on-pages";
+import { User } from "@/types/user";
 
 const poppins = Poppins({ weight: ["400", "600", "700"], subsets: ["latin"], variable: "--font-poppins" });
 const inter = Inter({ weight: ["400", "600", "700"], subsets: ["latin"], variable: "--font-inter" });
@@ -19,14 +22,22 @@ export const metadata: Metadata = {
   description: "A simple web app designed to help students keep track of their assignments.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  const { env } = getRequestContext();
+  let user: User|undefined;
+
+  if (session) {
+      user = await env.DATABASE.prepare("SELECT * FROM users WHERE email=?").bind(session?.user?.email).first().then((data: {email: string, settings: string}) => ({email: data.email, settings: JSON.parse(data.settings)}));
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${poppins.variable} ${inter.variable} ${kalam.variable} ${lora.variable} ${orelegaOne.variable} ${bebasNeue.variable} ${jetBrainsMono.variable} flex flex-col h-screen dark:bg-background`}>
+      <body className={`${poppins.variable} ${inter.variable} ${kalam.variable} ${lora.variable} ${orelegaOne.variable} ${bebasNeue.variable} ${jetBrainsMono.variable} flex flex-col h-screen dark:bg-background`} style={{fontFamily: `var(${user?.settings.font ? user.settings.font : "--font-poppins"})`}}>
         <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <Header />

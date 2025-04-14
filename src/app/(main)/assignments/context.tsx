@@ -10,16 +10,22 @@ import { Settings } from "@/types/settings";
 import { getUser } from "@/lib/getUser";
 import { createUser } from "@/lib/createUser";
 import { updateSettings } from "@/lib/updateSettings";
+import { User } from "@/types/user";
 
 const classContext = createContext({});
 const assignmentContext = createContext({});
 const settingsContext = createContext({});
 
-const Context = ({ children, defaultAssignments, defaultClasses }: { children: React.ReactNode, defaultAssignments: Assignment[], defaultClasses: Class[] }) => {
+const Context = ({ children, defaultAssignments, defaultClasses, defaultUser }: { children: React.ReactNode, defaultAssignments: Assignment[], defaultClasses: Class[], defaultUser: User }) => {
   const [classes, setClasses] = useState<Class[]>(defaultClasses);
   const [assignments, setAssignments] = useState<Assignment[]>(defaultAssignments);
-  const [settings, setSettings] = useState<Settings>({accentColor: undefined, overdueHighlight: true, balloons: true, font: "--font-poppins"});
+  const [settings, setSettings] = useState<Settings>(defaultUser.settings);
   const { data: session } = useSession();
+
+  useEffect(() => {
+    const body = document.body;
+    body.style.fontFamily = `var(${settings.font})`;
+  }, [settings.font]);
 
   useEffect(() => {
     async function fetchClasses() {
@@ -48,7 +54,6 @@ const Context = ({ children, defaultAssignments, defaultClasses }: { children: R
       if (session?.user?.email) {
         const fetchedUser = await getUser();
         if (!fetchedUser) {
-          console.log("creating user")
           await createUser({settings: {accentColor: undefined, overdueHighlight: true, balloons: true, font: "--font-poppins"}})
         } else if (!fetchedUser.settings) {
           updateSettings({settings: {accentColor: undefined, overdueHighlight: true, balloons: true, font: "--font-poppins"}})

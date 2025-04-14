@@ -8,6 +8,7 @@ import {Assignment} from "@/types/assignment";
 import {Class} from "@/types/class";
 import {redirect} from "next/navigation";
 import UpdateNotes from "@/components/updateNotes";
+import { User } from "@/types/user";
 
 export const runtime = 'edge'
 
@@ -25,11 +26,12 @@ export default async function Page() {
   const { env } = getRequestContext();
   const assignments: Assignment[] = await env.DATABASE.prepare("SELECT * FROM assignments WHERE email=?").bind(session?.user?.email).all().then((data: { results: Assignment[]; }) => data.results);
   const classes: Class[] = await env.DATABASE.prepare("SELECT * FROM classes WHERE email=?").bind(session?.user?.email).all().then((data: {results: Class[]}) => data.results);
+  const user: User = await env.DATABASE.prepare("SELECT * FROM users WHERE email=?").bind(session?.user?.email).first().then((data: {email: string, settings: string}) => ({email: data.email, settings: JSON.parse(data.settings)}));
 
   return (
     <div className="flex md:flex-row flex-col h-full">
       {now < endNotes && <UpdateNotes/>}
-      <Context defaultClasses={classes} defaultAssignments={assignments}>
+      <Context defaultClasses={classes} defaultAssignments={assignments} defaultUser={user}>
         <div className="border-r md:w-1/4 p-4">
           <Accordion type="single" collapsible className="md:hidden">
             <AccordionItem value="item-1">

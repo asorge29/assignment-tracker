@@ -88,7 +88,7 @@ export default async function Home() {
           <h2 className='text-center md:text-4xl text-xl'>What if I find a bug or have suggestions?</h2>
           <p className='indent-10 text-justify'>
             The Assignment Tracker is open source, so you can find the source code on Github
-            at <Link className='underline' href='https://github.com/asorge29/assignment-tracker'>github.com/asorge29/assignment-tracker</Link>.
+            at <Link className='underline' target="_blank" href='https://github.com/asorge29/assignment-tracker'>github.com/asorge29/assignment-tracker</Link>.
             Feel free to open an issue or pull request!
           </p>
         </div>

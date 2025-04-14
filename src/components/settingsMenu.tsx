@@ -1,13 +1,12 @@
 'use client'
 
-import { Settings2 } from "lucide-react";
+import { Check, Settings2 } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { useSettingsContext } from "@/app/(main)/assignments/context";
 import { Label } from "./ui/label";
 import { Checkbox } from "./ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { useEffect } from "react";
 import { updateSettings } from "@/lib/updateSettings";
 import { getUser } from "@/lib/getUser";
 import { Settings } from "@/types/settings";
@@ -34,11 +33,6 @@ const SettingsMenu = () => {
     }
   }
 
-  useEffect(() => {
-    const body = document.body;
-    body.style.fontFamily = `var(${settings.font})`;
-  }, [settings.font]);
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -54,15 +48,15 @@ const SettingsMenu = () => {
             <div className="w-10 h-10 rounded-full border bg-white cursor-pointer overflow-hidden -rotate-[35deg]" onClick={() => refetchSettings({...settings, accentColor: undefined})}>
               <div className="w-1/2 h-full bg-black"></div>
             </div>
-            <div className="w-10 h-10 rounded-full border bg-red-500 cursor-pointer" onClick={() => refetchSettings({...settings, accentColor: "red"})}></div>
-            <div className="w-10 h-10 rounded-full border bg-orange-500 cursor-pointer" onClick={() => refetchSettings({...settings, accentColor: "orange"})}></div>
-            <div className="w-10 h-10 rounded-full border bg-lime-500 cursor-pointer" onClick={() => refetchSettings({...settings, accentColor: "lime"})}></div>
-            <div className="w-10 h-10 rounded-full border bg-emerald-500 cursor-pointer" onClick={() => refetchSettings({...settings, accentColor: "emerald"})}></div>
-            <div className="w-10 h-10 rounded-full border bg-cyan-500 cursor-pointer" onClick={() => refetchSettings({...settings, accentColor: "cyan"})}></div>
-            <div className="w-10 h-10 rounded-full border bg-blue-500 cursor-pointer" onClick={() => refetchSettings({...settings, accentColor: "blue"})}></div>
-            <div className="w-10 h-10 rounded-full border bg-violet-500 cursor-pointer" onClick={() => refetchSettings({...settings, accentColor: "violet"})}></div>
-            <div className="w-10 h-10 rounded-full border bg-fuchsia-500 cursor-pointer" onClick={() => refetchSettings({...settings, accentColor: "fuchsia"})}></div>
-            <div className="w-10 h-10 rounded-full border bg-rose-500 cursor-pointer" onClick={() => refetchSettings({...settings, accentColor: "rose"})}></div>
+            <div className="w-10 h-10 rounded-full border bg-red-500 cursor-pointer flex justify-center items-center" onClick={() => refetchSettings({...settings, accentColor: "red"})}>{settings.accentColor === "red" && <Check/>}</div>
+            <div className="w-10 h-10 rounded-full border bg-orange-500 cursor-pointer flex justify-center items-center" onClick={() => refetchSettings({...settings, accentColor: "orange"})}>{settings.accentColor === "orange" && <Check/>}</div>
+            <div className="w-10 h-10 rounded-full border bg-lime-500 cursor-pointer flex justify-center items-center" onClick={() => refetchSettings({...settings, accentColor: "lime"})}>{settings.accentColor === "lime" && <Check/>}</div>
+            <div className="w-10 h-10 rounded-full border bg-emerald-500 cursor-pointer flex justify-center items-center" onClick={() => refetchSettings({...settings, accentColor: "emerald"})}>{settings.accentColor === "emerald" && <Check/>}</div>
+            <div className="w-10 h-10 rounded-full border bg-cyan-500 cursor-pointer flex justify-center items-center" onClick={() => refetchSettings({...settings, accentColor: "cyan"})}>{settings.accentColor === "cyan" && <Check/>}</div>
+            <div className="w-10 h-10 rounded-full border bg-blue-500 cursor-pointer flex justify-center items-center" onClick={() => refetchSettings({...settings, accentColor: "blue"})}>{settings.accentColor === "blue" && <Check/>}</div>
+            <div className="w-10 h-10 rounded-full border bg-violet-500 cursor-pointer flex justify-center items-center" onClick={() => refetchSettings({...settings, accentColor: "violet"})}>{settings.accentColor === "violet" && <Check/>}</div>
+            <div className="w-10 h-10 rounded-full border bg-fuchsia-500 cursor-pointer flex justify-center items-center" onClick={() => refetchSettings({...settings, accentColor: "fuchsia"})}>{settings.accentColor === "fuchsia" && <Check/>}</div>
+            <div className="w-10 h-10 rounded-full border bg-rose-500 cursor-pointer flex justify-center items-center" onClick={() => refetchSettings({...settings, accentColor: "rose"})}>{settings.accentColor === "rose" && <Check/>}</div>
           </div>
         </div>
         <div className="flex flex-row gap-2 items-center">

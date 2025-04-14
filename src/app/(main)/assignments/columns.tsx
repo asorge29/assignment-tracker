@@ -26,10 +26,10 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
         <Button
           variant="link"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0"
+          className="p-0 gap-1"
         >
           Name
-          <ArrowUpDown className="ml-2 h-4 w-4"/>
+          <ArrowUpDown className="h-4 w-4"/>
         </Button>
       );
     },
@@ -51,10 +51,10 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
         <Button
           variant="link"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0"
+          className="p-0 gap-1"
         >
           Due Date
-          <ArrowUpDown className="ml-2 h-4 w-4"/>
+          <ArrowUpDown className="h-4 w-4"/>
         </Button>
       );
     },
@@ -84,10 +84,10 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
         <Button
           variant="link"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0"
+          className="p-0 gap-1"
         >
           Class
-          <ArrowUpDown className="ml-2 h-4 w-4"/>
+          <ArrowUpDown className="h-4 w-4"/>
         </Button>
       );
     },
