@@ -31,7 +31,7 @@ const UpdateNotes = () => {
   };
 
   return (
-    <Dialog open={showNotes}>
+    <Dialog open={showNotes} onOpenChange={setShowNotes}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
@@ -56,7 +56,7 @@ const UpdateNotes = () => {
           </li>
           <li>
             Settings menu is located near new assignment button, and looks like this:
-            <Button variant="outline"><Settings2/></Button>
+            <Button variant="outline" className="ml-2"><Settings2/></Button>
           </li>
         </ul>
         </div>
