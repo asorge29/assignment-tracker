@@ -26,8 +26,3 @@ I created this app to help me keep track of the ever-growing mound of schoolwork
 | Sync your assignments wherever you log in  | 	Track you or sell your information  |
 | Be free and open source forever  | Show you ads  |
 | Make you happy  | Solve global warming :(  |
-
-## What will it do? 
-
-TODO:
-
