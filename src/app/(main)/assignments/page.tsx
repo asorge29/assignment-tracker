@@ -35,7 +35,7 @@ export default async function Page() {
         <div className="border-r md:w-1/4 p-4">
           <Accordion type="single" collapsible className="md:hidden">
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-xl md:text-3xl">Classes</AccordionTrigger>
+              <AccordionTrigger className="text-xl md:text-3xl hover:no-underline">Classes</AccordionTrigger>
               <AccordionContent><Classes/></AccordionContent>
             </AccordionItem>
           </Accordion>

@@ -75,7 +75,7 @@ const NewAssignment = ({ classes, refetchAssignments}: { classes: Class[], refet
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className={`${settings?.accentColor && `bg-${settings.accentColor}-500`} ${settings?.accentColor && `hover:bg-${settings.accentColor}-600`} text-wrap`}>Create Assignment</Button>
+        <Button className={`${settings?.accentColor && `bg-${settings.accentColor}-500`} ${settings?.accentColor && `hover:bg-${settings.accentColor}-600`} text-wrap w-min md:w-max md:text-nowrap`}>Create Assignment</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

@@ -114,10 +114,10 @@ export default function Classes() {
           ))}
         </TableBody>
       </Table>}
-      <div className='flex flex-row justify-between gap-1 py-4'>
+      <div className='flex flex-row lg:justify-between lg:flex-nowrap gap-1 py-4 flex-wrap justify-center'>
         <Dialog open={createFormOpen} onOpenChange={setCreateFormOpen}>
           <DialogTrigger asChild>
-            <Button className={`${settings?.accentColor && `bg-${settings.accentColor}-500`} ${settings?.accentColor && `hover:bg-${settings.accentColor}-600`}`}>Create Class</Button>
+            <Button className={`${settings?.accentColor && `bg-${settings.accentColor}-500`} ${settings?.accentColor && `hover:bg-${settings.accentColor}-600`} px-2`}>Create Class</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -145,7 +145,7 @@ export default function Classes() {
         </Dialog>
         {classes.length > 0 && <Dialog open={deleteFormOpen} onOpenChange={setDeleteFormOpen}>
           <DialogTrigger asChild>
-            <Button className={`${settings?.accentColor && `bg-${settings.accentColor}-500`} ${settings?.accentColor && `hover:bg-${settings.accentColor}-600`}`}>Delete Class</Button>
+            <Button className={`${settings?.accentColor && `bg-${settings.accentColor}-500`} ${settings?.accentColor && `hover:bg-${settings.accentColor}-600`} px-2`}>Delete Class</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>

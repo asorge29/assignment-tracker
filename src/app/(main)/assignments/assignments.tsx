@@ -45,8 +45,16 @@ export default function Assignments() {
             </div>
           ) : (
             <div className="flex gap-1">
-              <MoveLeft />
-              <p>Create a class here to get started</p>
+              <div>
+                <div className="hidden md:contents">
+                  <MoveLeft />
+                  <p>Create a class here to get started</p>
+                </div>
+                <div className="flex flex-row justify-end mr-16 md:hidden">
+                  <p>Open the class menu above and create a class to get started</p>
+                  <CornerRightUp className="flex-shrink-0 relative bottom-2"/>
+                </div>
+              </div>
             </div>
           )
         )}
