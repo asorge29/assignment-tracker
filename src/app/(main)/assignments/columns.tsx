@@ -70,7 +70,7 @@ export const columns = (refetchAssignments: () => void, classes: Class[], openEd
       const due = new Date(`${row.getValue("due_date")}T23:59:59`);
       const now = new Date();
 
-      if (due < now && settings.overdueHighlight) {
+      if (due < now && settings?.overdueHighlight) {
         return <div className="text-red-500">{formatted}</div>;
       }
 
