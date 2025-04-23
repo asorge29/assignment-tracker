@@ -45,7 +45,7 @@ export default async function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <Header />
             {children}
-            <footer className="flex flex-row items-center justify-center p-2 w-full border-t gap-4">
+            <footer className="flex flex-row items-center justify-center p-1 w-full border-t gap-4 text-xs">
               <Link href="/privacy" className="block">Privacy Policy</Link>
               <a href="https://github.com/asorge29/assignment-tracker/issues" className="block">Report an Issue</a>
             </footer>
