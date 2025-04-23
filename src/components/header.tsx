@@ -6,7 +6,7 @@ export default async function Header({}) {
 
   return (
     <div className="w-full flex flex-row justify-between items-center p-4 border-b">
-      <Link href="/"><h1 className="md:text-4xl text-xl font-semibold">Assignment Tracker</h1></Link>
+      <Link href="/"><p className="md:text-4xl text-xl font-semibold">Assignment Tracker</p></Link>
       <div className="flex gap-4 justify-center items-center overflow-visible w-auto">
         <Link href="/" className="text-2xl hover:underline hidden md:block">Home</Link>
         <Link href="/assignments" className="text-2xl hover:underline hidden md:block">Assignments</Link>

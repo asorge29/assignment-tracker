@@ -25,7 +25,7 @@ export default function Assignments() {
   return (
     <div>
       <div className="flex flex-row justify-between mb-4">
-        <h2 className="md:text-3xl text-xl">Assignments</h2>
+        <h1 className="md:text-3xl text-xl">Assignments</h1>
         <div className="flex flex-row gap-2">
           <SettingsMenu />
           {classes.length > 0 && <NewAssignment classes={classes} refetchAssignments={refetchAssignments}/>}
