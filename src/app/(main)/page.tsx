@@ -16,7 +16,7 @@ export default async function Home() {
   const session = await auth();
 
   return (
-    <main className="flex items-center flex-col min-h-screen">
+    <main className="flex items-center flex-col md:min-h-screen">
       <div className="flex flex-col items-center justify-center gap-4 p-4">
         <p className="md:text-6xl text-3xl text-center font-semibold">Hi!</p>
         <p className="md:text-6xl text-3xl text-center font-semibold">Welcome to the <h1 className="inline">Assignment Tracker</h1>.</p>
