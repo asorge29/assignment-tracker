@@ -16,13 +16,21 @@ export default async function Home() {
   const session = await auth();
 
   return (
-    <main className="flex items-center flex-col md:min-h-screen">
+    <main className="flex items-center flex-col">
       <div className="flex flex-col items-center justify-center gap-4 p-4">
         <p className="md:text-6xl text-3xl text-center font-semibold">Hi!</p>
-        <p className="md:text-6xl text-3xl text-center font-semibold">Welcome to the <h1 className="inline">Assignment Tracker</h1>.</p>
+        <div className="md:text-6xl text-3xl text-center font-semibold">Welcome to the <h1 className="inline">Assignment Tracker</h1>.</div>
       </div>
       <div className="flex md:flex-row flex-col items-center justify-center gap-4 p-4">
         {session ? <Link href='/assignments' className='underline text-xl'> Just take me to my assignments</Link> : <Link href='/login' className='underline text-xl'>Log In/Sign Up</Link>}
+      </div>
+      <div className="md:w-5/6 w-full">
+        <h2 className='text-center md:text-4xl text-xl px-4 mb-4'>So what is it?</h2>
+        <p className='indent-10 text-justify px-4'>
+          The assignment tracker is a simple web app that helps you keep track of your schoolwork. Simply enter your classes, and the assignments you have for each class.
+          You can then view your assignments in a list, and mark them as complete when you&apos;re done. It is designed to be simple and easy to use, so you can focus on what really matters: getting your work done.
+          Your assignments are saved in the cloud, and you can access them on any device you log in on.
+        </p>
       </div>
       <div className="flex justify-center md:flex-row flex-col md:w-5/6 w-full">
         <div className="md:w-1/2 w-full flex-shrink-0 p-4 gap-4 flex flex-col">
