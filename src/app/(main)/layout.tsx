@@ -8,7 +8,6 @@ import React from "react";
 import {auth} from "@/auth";
 import { getRequestContext } from "@cloudflare/next-on-pages";
 import { User } from "@/types/user";
-import Link from "next/link";
 
 const poppins = Poppins({ weight: ["400", "600", "700"], subsets: ["latin"], variable: "--font-poppins" });
 const inter = Inter({ weight: ["400", "600", "700"], subsets: ["latin"], variable: "--font-inter" });
@@ -45,10 +44,6 @@ export default async function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <Header />
             {children}
-            <footer className="flex flex-row items-center justify-center p-1 w-full border-t gap-4 text-xs">
-              <Link href="/privacy" className="block">Privacy Policy</Link>
-              <a href="https://github.com/asorge29/assignment-tracker/issues" className="block">Report an Issue</a>
-            </footer>
           </ThemeProvider>
         </SessionProvider>
       </body>
