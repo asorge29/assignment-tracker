@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import {auth} from '@/auth'
+import React from "react";
 
 export const runtime = 'edge'
 
@@ -151,6 +152,10 @@ export default async function Home() {
           </div>*/}
         </div>
       </div>
+      <footer className="flex flex-row items-center justify-center p-1 w-full border-t gap-4 text-xs">
+        <Link href="/privacy" className="block">Privacy Policy</Link>
+        <a href="https://github.com/asorge29/assignment-tracker/issues" className="block">Report an Issue</a>
+      </footer>
     </main>
   );
 }
