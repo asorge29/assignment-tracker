@@ -11,11 +11,11 @@ import {
 } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/themeProvider";
-import Header from "@/components/header";
+// import Header from "@/components/header";
 import React from "react";
-import { auth } from "@/auth";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { User } from "@/types/user";
+// import { auth } from "@/auth";
+// import { getCloudflareContext } from "@opennextjs/cloudflare";
+// import { User } from "@/types/user";
 
 const poppins = Poppins({
   weight: ["400", "600", "700"],
@@ -64,32 +64,32 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-  const { env } = getCloudflareContext();
-  let user: User | undefined;
+  // const session = await auth();
+  // const { env } = getCloudflareContext();
+  // let user: User | undefined;
 
-  if (session?.user?.email) {
-    user = await env.DATABASE.prepare("SELECT * FROM users WHERE email=?")
-      .bind(session?.user?.email)
-      .first()
-      .then((data: { email: string; settings: string }) => ({
-        email: data.email,
-        settings: JSON.parse(data.settings),
-      }))
-      .catch(() => ({ email: session?.user?.email, settings: undefined }));
-  }
+  // if (session?.user?.email) {
+  //   user = await env.DATABASE.prepare("SELECT * FROM users WHERE email=?")
+  //     .bind(session?.user?.email)
+  //     .first()
+  //     .then((data: { email: string; settings: string }) => ({
+  //       email: data.email,
+  //       settings: JSON.parse(data.settings),
+  //     }))
+  //     .catch(() => ({ email: session?.user?.email, settings: undefined }));
+  // }
 
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${poppins.variable} ${inter.variable} ${kalam.variable} ${lora.variable} ${orelegaOne.variable} ${bebasNeue.variable} ${jetBrainsMono.variable} flex flex-col h-screen dark:bg-background`}
-        style={{
-          fontFamily: `var(${user?.settings?.font ? user.settings.font : "--font-poppins"})`,
-        }}
+        // style={{
+        //   fontFamily: `var(${user?.settings?.font ? user.settings.font : "--font-poppins"})`,
+        // }}
       >
         <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <Header />
+            {/*<Header />*/}
             {children}
           </ThemeProvider>
         </SessionProvider>

@@ -62,9 +62,11 @@ const Context = ({ children, defaultAssignments, defaultClasses, defaultUser }: 
   }, [session]);
 
   useEffect(() => {
-    const body = document.body;
-    if (settings?.font) {
-      body.style.fontFamily = `var(${settings.font})`;
+    //const body = document.body;
+    const fontWrapper = document.getElementById('font-wrapper')
+    if (settings?.font && fontWrapper) {
+      //body.style.fontFamily = `var(${settings.font})`;
+      fontWrapper.style.fontFamily = `var(${settings.font})`;
     }
   }, [settings?.font]);
 
@@ -88,7 +90,9 @@ const Context = ({ children, defaultAssignments, defaultClasses, defaultUser }: 
         <assignmentContext.Provider
           value={{ assignments, setAssignments, refetchAssignments }}
         >
-          {children}
+          <div className="contents" id="font-wrapper">
+            {children}
+          </div>
         </assignmentContext.Provider>
       </classContext.Provider>
     </settingsContext.Provider>

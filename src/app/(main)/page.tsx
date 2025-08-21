@@ -14,7 +14,7 @@ export default async function Home() {
   const session = await auth();
 
   return (
-    <main className="flex items-center flex-col">
+    <main className="flex items-center flex-col bg-[length:40px_40px] bg-[linear-gradient(to_right,#8dc8f0_1px,transparent_1px),linear-gradient(to_bottom,grey_1px,transparent_1px)]">
       <div className="flex flex-col items-center justify-center gap-4 p-4">
         <p className="md:text-6xl text-3xl text-center font-semibold">Hi!</p>
         <div className="md:text-6xl text-3xl text-center font-semibold">
