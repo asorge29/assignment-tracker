@@ -14,7 +14,7 @@ export default async function Home() {
   const session = await auth();
 
   return (
-    <main className="flex items-center flex-col bg-[length:40px_40px] bg-[linear-gradient(to_right,#8dc8f0_1px,transparent_1px),linear-gradient(to_bottom,grey_1px,transparent_1px)]">
+    <main className="flex items-center flex-col bg-size-[40px_40px] bg-[linear-gradient(to_right,#8dc8f0_1px,transparent_1px),linear-gradient(to_bottom,grey_1px,transparent_1px)]">
       <div className="flex flex-col items-center justify-center gap-4 p-4">
         <p className="md:text-6xl text-3xl text-center font-semibold">Hi!</p>
         <div className="md:text-6xl text-3xl text-center font-semibold">
@@ -48,7 +48,7 @@ export default async function Home() {
         </p>
       </div>
       <div className="flex justify-center md:flex-row flex-col md:w-5/6 w-full">
-        <div className="md:w-1/2 w-full flex-shrink-0 p-4 gap-4 flex flex-col">
+        <div className="md:w-1/2 w-full shrink-0 p-4 gap-4 flex flex-col">
           <h2 className="text-center md:text-4xl text-xl">What does it do?</h2>
           <Table>
             <TableHeader>
@@ -104,7 +104,7 @@ export default async function Home() {
             . Feel free to open an issue or pull request!
           </p>
         </div>
-        <div className="md:w-1/2 w-full flex-shrink-0 flex flex-col gap-4 p-4">
+        <div className="md:w-1/2 w-full shrink-0 flex flex-col gap-4 p-4">
           <h2 className="text-center md:text-4xl text-xl">
             Where did it come from?
           </h2>
