@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { getRequestContext } from "@cloudflare/next-on-pages";
 import { auth } from "@/auth";
 
-export const runtime = "edge";
-
 export async function POST(request: Request) {
   const session = await auth();
   if (!session) {
@@ -31,10 +29,10 @@ export async function POST(request: Request) {
         query = `DELETE FROM assignments WHERE id = ? AND email = "${session.user?.email}"`;
         break;
       case "getClasses":
-        query = `SELECT * FROM classes WHERE email = "${session.user?.email}"`
+        query = `SELECT * FROM classes WHERE email = "${session.user?.email}"`;
         break;
       case "getAssignments":
-        query = `SELECT * FROM assignments WHERE email = "${session.user?.email}"`
+        query = `SELECT * FROM assignments WHERE email = "${session.user?.email}"`;
         break;
       case "updateAssignment":
         query = `UPDATE assignments SET title = ?, link = ?, due_date = ?, class = ? WHERE id = ? AND email = "${session.user?.email}"`;
