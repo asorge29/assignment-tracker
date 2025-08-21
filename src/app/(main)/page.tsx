@@ -7,115 +7,123 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import {auth} from '@/auth'
+import { auth } from "@/auth";
 import React from "react";
 
-export const runtime = 'edge'
-
 export default async function Home() {
-
   const session = await auth();
 
   return (
     <main className="flex items-center flex-col">
       <div className="flex flex-col items-center justify-center gap-4 p-4">
         <p className="md:text-6xl text-3xl text-center font-semibold">Hi!</p>
-        <div className="md:text-6xl text-3xl text-center font-semibold">Welcome to the <h1 className="inline">Assignment Tracker</h1>.</div>
+        <div className="md:text-6xl text-3xl text-center font-semibold">
+          Welcome to the <h1 className="inline">Assignment Tracker</h1>.
+        </div>
       </div>
       <div className="flex md:flex-row flex-col items-center justify-center gap-4 p-4">
-        {session ? <Link href='/assignments' className='underline text-xl'> Just take me to my assignments</Link> : <Link href='/login' className='underline text-xl'>Log In/Sign Up</Link>}
+        {session ? (
+          <Link href="/assignments" className="underline text-xl">
+            {" "}
+            Just take me to my assignments
+          </Link>
+        ) : (
+          <Link href="/login" className="underline text-xl">
+            Log In/Sign Up
+          </Link>
+        )}
       </div>
       <div className="md:w-5/6 w-full">
-        <h2 className='text-center md:text-4xl text-xl px-4 mb-4'>So what is it?</h2>
-        <p className='indent-10 text-justify px-4'>
-          The assignment tracker is a simple web app that helps you keep track of your schoolwork. Simply enter your classes, and the assignments you have for each class.
-          You can then view your assignments in a list, and mark them as complete when you&apos;re done. It is designed to be simple and easy to use, so you can focus on what really matters: getting your work done.
-          Your assignments are saved in the cloud, and you can access them on any device you log in on.
+        <h2 className="text-center md:text-4xl text-xl px-4 mb-4">
+          So what is it?
+        </h2>
+        <p className="indent-10 text-justify px-4">
+          The assignment tracker is a simple web app that helps you keep track
+          of your schoolwork. Simply enter your classes, and the assignments you
+          have for each class. You can then view your assignments in a list, and
+          mark them as complete when you&apos;re done. It is designed to be
+          simple and easy to use, so you can focus on what really matters:
+          getting your work done. Your assignments are saved in the cloud, and
+          you can access them on any device you log in on.
         </p>
       </div>
       <div className="flex justify-center md:flex-row flex-col md:w-5/6 w-full">
         <div className="md:w-1/2 w-full flex-shrink-0 p-4 gap-4 flex flex-col">
-          <h2 className='text-center md:text-4xl text-xl'>What does it do?</h2>
+          <h2 className="text-center md:text-4xl text-xl">What does it do?</h2>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Things the Assignment Tracker Will Do</TableHead>
-                <TableHead>Things the Assignment Tracker Won&apos;t Do</TableHead>
+                <TableHead>
+                  Things the Assignment Tracker Won&apos;t Do
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell>
-                  Help you keep track of your schoolwork
-                </TableCell>
-                <TableCell>
-                  Eat your homework
-                </TableCell>
+                <TableCell>Help you keep track of your schoolwork</TableCell>
+                <TableCell>Eat your homework</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>
-                  Improve your organization
-                </TableCell>
+                <TableCell>Improve your organization</TableCell>
                 <TableCell>
                   Watch the 18 reels that one friend sent you
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>
-                  Have dark mode. Everyone loves dark mode.
-                </TableCell>
-                <TableCell>
-                  Give you relationship advice
-                </TableCell>
+                <TableCell>Have dark mode. Everyone loves dark mode.</TableCell>
+                <TableCell>Give you relationship advice</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>
-                  Sync your assignments wherever you log in
-                </TableCell>
-                <TableCell>
-                  Track you or sell your information
-                </TableCell>
+                <TableCell>Sync your assignments wherever you log in</TableCell>
+                <TableCell>Track you or sell your information</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>
-                  Be free and open source forever
-                </TableCell>
-                <TableCell>
-                  Show you ads
-                </TableCell>
+                <TableCell>Be free and open source forever</TableCell>
+                <TableCell>Show you ads</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>
-                  Make you happy
-                </TableCell>
-                <TableCell>
-                  Solve global warming :(
-                </TableCell>
+                <TableCell>Make you happy</TableCell>
+                <TableCell>Solve global warming :(</TableCell>
               </TableRow>
             </TableBody>
           </Table>
-          <h2 className='text-center md:text-4xl text-xl'>What if I find a bug or have suggestions?</h2>
-          <p className='indent-10 text-justify'>
-            The Assignment Tracker is open source, so you can find the source code on Github
-            at <Link className='underline' target="_blank" href='https://github.com/asorge29/assignment-tracker'>github.com/asorge29/assignment-tracker</Link>.
-            Feel free to open an issue or pull request!
+          <h2 className="text-center md:text-4xl text-xl">
+            What if I find a bug or have suggestions?
+          </h2>
+          <p className="indent-10 text-justify">
+            The Assignment Tracker is open source, so you can find the source
+            code on Github at{" "}
+            <Link
+              className="underline"
+              target="_blank"
+              href="https://github.com/asorge29/assignment-tracker"
+            >
+              github.com/asorge29/assignment-tracker
+            </Link>
+            . Feel free to open an issue or pull request!
           </p>
         </div>
         <div className="md:w-1/2 w-full flex-shrink-0 flex flex-col gap-4 p-4">
-          <h2 className='text-center md:text-4xl text-xl'>Where did it come from?</h2>
-          <p className='indent-10 text-justify'>
-            I created this app to help me keep track of the ever-growing mound of schoolwork and for a fun learning
-            project.
-            I&apos;m a student trying to gain experience, and will be maintaining and improving this app in my free
-            time.
-            I&apos;d be pretty stoked if even a few people get some good use out of it and I&apos;d love to hear from
-            you
-            have any feedback!
+          <h2 className="text-center md:text-4xl text-xl">
+            Where did it come from?
+          </h2>
+          <p className="indent-10 text-justify">
+            I created this app to help me keep track of the ever-growing mound
+            of schoolwork and for a fun learning project. I&apos;m a student
+            trying to gain experience, and will be maintaining and improving
+            this app in my free time. I&apos;d be pretty stoked if even a few
+            people get some good use out of it and I&apos;d love to hear from
+            you have any feedback!
           </p>
-          <h2 className='text-center  md:text-4xl text-xl'>How much does it cost?</h2>
-          <p className='indent-10 text-justify'>
-            It is completely free to use. It will always be completely free to use. Below is a brief breakdown of the
-            costs associated with running this. The cost of maintaining this may increase if the usage approaches the limits of the free tier.
+          <h2 className="text-center  md:text-4xl text-xl">
+            How much does it cost?
+          </h2>
+          <p className="indent-10 text-justify">
+            It is completely free to use. It will always be completely free to
+            use. Below is a brief breakdown of the costs associated with running
+            this. The cost of maintaining this may increase if the usage
+            approaches the limits of the free tier.
             {/*If you would like to support the development of this project, you can buy me a coffee below :)*/}
           </p>
           <div>
@@ -141,7 +149,7 @@ export default async function Home() {
                 </TableRow>
                 <TableRow>
                   <TableCell>Total</TableCell>
-                  <TableCell className='text-green-500'>$14.18/yr</TableCell>
+                  <TableCell className="text-green-500">$14.18/yr</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -153,8 +161,15 @@ export default async function Home() {
         </div>
       </div>
       <footer className="flex flex-row items-center justify-center p-1 w-full border-t gap-4 text-xs">
-        <Link href="/privacy" className="block">Privacy Policy</Link>
-        <a href="https://github.com/asorge29/assignment-tracker/issues" className="block">Report an Issue</a>
+        <Link href="/privacy" className="block">
+          Privacy Policy
+        </Link>
+        <a
+          href="https://github.com/asorge29/assignment-tracker/issues"
+          className="block"
+        >
+          Report an Issue
+        </a>
       </footer>
     </main>
   );

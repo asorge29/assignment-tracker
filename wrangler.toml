@@ -1,0 +1,15 @@
+main = ".open-next/worker.js"
+name = "assignment-tracker"
+
+compatibility_date = "2025-06-16"
+compatibility_flags = ["nodejs_compat"]
+keep_vars = true
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = 'DATABASE'
+database_name = 'assignment-tracker'
+database_id = '290a7673-2c65-4573-bba9-3a63f9dab4be'
