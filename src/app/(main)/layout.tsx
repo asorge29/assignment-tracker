@@ -14,7 +14,7 @@ import { ThemeProvider } from "@/components/themeProvider";
 import Header from "@/components/header";
 import React from "react";
 import { auth } from "@/auth";
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { User } from "@/types/user";
 
 const poppins = Poppins({
@@ -65,7 +65,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  const { env } = getRequestContext();
+  const { env } = getCloudflareContext();
   let user: User | undefined;
 
   if (session?.user?.email) {
