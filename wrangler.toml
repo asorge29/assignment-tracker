@@ -3,6 +3,7 @@ name = "assignment-tracker"
 
 compatibility_date = "2025-06-16"
 compatibility_flags = ["nodejs_compat"]
+keep_vars = true
 
 [assets]
 directory = ".open-next/assets"
