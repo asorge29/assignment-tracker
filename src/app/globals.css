@@ -20,6 +20,12 @@
   }
 }
 
+@font-face {
+    font-family: 'ZukaDoodle';
+    font-style: normal;
+    src: url("/ZukaDoodle.ttf") format("truetype");
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
